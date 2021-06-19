@@ -20,13 +20,14 @@ import (
 )
 
 var (
-	localHost        = "configs/host"
-	localExclusion   = "configs/exclusion"
-	localLog         = "unbound-manager.log"
-	exclusionDomains []string
-	err              error
-	wg               sync.WaitGroup
-	validation       bool
+	advertisementConfig     = "configs/advertisement"
+	maliciousConfig         = "configs/malicious"
+	socialEngineeringConfig = "configs/social-engineering"
+	localExclusion          = "configs/exclusion"
+	exclusionDomains        []string
+	err                     error
+	wg                      sync.WaitGroup
+	validation              bool
 )
 
 func init() {
@@ -42,11 +43,10 @@ func init() {
 	if validation && !validation {
 		log.Fatal("Warning: Validation and no validation cannot be done at the same time.")
 	}
-	// Remove the localhost file from your system.
-	if fileExists(localHost) {
-		err = os.Remove(localHost)
-		handleErrors(err)
-	}
+	// Remove the old files from your system if they are found.
+	os.Remove(advertisementConfig)
+	os.Remove(maliciousConfig)
+	os.Remove(socialEngineeringConfig)
 	// Read through all of the exclusion domains before appending them.
 	if fileExists(localExclusion) {
 		exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
@@ -56,12 +56,16 @@ func init() {
 func main() {
 	// Scrape all of the domains and save them afterwards.
 	startScraping()
+	// We'll make everything distinctive once everything is finished.
+	makeEverythingUnique(advertisementConfig)
+	makeEverythingUnique(maliciousConfig)
+	makeEverythingUnique(socialEngineeringConfig)
 }
 
+// Replace the URLs in this section to create your own list or add new lists.
 func startScraping() {
-	// Replace the URLs in this section to create your own list or add new lists.
-	urls := []string{
-		// Advertisement
+	// Advertisement
+	advertisement := []string{
 		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
 		"https://raw.githubusercontent.com/DRSDavidSoft/additional-hosts/master/domains/blacklist/adservers-and-trackers.txt",
 		"https://raw.githubusercontent.com/Ewpratten/youtube_ad_blocklist/master/blocklist.txt",
@@ -110,7 +114,9 @@ func startScraping() {
 		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
 		"https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/domains.txt",
 		"https://block.energized.pro/extensions/xtreme/formats/domains.txt",
-		// Malicious
+	}
+	// Malicious
+	malicious := []string{
 		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
 		"https://raw.githubusercontent.com/FadeMind/hosts.extras/master/CoinBlockerList/hosts",
 		"https://raw.githubusercontent.com/piwik/referrer-spam-blacklist/master/spammers.txt",
@@ -128,9 +134,10 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
-		"https://raw.githubusercontent.com/complexorganizations/unbound-manager/main/configs/include",
 		"https://badmojr.github.io/1Hosts/Pro/domains.txt",
-		// Social Engineering
+	}
+	// Social Engineering
+	socialEngineering := []string{
 		"https://raw.githubusercontent.com/MetaMask/eth-phishing-detect/master/src/hosts.txt",
 		"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/abuse.txt",
@@ -138,27 +145,43 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/scam.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
-	removeDuplicateUrl := makeUnique(urls)
-	// Let's get this mess out of the way.
-	urls = nil
-	for i := 0; i < len(removeDuplicateUrl); i++ {
-		// Validate the URI before beginning the scraping process.
-		if validURL(removeDuplicateUrl[i]) {
-			saveTheDomains(removeDuplicateUrl[i])
-			// To save memory, remove the string from the array.
-			removeDuplicateUrl = removeStringFromSlice(removeDuplicateUrl, removeDuplicateUrl[i])
+	uniqueAdvertisement := makeUnique(advertisement)
+	advertisement = nil
+	uniqueMalicious := makeUnique(malicious)
+	malicious = nil
+	uniqueSocialEngineering := makeUnique(socialEngineering)
+	socialEngineering = nil
+	// Advertisement
+	for i := 0; i < len(uniqueAdvertisement); i++ {
+		if validURL(uniqueAdvertisement[i]) {
+			saveTheDomains(uniqueAdvertisement[i], advertisementConfig)
 		}
 	}
-	// We'll make everything distinctive once everything is finished.
-	makeEverythingUnique()
+	// Malicious
+	for i := 0; i < len(uniqueMalicious); i++ {
+		if validURL(uniqueMalicious[i]) {
+			saveTheDomains(uniqueMalicious[i], maliciousConfig)
+		}
+	}
+	// Social Engineering
+	for i := 0; i < len(uniqueSocialEngineering); i++ {
+		if validURL(uniqueSocialEngineering[i]) {
+			saveTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
+		}
+	}
+	wg.Wait()
 }
 
-func saveTheDomains(url string) {
+func saveTheDomains(url string, saveLocation string) {
 	// Send a request to acquire all the information you need.
 	response, err := http.Get(url)
-	handleErrors(err)
+	if err != nil {
+		log.Println(err)
+	}
 	body, err := io.ReadAll(response.Body)
-	handleErrors(err)
+	if err != nil {
+		log.Println(err)
+	}
 	// Examine the page's response code.
 	if response.StatusCode == 404 {
 		log.Println("Sorry, but we were unable to scrape the page you requested due to a 404 error.", url)
@@ -190,7 +213,7 @@ func saveTheDomains(url string) {
 						if icann || strings.IndexByte(eTLD, '.') >= 0 {
 							wg.Add(1)
 							// Go ahead and verify it in the background.
-							go makeDomainsUnique(string([]byte(foundDomains)))
+							go makeDomainsUnique(string([]byte(foundDomains)), saveLocation)
 						} else {
 							log.Println("Invalid domain suffix:", string([]byte(foundDomains)), url)
 						}
@@ -205,21 +228,22 @@ func saveTheDomains(url string) {
 		// While the validation is being performed, we wait.
 		wg.Wait()
 	}
+	returnContent = nil
 }
 
-func makeDomainsUnique(uniqueDomains string) {
+func makeDomainsUnique(uniqueDomains string, locatioToSave string) {
 	if validation {
 		// Validate each and every found domain.
 		if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) {
 			// Maintain a list of all authorized domains.
-			writeToFile(localHost, uniqueDomains)
+			writeToFile(locatioToSave, uniqueDomains)
 		} else {
 			// Let the users know if there are any issues while verifying the domain.
 			log.Println("Error validating domain:", uniqueDomains)
 		}
 	} else {
 		// To the list, add all of the domains.
-		writeToFile(localHost, uniqueDomains)
+		writeToFile(locatioToSave, uniqueDomains)
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	wg.Done()
@@ -292,19 +316,6 @@ func validURL(uri string) bool {
 	return err == nil
 }
 
-// Make a decision about how to handle errors.
-func handleErrors(err error) {
-	if err != nil {
-		file, err := os.OpenFile(localLog, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			log.Println(err)
-		}
-		log.SetOutput(file)
-		log.Println(err)
-		defer file.Close()
-	}
-}
-
 // Check to see if a file already exists.
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
@@ -327,16 +338,22 @@ func removeStringFromSlice(originalSlice []string, removeString string) []string
 // Save the information to a file.
 func writeToFile(pathInSystem string, content string) {
 	filePath, err := os.OpenFile(pathInSystem, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	handleErrors(err)
+	if err != nil {
+		log.Println(err)
+	}
 	_, err = filePath.WriteString(content + "\n")
-	handleErrors(err)
+	if err != nil {
+		log.Println(err)
+	}
 	defer filePath.Close()
 }
 
 // Read and append to array
 func readAndAppend(fileLocation string, arrayName []string) []string {
 	file, err := os.Open(fileLocation)
-	handleErrors(err)
+	if err != nil {
+		log.Println(err)
+	}
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	for scanner.Scan() {
@@ -347,9 +364,9 @@ func readAndAppend(fileLocation string, arrayName []string) []string {
 }
 
 // Read the completed file, then delete any duplicates before saving it.
-func makeEverythingUnique() {
+func makeEverythingUnique(contentLocation string) {
 	var finalDomainList []string
-	finalDomainList = readAndAppend(localHost, finalDomainList)
+	finalDomainList = readAndAppend(contentLocation, finalDomainList)
 	// Make each domain one-of-a-kind.
 	uniqueDomains := makeUnique(finalDomainList)
 	// It is recommended that the array be deleted from memory.
@@ -361,10 +378,13 @@ func makeEverythingUnique() {
 		uniqueDomains = removeStringFromSlice(uniqueDomains, exclusionDomains[a])
 	}
 	// Delete the original file and rewrite it.
-	err = os.Remove(localHost)
-	handleErrors(err)
+	err = os.Remove(contentLocation)
+	if err != nil {
+		log.Println(err)
+	}
 	// Begin composing the document
 	for i := 0; i < len(uniqueDomains); i++ {
-		writeToFile(localHost, uniqueDomains[i])
+		writeToFile(contentLocation, uniqueDomains[i])
 	}
+	uniqueDomains = nil
 }
