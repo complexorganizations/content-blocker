@@ -154,30 +154,38 @@ func startScraping() {
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
-			saveTheDomains(uniqueAdvertisement[i], advertisementConfig)
+			findTheDomains(uniqueAdvertisement[i], advertisementConfig)
+			// To save memory, remove the string from the array.
+			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
 		}
 	}
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
-			saveTheDomains(uniqueMalicious[i], maliciousConfig)
+			findTheDomains(uniqueMalicious[i], maliciousConfig)
+			// Remove it from the memory.
+			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
 		}
 	}
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
 		if validURL(uniqueSocialEngineering[i]) {
-			saveTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
+			//
+			findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
+			// Remove it from memeory
+			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
 		}
 	}
 	wg.Wait()
 }
 
-func saveTheDomains(url string, saveLocation string) {
+func findTheDomains(url string, saveLocation string) {
 	// Send a request to acquire all the information you need.
 	response, err := http.Get(url)
 	if err != nil {
 		log.Println(err)
 	}
+	// read all the content of the body.
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		log.Println(err)
@@ -213,7 +221,7 @@ func saveTheDomains(url string, saveLocation string) {
 						if icann || strings.IndexByte(eTLD, '.') >= 0 {
 							wg.Add(1)
 							// Go ahead and verify it in the background.
-							go makeDomainsUnique(string([]byte(foundDomains)), saveLocation)
+							go validateTheDomains(string([]byte(foundDomains)), saveLocation)
 						} else {
 							log.Println("Invalid domain suffix:", string([]byte(foundDomains)), url)
 						}
@@ -231,7 +239,7 @@ func saveTheDomains(url string, saveLocation string) {
 	returnContent = nil
 }
 
-func makeDomainsUnique(uniqueDomains string, locatioToSave string) {
+func validateTheDomains(uniqueDomains string, locatioToSave string) {
 	if validation {
 		// Validate each and every found domain.
 		if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) {
@@ -327,7 +335,9 @@ func fileExists(filename string) bool {
 
 // Remove a string from a slice
 func removeStringFromSlice(originalSlice []string, removeString string) []string {
+	// go though the array
 	for i := 0; i < len(originalSlice); i++ {
+		// if the array matches with the string, you remove it from the array
 		if originalSlice[i] == removeString {
 			return append(originalSlice[:i], originalSlice[i+1:]...)
 		}
@@ -337,14 +347,17 @@ func removeStringFromSlice(originalSlice []string, removeString string) []string
 
 // Save the information to a file.
 func writeToFile(pathInSystem string, content string) {
+	// open the file and if its not there create one.
 	filePath, err := os.OpenFile(pathInSystem, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
 	}
+	// write the content to the file
 	_, err = filePath.WriteString(content + "\n")
 	if err != nil {
 		log.Println(err)
 	}
+	// close the file
 	defer filePath.Close()
 }
 
@@ -354,11 +367,15 @@ func readAndAppend(fileLocation string, arrayName []string) []string {
 	if err != nil {
 		log.Println(err)
 	}
+	// scan the file, and read the file
 	scanner := bufio.NewScanner(file)
+	// split each line
 	scanner.Split(bufio.ScanLines)
+	// append each line to array
 	for scanner.Scan() {
 		arrayName = append(arrayName, scanner.Text())
 	}
+	// close the file before func ends
 	defer file.Close()
 	return arrayName
 }
@@ -386,5 +403,6 @@ func makeEverythingUnique(contentLocation string) {
 	for i := 0; i < len(uniqueDomains); i++ {
 		writeToFile(contentLocation, uniqueDomains[i])
 	}
+	// remove it from memory
 	uniqueDomains = nil
 }
