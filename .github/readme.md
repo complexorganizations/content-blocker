@@ -7,8 +7,9 @@ You can restrict any material you want on a DNS level.
 ### Variants
 | Variants               |
 | ---------------------  |
-| [Host](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/host) |
-
+| [Advertisement](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement) |
+| [Malicious](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious) |
+| [Social-Engineering](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering) |
 
 ---
 ### Creating and updating a list
@@ -34,9 +35,6 @@ Is the list updated on a regular basis?
 
 Why are you only banning it on the DNS level rather than the system level?
 - It's a good idea to prohibit something on a system level rather than a DNS level, however some devices can't prohibit it on a system level (for example, smart devices), therefore a dns level is preferred.
-
-Is it possible for me to utilize your list without utilizing Unbound Manager?
-- `https://github.com/complexorganizations/content-blocker/tree/main/configs`
 
 How can I get credit if I own one of the lists you're using?
 - Please make a pull request.
