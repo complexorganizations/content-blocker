@@ -15,9 +15,9 @@ You can restrict any material you want on a DNS level.
 ### Creating and updating a list
 Let's begin by cloning the repository.
 ```
-git clone --depth 1 https://github.com/complexorganizations/unbound-manager
+git clone --depth 1 https://github.com/complexorganizations/content-blocker
 ```
-Open `main.go` if you wish to alter the domain sources. After that update the urls array.
+Let's make a new list.
 ```
 go run main.go
 ```
