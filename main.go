@@ -59,6 +59,7 @@ func main() {
 	// Scrape all of the domains and save them afterwards.
 	startScraping()
 	// We'll make everything distinctive once everything is finished.
+	makeEverythingUnique(allInOneBlockList)
 	makeEverythingUnique(advertisementConfig)
 	makeEverythingUnique(maliciousConfig)
 	makeEverythingUnique(socialEngineeringConfig)
