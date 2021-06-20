@@ -8,6 +8,11 @@ You can restrict any material you want on a DNS level.
 
 #### Get all items
 
+## Features
+
+- On a DNS level, it blocks the majority of advertising, malicious, social-engineering.
+- Save your data since the DNS servers will not load for ads, leaving your device with no adverts to download.
+
 ```http
   GET https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts
 ```
@@ -62,6 +67,11 @@ Open Source Community
 ## Support
 
 Please utilize the github repo issue and wiki for help.
+
+
+## Feedback
+
+Please utilize the github repo conversations to offer feedback.
 
 
 ## License
