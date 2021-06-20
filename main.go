@@ -29,16 +29,20 @@ var (
 	err                     error
 	wg                      sync.WaitGroup
 	validation              bool
+	showLogs                bool
 )
 
 func init() {
 	// If any user input flags are provided, use them.
 	if len(os.Args) > 1 {
 		tempValidation := flag.Bool("validation", false, "Choose whether or not to do domain validation.")
+		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
 		flag.Parse()
 		validation = *tempValidation
+		showLogs = *tempLog
 	} else {
 		validation = false
+		showLogs = false
 	}
 	// It is impossible for an flag to be both true and false at the same time.
 	if validation && !validation {
@@ -251,7 +255,9 @@ func findTheDomains(url string, saveLocation string) {
 	for a := 0; a < len(returnContent); a++ {
 		// If the string begins with a "!", inform the user that it is most likely a browser-level ad block list rather than a domain-level ad block list.
 		if strings.HasPrefix(string([]byte(returnContent[a])), "!") {
-			log.Println("Error: Most likely, this is a browser-level block list rather than a DNS-level block list.", url)
+			if showLogs {
+				log.Println("Error: Most likely, this is a browser-level block list rather than a DNS-level block list.", url)
+			}
 		}
 		// Check to see if the string includes a # prefix, and if it does, skip it.
 		if !strings.HasPrefix(string([]byte(returnContent[a])), "#") {
@@ -270,10 +276,14 @@ func findTheDomains(url string, saveLocation string) {
 							// Go ahead and verify it in the background.
 							go validateTheDomains(string([]byte(foundDomains)), saveLocation)
 						} else {
-							log.Println("Invalid domain suffix:", string([]byte(foundDomains)), url)
+							if showLogs {
+								log.Println("Invalid domain suffix:", string([]byte(foundDomains)), url)
+							}
 						}
 					} else {
-						log.Println("Invalid domain syntax:", string([]byte(foundDomains)), url)
+						if showLogs {
+							log.Println("Invalid domain syntax:", string([]byte(foundDomains)), url)
+						}
 					}
 				}
 			}
