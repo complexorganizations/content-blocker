@@ -56,7 +56,7 @@ Is it possible for you to remove my domain off the blacklist if I pay you?
 - No
 
 What's the best way to get my list in here?
-- To be considered for inclusion, your list must be updated at least once every 30 days and contain at least 1000 domains.
+- To be considered for inclusion, your list must be updated at least once every 30 days and contain at least 500 domains.
 
 ### Credits
 Open Source Community
