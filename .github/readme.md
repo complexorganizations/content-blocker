@@ -7,6 +7,7 @@ You can restrict any material you want on a DNS level.
 ### Variants
 | Variants               |
 | ---------------------  |
+| [All-in-One](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts) |
 | [Advertisement](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement) |
 | [Malicious](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious) |
 | [Social-Engineering](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering) |
