@@ -67,7 +67,7 @@ func main() {
 
 // Replace the URLs in this section to create your own list or add new lists.
 func startScraping() {
-	// Advertisement
+	// Advertisement && Tracking
 	advertisement := []string{
 		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
 		"https://raw.githubusercontent.com/DRSDavidSoft/additional-hosts/master/domains/blacklist/adservers-and-trackers.txt",
@@ -117,6 +117,23 @@ func startScraping() {
 		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
 		"https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/domains.txt",
 		"https://block.energized.pro/extensions/xtreme/formats/domains.txt",
+		"https://raw.githubusercontent.com/allendema/noplaylist/main/NoPlayList.txt",
+		"https://raw.githubusercontent.com/anthony-wang/PiHoleBlocklist/master/hosts1.txt",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/xiaomi-ads-tracking.txt",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/huawei-trackers.txt",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smart-tv-ads-tracking.txt",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smartphone-ads-tracking.txt",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/spotify-ads-tracking.txt",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/windows10-spying-erm-i-mean-telemetry-lol.txt",
+		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/advertisement.txt",
+		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/list.txt",
+		"https://raw.githubusercontent.com/mhxion/pornaway/master/hosts/porn_ads.txt",
+		"https://raw.githubusercontent.com/migueldemoura/ublock-umatrix-rulesets/master/Hosts/ads-tracking",
+		"https://raw.githubusercontent.com/xlimit91/xlimit91-block-list/master/blacklist.txt",
+		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/hosts.txt",
+		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
+		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
+		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
 	}
 	// Malicious
 	malicious := []string{
@@ -138,6 +155,25 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
 		"https://badmojr.github.io/1Hosts/Pro/domains.txt",
+		"https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-without-shorturl.lst",
+		"https://gitlab.com/andryou/block/raw/master/senpai-strict-domains",
+		"https://gitlab.com/andryou/block/raw/master/chibi-strict-domains",
+		"https://gitlab.com/andryou/block/raw/master/kouhai-strict-domains",
+		"https://gitlab.com/curben/urlhaus-filter/-/raw/master/urlhaus-filter-domains.txt",
+		"https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts",
+		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
+		"https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/hosts.txt",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/avg-avast-data-mining-full-block.txt",
+		"https://raw.githubusercontent.com/furkun/ProtectorHosts/main/hosts",
+		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/fraudulent.txt",
+		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/malware.txt",
+		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/ransomware.txt",
+		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/scam.txt",
+		"https://raw.githubusercontent.com/herrbischoff/trackers/master/domains.txt",
+		"https://raw.githubusercontent.com/migueldemoura/ublock-umatrix-rulesets/master/Hosts/malware",
+		"https://raw.githubusercontent.com/Strappazzon/teleme7ry/master/rules.txt",
+		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
+		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
 	}
 	// Social Engineering
 	socialEngineering := []string{
@@ -146,6 +182,13 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/abuse.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/fraud.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/scam.txt",
+		"https://blocklist.cyberthreatcoalition.org/vetted/domain.txt",
+		"https://raw.githubusercontent.com/sk-cat/fluffy-blocklist/main/domains",
+		"https://phishing.army/download/phishing_army_blocklist_extended.txt",
+		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/phishing.txt",
+		"https://raw.githubusercontent.com/merkleID/covid-domains/master/full-domains-list.txt",
+		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
+		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Scam",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
