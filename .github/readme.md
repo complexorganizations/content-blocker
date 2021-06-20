@@ -6,16 +6,20 @@ You can restrict any material you want on a DNS level.
 
 #### Note: I'm looking for assistance in identifying more lists that prohibit ADs.
 
----
-### Variants
-| Variants               |
-| ---------------------  |
-| [All-in-One](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts) |
-| [Advertisement](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement) |
-| [Malicious](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious) |
-| [Social-Engineering](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering) |
+#### Get all items
 
----
+```http
+  GET https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts
+```
+
+| Type     | Description                |
+| :------- | :------------------------- |
+| All-in-One | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
+| Advertisement | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
+| Malicious | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious |
+| Social-Engineering | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering |
+
+
 ### Creating and updating a list
 Let's begin by cloning the repository.
 ```
@@ -26,7 +30,7 @@ Let's make a new list.
 go run main.go
 ```
 
----
+
 ### Q&A
 What's the best way for me to make my own list?
 - Open the repo after forking and cloning it. Go ahead and change the struct in `startScraping`, replacing the urls there with the lists you wish to use, and then just run the file using the command `go run main.go`.
@@ -43,7 +47,7 @@ Why are you only banning it on the DNS level rather than the system level?
 How can I get credit if I own one of the lists you're using?
 - Please make a pull request.
 
----
+
 ### Credits
 Open Source Community
 
@@ -53,3 +57,14 @@ Open Source Community
 | Light-Switch-Ads       | https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt | Apache License 2.0 |
 | Notracking-Trackers    | https://raw.githubusercontent.com/notracking/hosts-blocklists/master/unbound/unbound.blacklist.conf | UNKNOWN |
 |                        |                        |                        |
+
+
+## Support
+
+Please utilize the github repo issue and wiki for help.
+
+
+## License
+Copyright © [Prajwal](https://github.com/prajwal-koirala)
+
+This project is unlicensed.
