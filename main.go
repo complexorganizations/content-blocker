@@ -79,7 +79,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/FadeMind/hosts.extras/master/GoodbyeAds-Samsung-Adblock-Extension/hosts",
 		"https://raw.githubusercontent.com/FadeMind/hosts.extras/master/GoodbyeAds-Spotify-AdBlock-Extension/hosts",
 		"https://raw.githubusercontent.com/FadeMind/hosts.extras/master/GoodbyeAds-YouTube-Adblock-Extension/hosts",
-		"https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts",
 		"https://raw.githubusercontent.com/FadeMind/hosts.extras/master/GoodbyeAds-Xiaomi-Extension/hosts",
 		"https://raw.githubusercontent.com/HorusTeknoloji/TR-PhishingList/master/url-lists.txt",
 		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt",
@@ -134,6 +133,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
+		"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
 	}
 	// Malicious
 	malicious := []string{
@@ -161,7 +161,6 @@ func startScraping() {
 		"https://gitlab.com/andryou/block/raw/master/kouhai-strict-domains",
 		"https://gitlab.com/curben/urlhaus-filter/-/raw/master/urlhaus-filter-domains.txt",
 		"https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts",
-		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
 		"https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/hosts.txt",
 		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/avg-avast-data-mining-full-block.txt",
 		"https://raw.githubusercontent.com/furkun/ProtectorHosts/main/hosts",
@@ -174,6 +173,8 @@ func startScraping() {
 		"https://raw.githubusercontent.com/Strappazzon/teleme7ry/master/rules.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
+		"https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains",
+		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
