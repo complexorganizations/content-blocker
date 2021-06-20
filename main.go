@@ -20,6 +20,7 @@ import (
 )
 
 var (
+	allInOneBlockList       = "configs/hosts"
 	advertisementConfig     = "configs/advertisement"
 	maliciousConfig         = "configs/malicious"
 	socialEngineeringConfig = "configs/social-engineering"
@@ -245,12 +246,16 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 		if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) {
 			// Maintain a list of all authorized domains.
 			writeToFile(locatioToSave, uniqueDomains)
+			// Save it to all in one.
+			writeToFile(allInOneBlockList, uniqueDomains)
 		} else {
 			// Let the users know if there are any issues while verifying the domain.
 			log.Println("Error validating domain:", uniqueDomains)
 		}
 	} else {
 		// To the list, add all of the domains.
+		writeToFile(allInOneBlockList, uniqueDomains)
+		// Add it to the list of one-of-a-kind items.
 		writeToFile(locatioToSave, uniqueDomains)
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
