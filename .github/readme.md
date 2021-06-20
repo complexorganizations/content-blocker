@@ -52,6 +52,9 @@ Why are you only banning it on the DNS level rather than the system level?
 How can I get credit if I own one of the lists you're using?
 - Please make a pull request.
 
+Is it possible for you to remove my domain off the blacklist if I pay you?
+- No
+
 
 ### Credits
 Open Source Community
