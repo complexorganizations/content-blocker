@@ -14,7 +14,7 @@ You can restrict any material you want on a DNS level.
 
 | Type     | Description                |
 | :------- | :------------------------- |
-| All-in-One | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
+| Everything | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
 | Advertisement | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
 | Malicious | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious |
 | Social-Engineering | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering |
