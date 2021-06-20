@@ -45,6 +45,7 @@ func init() {
 		log.Fatal("Warning: Validation and no validation cannot be done at the same time.")
 	}
 	// Remove the old files from your system if they are found.
+	os.Remove(allInOneBlockList)
 	os.Remove(advertisementConfig)
 	os.Remove(maliciousConfig)
 	os.Remove(socialEngineeringConfig)
