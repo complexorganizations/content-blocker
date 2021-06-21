@@ -19,7 +19,7 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 | Advertisement | Advertisement, Tracking | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
 | Malicious | Malware, Spyware | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious |
 | Social-Engineering | Phishing, Scams, Fake News | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering |
-
+| Explicit | Sexual content | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit |
 
 ### Creating and updating a list
 Let's begin by cloning the repository.
