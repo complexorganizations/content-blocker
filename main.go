@@ -25,6 +25,7 @@ var (
 	maliciousConfig         = "configs/malicious"
 	socialEngineeringConfig = "configs/social-engineering"
 	localExclusion          = "configs/exclusion"
+	explicitConfig		= "configs/explicit"
 	exclusionDomains        []string
 	err                     error
 	wg                      sync.WaitGroup
@@ -53,6 +54,7 @@ func init() {
 	os.Remove(advertisementConfig)
 	os.Remove(maliciousConfig)
 	os.Remove(socialEngineeringConfig)
+	os.Remove(explicitConfig)
 	// Read through all of the exclusion domains before appending them.
 	if fileExists(localExclusion) {
 		exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
@@ -67,6 +69,7 @@ func main() {
 	makeEverythingUnique(advertisementConfig)
 	makeEverythingUnique(maliciousConfig)
 	makeEverythingUnique(socialEngineeringConfig)
+	makeEverythingUnique(explicitConfig)
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
@@ -113,7 +116,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
 		"https://raw.githubusercontent.com/tiuxo/hosts/master/ads",
 		"https://raw.githubusercontent.com/yous/YousList/master/hosts.txt",
-		"https://hblock.molinero.dev/hosts_domains.txt",
+		"https://block.energized.pro/ultimate/formats/domains.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
@@ -195,6 +198,13 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Scam",
 	}
+	// Adult content
+	explicit := []string{
+		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
+		"https://block.energized.pro/porn/formats/domains.txt",
+		"https://raw.githubusercontent.com/Bon-Appetit/porn-domains/master/block.txt",
+		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
+	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
 	advertisement = nil
@@ -202,6 +212,8 @@ func startScraping() {
 	malicious = nil
 	uniqueSocialEngineering := makeUnique(socialEngineering)
 	socialEngineering = nil
+	uniqueExplicit := makeUnique(explicit)
+	explicit = nil
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
@@ -225,6 +237,15 @@ func startScraping() {
 			findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
 			// Remove it from memeory
 			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
+		}
+	}
+	// Explicit
+	for i := 0; i < len(uniqueExplicit); i++ {
+		if validURL(uniqueExplicit[i]) {
+			//
+			findTheDomains(uniqueExplicit[i], explicitConfig)
+			// Remove it from memeory
+			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
 		}
 	}
 	wg.Wait()
