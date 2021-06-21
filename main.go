@@ -105,9 +105,9 @@ func installInSystem() {
 	var systemHostFile string
 	switch runtime.GOOS {
 	case "windows":
-		systemHostFile := `C:\Windows\System32\drivers\etc\hosts`
+		systemHostFile = `C:\Windows\System32\drivers\etc\hosts`
 	case "darwin", "linux":
-		systemHostFile := `/etc/hosts`
+		systemHostFile = `/etc/hosts`
 	}
 	// lists
 	switch userInput {
