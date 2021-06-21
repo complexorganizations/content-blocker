@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
 	"sync"
@@ -25,12 +26,14 @@ var (
 	maliciousConfig         = "configs/malicious"
 	socialEngineeringConfig = "configs/social-engineering"
 	localExclusion          = "configs/exclusion"
-	explicitConfig		= "configs/explicit"
+	explicitConfig          = "configs/explicit"
 	exclusionDomains        []string
 	err                     error
 	wg                      sync.WaitGroup
 	validation              bool
 	showLogs                bool
+	update                  bool
+	install                 bool
 )
 
 func init() {
@@ -38,16 +41,18 @@ func init() {
 	if len(os.Args) > 1 {
 		tempValidation := flag.Bool("validation", false, "Choose whether or not to do domain validation.")
 		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
+		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
+		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		flag.Parse()
 		validation = *tempValidation
 		showLogs = *tempLog
+		update = *tempUpdate
+		install = *tempInstall
 	} else {
 		validation = false
 		showLogs = false
-	}
-	// It is impossible for an flag to be both true and false at the same time.
-	if validation && !validation {
-		log.Fatal("Warning: Validation and no validation cannot be done at the same time.")
+		update = false
+		install = true
 	}
 	// Remove the old files from your system if they are found.
 	os.Remove(allInOneBlockList)
@@ -62,14 +67,33 @@ func init() {
 }
 
 func main() {
-	// Scrape all of the domains and save them afterwards.
-	startScraping()
-	// We'll make everything distinctive once everything is finished.
-	makeEverythingUnique(allInOneBlockList)
-	makeEverythingUnique(advertisementConfig)
-	makeEverythingUnique(maliciousConfig)
-	makeEverythingUnique(socialEngineeringConfig)
-	makeEverythingUnique(explicitConfig)
+	// In your system, place the host file.
+	if install {
+		installInSystem()
+	}
+	// Lists should be updated.
+	if update {
+		// Scrape all of the domains and save them afterwards.
+		startScraping()
+		// We'll make everything distinctive once everything is finished.
+		makeEverythingUnique(allInOneBlockList)
+		makeEverythingUnique(advertisementConfig)
+		makeEverythingUnique(maliciousConfig)
+		makeEverythingUnique(socialEngineeringConfig)
+		makeEverythingUnique(explicitConfig)
+	}
+}
+
+// Configure your system to use the lists.
+func installInSystem() {
+	windowsHostFile := `C:\Windows\System32\drivers\etc\hosts`
+	unixHostFile := `/etc/hosts`
+	switch runtime.GOOS {
+	case "windows":
+		os.Remove(windowsHostFile)
+	case "darwin", "linux":
+		os.Remove(unixHostFile)
+	}
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
@@ -487,4 +511,22 @@ func makeEverythingUnique(contentLocation string) {
 	}
 	// remove it from memory
 	uniqueDomains = nil
+}
+
+// Download a file in your system
+func downloadFile(filepath string, url string) {
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		log.Println(err)
+	}
+	defer resp.Body.Close()
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		log.Println(err)
+	}
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+	defer out.Close()
 }
