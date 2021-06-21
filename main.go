@@ -113,7 +113,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
 		"https://raw.githubusercontent.com/tiuxo/hosts/master/ads",
 		"https://raw.githubusercontent.com/yous/YousList/master/hosts.txt",
-		"https://hblock.molinero.dev/hosts_domains.txt",
+		"https://block.energized.pro/ultimate/formats/domains.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
