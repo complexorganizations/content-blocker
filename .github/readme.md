@@ -1,6 +1,6 @@
 # content-blocker
 
-You can restrict any material you want on a DNS level.
+Content blocker is a DNS level blocker that can block anything on the DNS level, eliminating the need for the user to download an additional application. It works on internet of things devices.
 
 #### Note: I'm looking for assistance in identifying more lists that prohibit ADs.
 
