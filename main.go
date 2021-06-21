@@ -95,10 +95,6 @@ func installInSystem() {
 	fmt.Println("5. Explicit")
 	var userInput int
 	fmt.Scanln(&userInput)
-	// choose weather or not to exit
-	if &userInput == "exit" {
-		os.Exit(0)
-	}
 	// Set up the lists on your computer.
 	hosts := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts"
 	advertisement := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement"
