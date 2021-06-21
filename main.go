@@ -203,6 +203,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
 		"https://block.energized.pro/porn/formats/domains.txt",
 		"https://raw.githubusercontent.com/Bon-Appetit/porn-domains/master/block.txt",
+		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
