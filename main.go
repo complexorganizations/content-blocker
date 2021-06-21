@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"net"
@@ -11,6 +12,7 @@ import (
 	"net/url"
 	"os"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
 	"sync"
@@ -25,12 +27,14 @@ var (
 	maliciousConfig         = "configs/malicious"
 	socialEngineeringConfig = "configs/social-engineering"
 	localExclusion          = "configs/exclusion"
-	explicitConfig		= "configs/explicit"
+	explicitConfig          = "configs/explicit"
 	exclusionDomains        []string
 	err                     error
 	wg                      sync.WaitGroup
 	validation              bool
 	showLogs                bool
+	update                  bool
+	install                 bool
 )
 
 func init() {
@@ -38,16 +42,18 @@ func init() {
 	if len(os.Args) > 1 {
 		tempValidation := flag.Bool("validation", false, "Choose whether or not to do domain validation.")
 		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
+		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
+		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		flag.Parse()
 		validation = *tempValidation
 		showLogs = *tempLog
+		update = *tempUpdate
+		install = *tempInstall
 	} else {
 		validation = false
 		showLogs = false
-	}
-	// It is impossible for an flag to be both true and false at the same time.
-	if validation && !validation {
-		log.Fatal("Warning: Validation and no validation cannot be done at the same time.")
+		update = false
+		install = false
 	}
 	// Remove the old files from your system if they are found.
 	os.Remove(allInOneBlockList)
@@ -62,14 +68,62 @@ func init() {
 }
 
 func main() {
-	// Scrape all of the domains and save them afterwards.
-	startScraping()
-	// We'll make everything distinctive once everything is finished.
-	makeEverythingUnique(allInOneBlockList)
-	makeEverythingUnique(advertisementConfig)
-	makeEverythingUnique(maliciousConfig)
-	makeEverythingUnique(socialEngineeringConfig)
-	makeEverythingUnique(explicitConfig)
+	// In your system, place the host file.
+	if install {
+		installInSystem()
+	}
+	// Lists should be updated.
+	if update {
+		// Scrape all of the domains and save them afterwards.
+		startScraping()
+		// We'll make everything distinctive once everything is finished.
+		makeEverythingUnique(allInOneBlockList)
+		makeEverythingUnique(advertisementConfig)
+		makeEverythingUnique(maliciousConfig)
+		makeEverythingUnique(socialEngineeringConfig)
+		makeEverythingUnique(explicitConfig)
+	}
+}
+
+// Configure your system to use the lists.
+func installInSystem() {
+	fmt.Println("Which of the following lists would you like to add to your system?")
+	fmt.Println("1. Hosts")
+	fmt.Println("2. Advertisement")
+	fmt.Println("3. Malicious")
+	fmt.Println("4. Social-Engineering")
+	fmt.Println("5. Explicit")
+	var userInput int
+	fmt.Scanln(&userInput)
+	// Set up the lists on your computer.
+	hosts := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts"
+	advertisement := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement"
+	malicious := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
+	socialEngineering := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering"
+	explicit := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit"
+	// system download files
+	var systemHostFile string
+	switch runtime.GOOS {
+	case "windows":
+		systemHostFile = `C:\Windows\System32\drivers\etc\hosts`
+	case "darwin", "linux":
+		systemHostFile = `/etc/hosts`
+	}
+	// lists
+	switch userInput {
+	case 1:
+		downloadFile(hosts, systemHostFile)
+	case 2:
+		downloadFile(advertisement, systemHostFile)
+	case 3:
+		downloadFile(malicious, systemHostFile)
+	case 4:
+		downloadFile(socialEngineering, systemHostFile)
+	case 5:
+		downloadFile(explicit, systemHostFile)
+	default:
+		os.Exit(0)
+	}
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
@@ -487,4 +541,30 @@ func makeEverythingUnique(contentLocation string) {
 	}
 	// remove it from memory
 	uniqueDomains = nil
+}
+
+// Download a file in your system
+func downloadFile(url string, filePath string) {
+	// Send a request to acquire all the information you need.
+	response, err := http.Get(url)
+	if err != nil {
+		log.Println(err)
+	}
+	// read all the content of the body.
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		log.Println(err)
+	}
+	// Scraped data is read and appended to an array.
+	var returnContent []string
+	scanner := bufio.NewScanner(bytes.NewReader(body))
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan() {
+		returnContent = append(returnContent, scanner.Text())
+	}
+	for a := 0; a < len(returnContent); a++ {
+		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
+		os.Remove(filePath)
+		writeToFile(filePath, contentToWrite)
+	}
 }

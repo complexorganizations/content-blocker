@@ -9,28 +9,35 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 - On a DNS level, it blocks the majority of advertising, malicious, social-engineering.
 - Save your data since the DNS servers will not load for ads, leaving your device with no adverts to download.
 
-```http
-  GET https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts
-```
 
+### Variants
 | Name     | Description                | URL      |
 | :------- | :------------------------- | :------- |
-| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
-| Advertisement | Advertisement, Tracking | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
-| Malicious | Malware, Spyware | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious |
-| Social-Engineering | Phishing, Scams, Fake News | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering |
-| Explicit | Sexual content | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit |
+| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts` |
+| Advertisement | Advertisement, Tracking | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement` |
+| Malicious | Malware, Spyware | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious` |
+| Social-Engineering | Phishing, Scams, Fake News | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering` |
+| Explicit | Sexual content | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit` |
+
+### Instead of a DNS server, install the list on your machine.
+Let's get the app on your computer.
+```
+git clone --depth 1 https://github.com/complexorganizations/content-blocker
+```
+Let's get the lists set up in your system.
+```
+go run main.go -install
+```
 
 ### Creating and updating a list
 Let's begin by cloning the repository.
 ```
 git clone --depth 1 https://github.com/complexorganizations/content-blocker
 ```
-Let's make a new list.
+Make a new, up-to-date list.
 ```
-go run main.go
+go run main.go -update
 ```
-
 
 ### Q&A
 What's the best way for me to make my own list?
