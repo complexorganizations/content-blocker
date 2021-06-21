@@ -54,6 +54,9 @@ Is it possible for you to remove my domain off the blacklist if I pay you?
 What's the best way to get my list in here?
 - To be considered for inclusion, your list must be updated at least once every 30 days and contain at least 500 domains.
 
+Why isn't there a list of IP addresses?
+- They may simply go on to the next IP and continue from there, thus banning IPs is worthless.
+
 ### Credits
 Open Source Community
 
