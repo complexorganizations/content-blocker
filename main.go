@@ -53,7 +53,7 @@ func init() {
 		validation = false
 		showLogs = false
 		update = false
-		install = true
+		install = false
 	}
 	// Remove the old files from your system if they are found.
 	os.Remove(allInOneBlockList)
