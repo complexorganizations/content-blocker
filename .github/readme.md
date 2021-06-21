@@ -9,17 +9,15 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 - On a DNS level, it blocks the majority of advertising, malicious, social-engineering.
 - Save your data since the DNS servers will not load for ads, leaving your device with no adverts to download.
 
-```http
-  GET https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts
-```
 
+### Variants
 | Name     | Description                | URL      |
 | :------- | :------------------------- | :------- |
-| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts |
-| Advertisement | Advertisement, Tracking | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement |
-| Malicious | Malware, Spyware | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious |
-| Social-Engineering | Phishing, Scams, Fake News | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering |
-| Explicit | Sexual content | https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit |
+| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts` |
+| Advertisement | Advertisement, Tracking | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement` |
+| Malicious | Malware, Spyware | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious` |
+| Social-Engineering | Phishing, Scams, Fake News | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering` |
+| Explicit | Sexual content | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit` |
 
 ### Instead of a DNS server, install the list on your machine.
 Let's get the app on your computer.
