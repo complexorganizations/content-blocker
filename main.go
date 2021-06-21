@@ -110,7 +110,7 @@ func installInSystem() {
 		systemHostFile := `/etc/hosts`
 	}
 	// lists
-	switch *userInput {
+	switch userInput {
 	case 1:
 		downloadFile(hosts, systemHostFile)
 	case 2:
