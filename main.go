@@ -87,13 +87,46 @@ func main() {
 
 // Configure your system to use the lists.
 func installInSystem() {
-	windowsHostFile := `C:\Windows\System32\drivers\etc\hosts`
-	unixHostFile := `/etc/hosts`
+	fmt.Println("Which of the following lists would you like to add to your system?")
+	fmt.Println("1. Hosts")
+	fmt.Println("2. Advertisement")
+	fmt.Println("3. Malicious")
+	fmt.Println("4. Social-Engineering")
+	fmt.Println("5. Explicit")
+	var userInput int
+	fmt.Scanln(&userInput)
+	// choose weather or not to exit
+	if &userInput == "exit" {
+		os.Exit(0)
+	}
+	// Set up the lists on your computer.
+	hosts := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts"
+	advertisement := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement"
+	malicious := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
+	socialEngineering := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering"
+	explicit := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit"
+	// system download files
+	var systemHostFile string
 	switch runtime.GOOS {
 	case "windows":
-		os.Remove(windowsHostFile)
+		systemHostFile := `C:\Windows\System32\drivers\etc\hosts`
 	case "darwin", "linux":
-		os.Remove(unixHostFile)
+		systemHostFile := `/etc/hosts`
+	}
+	// lists
+	switch &userInput {
+	case 1:
+		downloadFile(hosts, systemHostFile)
+	case 2:
+		downloadFile(advertisement, systemHostFile)
+	case 3:
+		downloadFile(malicious, systemHostFile)
+	case 4:
+		downloadFile(socialEngineering, systemHostFile)
+	case 5:
+		downloadFile(explicit, systemHostFile)
+	default:
+		os.Exit(0)
 	}
 }
 
