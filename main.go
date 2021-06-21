@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"bytes"
 	"flag"
+	"fmt"
 	"io"
 	"log"
 	"net"
@@ -514,19 +515,26 @@ func makeEverythingUnique(contentLocation string) {
 }
 
 // Download a file in your system
-func downloadFile(filepath string, url string) {
-	// Get the data
-	resp, err := http.Get(url)
+func downloadFile(url string, filePath string) {
+	// Send a request to acquire all the information you need.
+	response, err := http.Get(url)
 	if err != nil {
 		log.Println(err)
 	}
-	defer resp.Body.Close()
-	// Create the file
-	out, err := os.Create(filepath)
+	// read all the content of the body.
+	body, err := io.ReadAll(response.Body)
 	if err != nil {
 		log.Println(err)
 	}
-	// Write the body to file
-	_, err = io.Copy(out, resp.Body)
-	defer out.Close()
+	// Scraped data is read and appended to an array.
+	var returnContent []string
+	scanner := bufio.NewScanner(bytes.NewReader(body))
+	scanner.Split(bufio.ScanLines)
+	for scanner.Scan() {
+		returnContent = append(returnContent, scanner.Text())
+	}
+	for a := 0; a < len(returnContent); a++ {
+		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
+		writeToFile(filePath, contentToWrite)
+	}
 }
