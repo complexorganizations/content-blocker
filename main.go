@@ -235,7 +235,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
 		"https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains",
 		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt"
+		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
