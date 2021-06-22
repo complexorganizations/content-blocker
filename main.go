@@ -235,6 +235,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
 		"https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains",
 		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
+		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt"
 	}
 	// Social Engineering
 	socialEngineering := []string{
@@ -257,6 +258,7 @@ func startScraping() {
 		"https://block.energized.pro/porn/formats/domains.txt",
 		"https://raw.githubusercontent.com/Bon-Appetit/porn-domains/master/block.txt",
 		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
+		"https://raw.githubusercontent.com/blocklistproject/Lists/master/porn.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
