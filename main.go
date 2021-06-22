@@ -239,6 +239,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
 		"https://gitlab.com/quidsup/notrack-blocklists/-/raw/master/notrack-blocklist.txt",
+		"https://raw.githubusercontent.com/matomo-org/referrer-spam-list/master/spammers.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
