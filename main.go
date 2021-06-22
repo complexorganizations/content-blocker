@@ -176,7 +176,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
 		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
 		"https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/domains.txt",
-		"https://block.energized.pro/extensions/xtreme/formats/domains.txt",
 		"https://raw.githubusercontent.com/allendema/noplaylist/main/NoPlayList.txt",
 		"https://raw.githubusercontent.com/anthony-wang/PiHoleBlocklist/master/hosts1.txt",
 		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/xiaomi-ads-tracking.txt",
