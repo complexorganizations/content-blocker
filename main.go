@@ -194,6 +194,8 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
 		"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
+		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/huluads.txt",
+		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/black.list",
 	}
 	// Malicious
 	malicious := []string{
@@ -236,6 +238,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains",
 		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
+		"https://gitlab.com/quidsup/notrack-blocklists/-/raw/master/notrack-blocklist.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
