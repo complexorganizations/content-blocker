@@ -4,8 +4,8 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 
 ## Features
 
-- On a DNS level, it blocks the majority of advertising, malicious, social-engineering.
-- Save your data since the DNS servers will not load for ads, leaving your device with no adverts to download.
+- Block on the dns level
+- Save data
 
 
 ### Variants
