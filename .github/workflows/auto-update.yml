@@ -1,0 +1,30 @@
+name: Lists are being updated.
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.16
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.16
+        id: go
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v1
+      - name: Setting up NodeJs
+        uses: actions/setup-node@v1
+      - name: Get dependencies
+        run: go get -v
+      - name: Build Test
+        run: go build -v .
+      - name: Run the build
+        run: ./content-blocker -update
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
+        with:
+          file-path: configs/*
+          commit-msg: Automatic updates are carried out
+          github-token: ${{ secrets.REPO_UPDATE_KEY }}
