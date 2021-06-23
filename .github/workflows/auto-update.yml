@@ -25,4 +25,4 @@ jobs:
         with:
           file-path: configs/*
           commit-msg: Automatic updates are carried out
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.REPO_UPDATE_KEY }}
