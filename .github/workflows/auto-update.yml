@@ -22,8 +22,9 @@ jobs:
       - name: Run the build
         run: ./content-blocker -update
       - name: Update resources
-        uses: actions/upload-artifact@v2
-        with:
-          name: Updated Lists
-          path: configs/
-          if-no-files-found: error
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Updates are performed automatically."
+          git push
