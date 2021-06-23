@@ -68,6 +68,7 @@ func init() {
 }
 
 func main() {
+	writeToFile(allInOneBlockList, "aple")
 }
 
 // Configure your system to use the lists.
