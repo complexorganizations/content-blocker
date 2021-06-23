@@ -24,6 +24,6 @@ jobs:
       - name: Update resources
         uses: test-room-7/action-update-file@v1
         with:
-          file-path: configs/*
+          file-path: .
           commit-msg: Updates are performed automatically.
           github-token: ${{ secrets.REPO_UPDATE_KEY }}
