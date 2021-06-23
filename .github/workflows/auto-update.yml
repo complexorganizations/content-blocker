@@ -24,7 +24,7 @@ jobs:
       - name: Update resources
         uses: test-room-7/action-update-file@v1
         with:
-          file-path: configs/
+          file-path: configs/*
           allow-dot: true
           allow-removing: true
           commit-msg: Updates are performed automatically.
