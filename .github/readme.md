@@ -66,9 +66,9 @@ Open Source Community
 
 | Author                 | Repository             | License                |
 | ---------------------  | ---------------------  | ---------------------  |
-| Steven-Black           | https://github.com/StevenBlack/hosts | MIT |
-| Light-Switch           | https://github.com/lightswitch05/hosts | Apache License 2.0 |
-| Notracking             | https://github.com/notracking/hosts-blocklists | UNKNOWN |
+| Steven-Black           | `https://github.com/StevenBlack/hosts` | MIT |
+| Light-Switch           | `https://github.com/lightswitch05/hosts` | Apache License 2.0 |
+| Notracking             | `https://github.com/notracking/hosts-blocklists` | UNKNOWN |
 |                        |                        |                        |
 
 
