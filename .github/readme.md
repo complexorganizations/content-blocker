@@ -64,11 +64,11 @@ Why isn't there a list of IP addresses?
 ### Credits
 Open Source Community
 
-| Author                 | URL                    | License                |
+| Author                 | Repository             | License                |
 | ---------------------  | ---------------------  | ---------------------  |
-| Steven-Black-Ads       | https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | MIT |
-| Light-Switch-Ads       | https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt | Apache License 2.0 |
-| Notracking-Trackers    | https://raw.githubusercontent.com/notracking/hosts-blocklists/master/unbound/unbound.blacklist.conf | UNKNOWN |
+| Steven-Black           | https://github.com/StevenBlack/hosts | MIT |
+| Light-Switch           | https://github.com/lightswitch05/hosts | Apache License 2.0 |
+| Notracking             | https://github.com/notracking/hosts-blocklists | UNKNOWN |
 |                        |                        |                        |
 
 
