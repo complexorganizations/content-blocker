@@ -396,15 +396,23 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 			writeToFile(locatioToSave, uniqueDomains)
 			// Save it to all in one.
 			writeToFile(allInOneBlockList, uniqueDomains)
+			if showLogs {
+				log.Println("Valid domain:", uniqueDomains)
+			}
 		} else {
 			// Let the users know if there are any issues while verifying the domain.
-			log.Println("Error validating domain:", uniqueDomains)
+			if showLogs {
+				log.Println("Error validating domain:", uniqueDomains)
+			}
 		}
 	} else {
 		// To the list, add all of the domains.
 		writeToFile(allInOneBlockList, uniqueDomains)
 		// Add it to the list of one-of-a-kind items.
 		writeToFile(locatioToSave, uniqueDomains)
+		if showLogs {
+			log.Println("Domain:", uniqueDomains)
+		}
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	wg.Done()
