@@ -248,6 +248,10 @@ func startScraping() {
 		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/sonos",
 		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/windows",
 		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/alexa",
+		"https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts",
+		"https://raw.githubusercontent.com/mitchellkrogza/The-Big-List-of-Hacked-Malware-Web-Sites/master/hosts",
+		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
+		"https://raw.githubusercontent.com/infinitytec/blocklists/master/scams-and-phishing.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
