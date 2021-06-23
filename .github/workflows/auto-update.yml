@@ -19,13 +19,13 @@ jobs:
         run: go get -v
       - name: Build Test
         run: go build -v .
-      - name: Run the build
-        run: ./content-blocker -update
-      - name: Update resources
-        uses: test-room-7/action-update-file@v1
-        with:
-          file-path: configs/*
-          allow-dot: true
-          allow-removing: true
-          commit-msg: Updates are performed automatically.
-          github-token: ${{ secrets.REPO_UPDATE_KEY }}
+#      - name: Run the build
+#        run: ./content-blocker -update
+#      - name: Update resources
+#        uses: test-room-7/action-update-file@v1
+#        with:
+#          file-path: configs/*
+#          allow-dot: true
+#          allow-removing: true
+#          commit-msg: Updates are performed automatically.
+#          github-token: ${{ secrets.REPO_UPDATE_KEY }}
