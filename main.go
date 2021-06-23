@@ -68,21 +68,6 @@ func init() {
 }
 
 func main() {
-	// In your system, place the host file.
-	if install {
-		installInSystem()
-	}
-	// Lists should be updated.
-	if update {
-		// Scrape all of the domains and save them afterwards.
-		startScraping()
-		// We'll make everything distinctive once everything is finished.
-		makeEverythingUnique(allInOneBlockList)
-		makeEverythingUnique(advertisementConfig)
-		makeEverythingUnique(maliciousConfig)
-		makeEverythingUnique(socialEngineeringConfig)
-		makeEverythingUnique(explicitConfig)
-	}
 }
 
 // Configure your system to use the lists.
