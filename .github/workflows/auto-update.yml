@@ -23,19 +23,8 @@ jobs:
         run: ./content-blocker -update
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Automated Change
-          branch: main
-          commit_options: "--no-verify --signoff"
-          file_pattern: configs/*
-          repository: .
-          commit_user_name: Auto Update Bot
-          commit_user_email: my-github-actions-bot@example.org
-          commit_author: Author <actions@github.com>
-          status_options: "--untracked-files=no"
-          add_options: "-u"
-          push_options: "--force"
-          skip_dirty_check: true
-          skip_fetch: true
-          disable_globbing: true
+          commit_message: My Commit Message
+          branch: ${{ github.head_ref }}
+          commit_user_name: org-bot
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_UPDATE_KEY }}
