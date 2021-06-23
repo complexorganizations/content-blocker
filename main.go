@@ -240,6 +240,18 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
 		"https://gitlab.com/quidsup/notrack-blocklists/-/raw/master/notrack-blocklist.txt",
 		"https://raw.githubusercontent.com/matomo-org/referrer-spam-list/master/spammers.txt",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/apple",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/xiaomi",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/huawei",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/roku",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/samsung",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/sonos",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/windows",
+		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/alexa",
+		"https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts",
+		"https://raw.githubusercontent.com/mitchellkrogza/The-Big-List-of-Hacked-Malware-Web-Sites/master/hosts",
+		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
+		"https://raw.githubusercontent.com/infinitytec/blocklists/master/scams-and-phishing.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
