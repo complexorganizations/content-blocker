@@ -31,9 +31,11 @@ jobs:
           commit_user_name: Auto Update Bot
           commit_user_email: my-github-actions-bot@example.org
           commit_author: Author <actions@github.com>
-          status_options: '--untracked-files=no'
-          add_options: '-u'
-          push_options: '--force'
+          status_options: "--untracked-files=no"
+          add_options: "-u"
+          push_options: "--force"
           skip_dirty_check: true
           skip_fetch: true
           disable_globbing: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_UPDATE_KEY }}
