@@ -1,8 +1,7 @@
 name: Lists are being updated.
-on: [push]
-#on:
-#  schedule:
-#    - cron: "0 */12 * * *"
+on:
+  schedule:
+    - cron: "0 */12 * * *"
 jobs:
   build:
     name: Build
@@ -19,7 +18,7 @@ jobs:
         run: go get -v
       - name: Build Test
         run: go build -v .
-      - name: Run the build
+      - name: Generating new resources.
         run: ./content-blocker -update
       - name: Update resources
         run: |
