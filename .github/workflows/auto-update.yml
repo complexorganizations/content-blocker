@@ -22,12 +22,12 @@ jobs:
         run: ./content-blocker -update
       - name: Update resources
         uses: test-room-7/action-update-file@v1
-        with:
-          file-path: |
-          configs/advertisement
-          configs/explicit
-          configs/hosts
-          configs/malicious
-          configs/social-engineering
-        commit-msg: Automatic updates are carried out.
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+  with:
+    file-path: |
+      configs/advertisement
+      configs/explicit
+      configs/hosts
+      configs/malicious
+      configs/social-engineering
+    commit-msg: Automatic updates are carried out
+    github-token: ${{ secrets.GITHUB_TOKEN }}
