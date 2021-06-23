@@ -1,5 +1,5 @@
 name: Lists are being updated.
-on: [push, pull_request]
+on: [push]
 #on:
 #  schedule:
 #    - cron: "0 */12 * * *"
