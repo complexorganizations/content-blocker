@@ -21,10 +21,9 @@ jobs:
         run: go build -v .
       - name: Run the build
         run: ./content-blocker -update
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Update resources
+        uses: test-room-7/action-update-file@v1
         with:
-          commit_message: My Commit Message
-          branch: ${{ github.head_ref }}
-          commit_user_name: org-bot
-        env:
-          GITHUB_TOKEN: ${{ secrets.REPO_UPDATE_KEY }}
+          file-path: configs/*
+          commit-msg: Automatic updates are carried out
+          github-token: ${{ secrets.REPO_UPDATE_KEY }}
