@@ -11,8 +11,9 @@ jobs:
           go-version: 1.16
         id: go
       - name: Check out code into the Go module directory
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+        uses: actions/checkout@v1
+      - name: Setting up NodeJs
+        uses: actions/setup-node@v1
       - name: Get dependencies
         run: go get -v
       - name: Build Test
@@ -21,7 +22,8 @@ jobs:
         run: ./content-blocker -update
       - name: Update resources
         uses: test-room-7/action-update-file@v1
-        file-path: |
+        with:
+          file-path: |
           configs/advertisement
           configs/explicit
           configs/hosts
