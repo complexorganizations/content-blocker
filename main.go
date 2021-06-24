@@ -288,6 +288,7 @@ func startScraping() {
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
+			// Begin searching and confirming the domains you've discovered.
 			findTheDomains(uniqueAdvertisement[i], advertisementConfig)
 			// To save memory, remove the string from the array.
 			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
@@ -296,6 +297,7 @@ func startScraping() {
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
+			// Begin looking for and verifying the domains you've found.
 			findTheDomains(uniqueMalicious[i], maliciousConfig)
 			// Remove it from the memory.
 			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
@@ -304,7 +306,7 @@ func startScraping() {
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
 		if validURL(uniqueSocialEngineering[i]) {
-			//
+			// Begin searching for and confirming the domains you've discovered.
 			findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
 			// Remove it from memeory
 			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
@@ -313,7 +315,7 @@ func startScraping() {
 	// Explicit
 	for i := 0; i < len(uniqueExplicit); i++ {
 		if validURL(uniqueExplicit[i]) {
-			//
+			// Begin looking for and verifying the domains you've found.
 			findTheDomains(uniqueExplicit[i], explicitConfig)
 			// Remove it from memeory
 			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
@@ -368,11 +370,13 @@ func findTheDomains(url string, saveLocation string) {
 							// Go ahead and verify it in the background.
 							go validateTheDomains(string([]byte(foundDomains)), saveLocation)
 						} else {
+							// Because we know it's not a legitimate suffix, it informs the user that the domain is invalid.
 							if showLogs {
 								log.Println("Invalid domain suffix:", string([]byte(foundDomains)), url)
 							}
 						}
 					} else {
+						// Let the user know that the domain is invalid since it does not fit the syntax.
 						if showLogs {
 							log.Println("Invalid domain syntax:", string([]byte(foundDomains)), url)
 						}
