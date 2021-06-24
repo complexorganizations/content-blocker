@@ -44,7 +44,7 @@ git clone --depth 1 https://github.com/complexorganizations/content-blocker
 ```
 Make a new, up-to-date list.
 ```
-go run main.go -update
+go run main.go -update -validation
 ```
 
 ---
