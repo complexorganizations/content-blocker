@@ -13,6 +13,10 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 - content blocker is a general purpose blocker that can block practically anything on the internet, but is most commonly used to block advertisements, tracking, and pornography.
 - DNS queries on the DNS server are canceled, saving bandwidth.
 
+### Goals
+- Lists containing valid hosts that have been unified.
+- Domains and subdomains that are duplicated are removed from the list.
+
 ### Variants
 | Name     | Description                | URL      |
 | :------- | :------------------------- | :------- |
@@ -42,6 +46,16 @@ Make a new, up-to-date list.
 go run main.go -update
 ```
 
+### Compatibility
+| Operating System(s)    | Tested                 |
+| ---------------------  | ---------------------  |
+| Linux                  | :heavy_check_mark:     |
+| Windows                | :heavy_check_mark:     |
+| MacOS                  | :heavy_check_mark:     |
+| Android                | :heavy_check_mark:     |
+| iOS                    | :heavy_check_mark:     |
+
+---
 ### Q&A
 What's the best way for me to make my own list?
 - Open the repo after forking and cloning it. Go ahead and change the struct in `startScraping`, replacing the urls there with the lists you wish to use, and then just run the file using the command `go run main.go`.
