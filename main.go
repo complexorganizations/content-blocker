@@ -273,7 +273,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
 		"https://raw.githubusercontent.com/mhxion/pornaway/master/hosts/porn_sites.txt",
 		"https://raw.githubusercontent.com/tiuxo/hosts/master/porn",
-		"https://raw.githubusercontent.com/tlvince/hosts/gh-pages/hosts",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
