@@ -62,6 +62,8 @@ go run main.go -update -validation
 What's the best way for me to make my own list?
 - Open the repo after forking and cloning it. Go ahead and change the struct in `startScraping`, replacing the urls there with the lists you wish to use, and then just run the file using the command `go run main.go`.
 
+Note: If you want to create your own list(s), please utilize a server; otherwise, your system resources will be depleted.
+
 What's the best way to add my own exclusions?
 - Simply open the `configs/exclusion` file, add a domain, and submit a pull request; if your pull request is merged, the domain will be excluded the next time the list is updated.
 
