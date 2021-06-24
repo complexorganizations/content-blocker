@@ -104,7 +104,7 @@ func installInSystem() {
 	malicious := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/malicious"
 	socialEngineering := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/social-engineering"
 	explicit := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/explicit"
-	// system download files
+	// Take user input and check the operating system.
 	var systemHostFile string
 	switch runtime.GOOS {
 	case "windows":
@@ -112,7 +112,7 @@ func installInSystem() {
 	case "darwin", "linux":
 		systemHostFile = `/etc/hosts`
 	}
-	// lists
+	// Select the list you want to install in your system.
 	switch userInput {
 	case 1:
 		downloadFile(hosts, systemHostFile)
