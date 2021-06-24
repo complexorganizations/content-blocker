@@ -263,6 +263,7 @@ func startScraping() {
 	// Adult content
 	explicit := []string{
 		"https://block.energized.pro/porn/formats/domains.txt",
+		"https://block.energized.pro/extensions/porn-lite/formats/domains.txt",
 		"https://raw.githubusercontent.com/4skinSkywalker/Anti-Porn-HOSTS-File/master/HOSTS.txt",
 		"https://raw.githubusercontent.com/Bon-Appetit/porn-domains/master/block.txt",
 		"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/0.0.0.0/hosts",
