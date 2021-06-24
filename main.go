@@ -50,10 +50,7 @@ func init() {
 		update = *tempUpdate
 		install = *tempInstall
 	} else {
-		validation = false
-		showLogs = false
-		update = false
-		install = false
+		os.Exit(0)
 	}
 }
 
