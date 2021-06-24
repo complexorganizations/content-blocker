@@ -366,7 +366,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 				// This is a list of all the domains discovered using the regex.
 				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(returnContent[a]))
 				// all the emails from rejex
-				foundDomain := fmt.Sprintf("%X", foundDomains)
+				foundDomain := string(foundDomains)
 				if len(foundDomain) > 3 {
 					// Validate the entire list of domains.
 					if len(foundDomain) < 255 && checkIPAddress(foundDomain) && !strings.Contains(foundDomain, " ") && strings.Contains(foundDomain, ".") && !strings.Contains(foundDomain, "#") && !strings.Contains(foundDomain, "*") && !strings.Contains(foundDomain, "!") {
