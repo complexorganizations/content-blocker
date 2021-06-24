@@ -72,9 +72,12 @@ Open Source Community
 
 | Author                 | Repository             | License                |
 | ---------------------  | ---------------------  | ---------------------  |
-| Steven-Black           | `https://github.com/StevenBlack/hosts` | MIT |
-| Light-Switch           | `https://github.com/lightswitch05/hosts` | Apache License 2.0 |
+| StevenBlack            | `https://github.com/StevenBlack/hosts` | MIT |
+| LightSwitch            | `https://github.com/lightswitch05/hosts` | Apache License 2.0 |
 | Notracking             | `https://github.com/notracking/hosts-blocklists` | UNKNOWN |
+| AdAway                 | `https://github.com/AdAway/AdAway` | GPLv3+     |
+| DRSDavidSoft           | `https://github.com/DRSDavidSoft/additional-hosts` | MIT |
+| Ewpratten              | `https://github.com/Ewpratten/youtube_ad_blocklist` | GPLv3+ |
 |                        |                        |                        |
 
 
