@@ -363,7 +363,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 		if !strings.HasPrefix(string([]byte(returnContent[a])), "#") {
 			// Make sure the domain is at least 3 characters long
 			if len(string([]byte(returnContent[a]))) > 3 {
-				// To find the domains on a page use regex.
+				// This is a list of all the domains discovered using the regex.
 				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(returnContent[a]))
 				// all the emails from rejex
 				foundDomain := fmt.Sprintf("%X", foundDomains)
@@ -428,7 +428,7 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 			log.Println("Domain:", uniqueDomains)
 		}
 	}
-	// clear the memroy.
+	// It should be forgotten.
 	uniqueDomains = ""
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	wg.Done()
@@ -534,7 +534,7 @@ func writeToFile(pathInSystem string, content string) {
 	if err != nil {
 		log.Println(err)
 	}
-	// remove it from memeory
+	// It's something that should be forgotten.
 	content = ""
 	// close the file
 	defer filePath.Close()
@@ -581,6 +581,8 @@ func makeEverythingUnique(contentLocation string) {
 	// Begin composing the document
 	for i := 0; i < len(uniqueDomains); i++ {
 		writeToFile(contentLocation, uniqueDomains[i])
+		// It should be removed from the array memeory.
+		uniqueDomains = removeStringFromSlice(uniqueDomains, uniqueDomains[i])
 	}
 	// remove it from memory
 	uniqueDomains = nil
@@ -609,6 +611,7 @@ func downloadFile(url string, filePath string) {
 	for a := 0; a < len(returnContent); a++ {
 		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
 		writeToFile(filePath, contentToWrite)
+		// It should be removed from the system memory.
 		contentToWrite = ""
 	}
 }
