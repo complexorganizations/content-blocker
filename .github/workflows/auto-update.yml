@@ -1,8 +1,7 @@
 name: Updating the resources
-on: [push, pull_request]
-#on:
-#  schedule:
-#    - cron: "0 0 * * *"
+on:
+  schedule:
+    - cron: "0 0 * * *"
 jobs:
   build:
     name: Build
