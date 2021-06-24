@@ -35,7 +35,6 @@ var (
 	showLogs                bool
 	update                  bool
 	install                 bool
-	status                  bool
 )
 
 func init() {
@@ -45,19 +44,16 @@ func init() {
 		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
 		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
-		tempStatus := flag.Bool("status", false, "Notify the user of the application's current state.")
 		flag.Parse()
 		validation = *tempValidation
 		showLogs = *tempLog
 		update = *tempUpdate
 		install = *tempInstall
-		status = *tempStatus
 	} else {
 		validation = false
 		showLogs = false
 		update = false
 		install = false
-		status = false
 	}
 	// Remove the old files from your system if they are found.
 	os.Remove(allInOneBlockList)
@@ -292,11 +288,6 @@ func startScraping() {
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
-			// status
-			if status {
-				fmt.Println(uniqueMalicious[i])
-			}
-			// scrape the domains from the url
 			findTheDomains(uniqueAdvertisement[i], advertisementConfig)
 			// To save memory, remove the string from the array.
 			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
@@ -305,10 +296,6 @@ func startScraping() {
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
-			// status
-			if status {
-				fmt.Println(uniqueMalicious[i])
-			}
 			findTheDomains(uniqueMalicious[i], maliciousConfig)
 			// Remove it from the memory.
 			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
@@ -317,10 +304,6 @@ func startScraping() {
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
 		if validURL(uniqueSocialEngineering[i]) {
-			// status
-			if status {
-				fmt.Println(uniqueSocialEngineering[i])
-			}
 			//
 			findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
 			// Remove it from memeory
@@ -330,9 +313,6 @@ func startScraping() {
 	// Explicit
 	for i := 0; i < len(uniqueExplicit); i++ {
 		if validURL(uniqueExplicit[i]) {
-			if status {
-				fmt.Println(uniqueExplicit[i])
-			}
 			//
 			findTheDomains(uniqueExplicit[i], explicitConfig)
 			// Remove it from memeory
@@ -563,10 +543,6 @@ func readAndAppend(fileLocation string, arrayName []string) []string {
 
 // Read the completed file, then delete any duplicates before saving it.
 func makeEverythingUnique(contentLocation string) {
-	// status
-	if status {
-		fmt.Println(contentLocation)
-	}
 	var finalDomainList []string
 	finalDomainList = readAndAppend(contentLocation, finalDomainList)
 	// Make each domain one-of-a-kind.
