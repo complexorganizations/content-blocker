@@ -613,5 +613,6 @@ func downloadFile(url string, filePath string) {
 		writeToFile(filePath, contentToWrite)
 		// It should be removed from the system memory.
 		contentToWrite = ""
+		returnContent = removeStringFromSlice(returnContent, returnContent[a])
 	}
 }
