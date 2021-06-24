@@ -1,4 +1,4 @@
-name: Lists are being updated.
+name: Updating the resources
 on:
   schedule:
     - cron: "0 */12 * * *"
