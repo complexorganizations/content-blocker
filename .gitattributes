@@ -1,5 +1,0 @@
-configs/hosts filter=lfs diff=lfs merge=lfs -text
-configs/advertisement filter=lfs diff=lfs merge=lfs -text
-configs/malicious filter=lfs diff=lfs merge=lfs -text
-configs/social-engineering filter=lfs diff=lfs merge=lfs -text
-configs/explicit filter=lfs diff=lfs merge=lfs -text
