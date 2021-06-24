@@ -78,6 +78,7 @@ Open Source Community
 | AdAway                 | `https://github.com/AdAway/AdAway` | GPLv3+     |
 | DRSDavidSoft           | `https://github.com/DRSDavidSoft/additional-hosts` | MIT |
 | Ewpratten              | `https://github.com/Ewpratten/youtube_ad_blocklist` | GPLv3+ |
+| Perflyst               | `https://github.com/Perflyst/PiHoleBlocklist` | `MIT` |
 |                        |                        |                        |
 
 
