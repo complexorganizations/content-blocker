@@ -20,11 +20,11 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 ### Variants
 | Name     | Description                | URL      | Mirror   |
 | :------- | :------------------------- | :------- | :------- |
-| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/hosts` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/hosts` |
-| Advertisement | Advertisement, Tracking | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/advertisement` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/advertisement` |
-| Malicious | Malware, Spyware | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/malicious` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/malicious` |
-| Social-Engineering | Phishing, Scams, Fake News | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/social-engineering` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/social-engineering` |
-| Explicit | Sexual content | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/explicit` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/explicit` |
+| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/hosts` |
+| Advertisement | Advertisement, Tracking | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/advertisement` |
+| Malicious | Malware, Spyware | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/malicious` |
+| Social-Engineering | Phishing, Scams, Fake News | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/social-engineering` |
+| Explicit | Sexual content | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/explicit` |
 
 ---
 #### Instead of a DNS server, install the list on your machine.
