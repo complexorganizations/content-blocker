@@ -281,6 +281,9 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mhxion/pornaway/master/hosts/porn_sites.txt",
 		"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/0.0.0.0/hosts",
 		"https://raw.githubusercontent.com/tiuxo/hosts/master/porn",
+		"https://raw.githubusercontent.com/4skinSkywalker/Anti-Porn-HOSTS-File/master/HOSTS.txt",
+		"https://raw.githubusercontent.com/Import-External-Sources/pornhosts/master/download_here/0.0.0.0/hosts",
+		"https://raw.githubusercontent.com/tlvince/hosts/gh-pages/hosts",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
