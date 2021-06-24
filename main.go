@@ -199,6 +199,8 @@ func startScraping() {
 	}
 	// Malicious
 	malicious := []string{
+		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/domains/domains0.list",
+		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/domains/domains1.list",
 		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
 		"https://raw.githubusercontent.com/FadeMind/hosts.extras/master/CoinBlockerList/hosts",
 		"https://raw.githubusercontent.com/piwik/referrer-spam-blacklist/master/spammers.txt",
