@@ -93,10 +93,7 @@ What are the reasons behind the exclusion of so many financial domains and subdo
 - We just erase such entries if any of the list authors try to mess with them.
 
 Why doesn't your repo have a git history?
-- We would top out github's 100MB limit, under a day due to huge amounts of change.
-
-Why are you using Git LFS?
-- The maximum file size on github is 100MB, and merely uploading them requires git lfs.
+- We would top out github's limits, under a day due to huge amounts of change.
 
 ---
 #### Credits
