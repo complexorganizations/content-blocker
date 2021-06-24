@@ -29,7 +29,6 @@ var (
 	localExclusion          = "configs/exclusion"
 	explicitConfig          = "configs/explicit"
 	exclusionDomains        []string
-	hostsArray              []string
 	advertisementArray      []string
 	maliciousArray          []string
 	socialEngineeringArray  []string
