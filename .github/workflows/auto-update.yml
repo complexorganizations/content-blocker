@@ -1,14 +1,15 @@
 name: Updating the resources
-on:
-  schedule:
-    - cron: "0 */12 * * *"
+on: [push, pull_request]
+#on:
+#  schedule:
+#    - cron: "0 0 * * *"
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go 1.16
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with:
           go-version: 1.16
         id: go
@@ -19,7 +20,7 @@ jobs:
       - name: Build Test
         run: go build -v .
       - name: Generating new resources.
-        run: ./content-blocker -update
+        run: ./content-blocker -update -validation -status
       - name: Update resources
         run: |
           git config user.name github-actions
