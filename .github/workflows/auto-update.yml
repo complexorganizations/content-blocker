@@ -1,8 +1,7 @@
 name: Updating the resources
-on: [push, pull_request]
-#on:
-#  schedule:
-#    - cron: "0 */12 * * *"
+on:
+  schedule:
+    - cron: "0 */12 * * *"
 jobs:
   build:
     name: Build
@@ -25,6 +24,9 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add configs/*
+          git checkout --orphan tmp-main
+          git add -A
           git commit -m "Updates are performed automatically. $(date)"
-          git push
+          git branch -D main
+          git branch -m main
+          git push -f origin main
