@@ -29,6 +29,11 @@ var (
 	localExclusion          = "configs/exclusion"
 	explicitConfig          = "configs/explicit"
 	exclusionDomains        []string
+	hostsArray              []string
+	advertisementArray      []string
+	maliciousArray          []string
+	socialEngineeringArray  []string
+	exclusionArray          []string
 	err                     error
 	wg                      sync.WaitGroup
 	validation              bool
@@ -285,8 +290,9 @@ func startScraping() {
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
+			wg.Add(1)
 			// Begin searching and confirming the domains you've discovered.
-			findTheDomains(uniqueAdvertisement[i], advertisementConfig)
+			go findTheDomains(uniqueAdvertisement[i], advertisementConfig, advertisementArray)
 			// To save memory, remove the string from the array.
 			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
 		}
@@ -294,8 +300,9 @@ func startScraping() {
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
+			wg.Add(1)
 			// Begin looking for and verifying the domains you've found.
-			findTheDomains(uniqueMalicious[i], maliciousConfig)
+			go findTheDomains(uniqueMalicious[i], maliciousConfig, maliciousArray)
 			// Remove it from the memory.
 			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
 		}
@@ -303,8 +310,9 @@ func startScraping() {
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
 		if validURL(uniqueSocialEngineering[i]) {
+			wg.Add(1)
 			// Begin searching for and confirming the domains you've discovered.
-			findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
+			go findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig, socialEngineeringArray)
 			// Remove it from memeory
 			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
 		}
@@ -312,8 +320,9 @@ func startScraping() {
 	// Explicit
 	for i := 0; i < len(uniqueExplicit); i++ {
 		if validURL(uniqueExplicit[i]) {
+			wg.Add(1)
 			// Begin looking for and verifying the domains you've found.
-			findTheDomains(uniqueExplicit[i], explicitConfig)
+			go findTheDomains(uniqueExplicit[i], explicitConfig, exclusionArray)
 			// Remove it from memeory
 			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
 		}
@@ -321,7 +330,7 @@ func startScraping() {
 	wg.Wait()
 }
 
-func findTheDomains(url string, saveLocation string) {
+func findTheDomains(url string, saveLocation string, returnContent []string) {
 	// Send a request to acquire all the information you need.
 	response, err := http.Get(url)
 	if err != nil {
@@ -337,7 +346,6 @@ func findTheDomains(url string, saveLocation string) {
 		log.Println("Sorry, but we were unable to scrape the page you requested due to a 404 error.", url)
 	}
 	// Scraped data is read and appended to an array.
-	var returnContent []string
 	scanner := bufio.NewScanner(bytes.NewReader(body))
 	scanner.Split(bufio.ScanLines)
 	for scanner.Scan() {
@@ -383,9 +391,9 @@ func findTheDomains(url string, saveLocation string) {
 		}
 		// When you're finished, close the body.
 		defer response.Body.Close()
-		// While the validation is being performed, we wait.
-		wg.Wait()
 	}
+	// While the validation is being performed, we wait.
+	wg.Wait()
 	returnContent = nil
 }
 
