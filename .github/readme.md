@@ -8,7 +8,7 @@
 
 Content blocker is a DNS level blocker that can block anything on the DNS level, eliminating the need for the user to download an additional application. It works on internet of things devices.
 
-## Features
+### Features
 
 - content blocker is a general purpose blocker that can block practically anything on the internet, but is most commonly used to block advertisements, tracking, and pornography.
 - DNS queries on the DNS server are canceled, saving bandwidth.
@@ -26,7 +26,8 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 | Social-Engineering | Phishing, Scams, Fake News | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering` |
 | Explicit | Sexual content | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit` |
 
-### Instead of a DNS server, install the list on your machine.
+---
+#### Instead of a DNS server, install the list on your machine.
 Let's get the app on your computer.
 ```
 git clone --depth 1 https://github.com/complexorganizations/content-blocker
@@ -36,7 +37,7 @@ Let's get the lists set up in your system.
 go run main.go -install
 ```
 
-### Creating and updating a list
+#### Creating and updating a list
 Let's begin by cloning the repository.
 ```
 git clone --depth 1 https://github.com/complexorganizations/content-blocker
@@ -46,7 +47,8 @@ Make a new, up-to-date list.
 go run main.go -update
 ```
 
-### Compatibility
+---
+#### Compatibility
 | Operating System(s)    | Tested                 |
 | ---------------------  | ---------------------  |
 | Linux                  | :heavy_check_mark:     |
@@ -56,7 +58,7 @@ go run main.go -update
 | iOS                    | :heavy_check_mark:     |
 
 ---
-### Q&A
+## Q&A
 What's the best way for me to make my own list?
 - Open the repo after forking and cloning it. Go ahead and change the struct in `startScraping`, replacing the urls there with the lists you wish to use, and then just run the file using the command `go run main.go`.
 
@@ -81,7 +83,11 @@ What's the best way to get my list in here?
 Why isn't there a list of IP addresses?
 - They may simply go on to the next IP and continue from there, thus banning IPs is worthless.
 
-### Credits
+What is the procedure for creating a new category?
+- Creating new categories is strongly discouraged, and no longer receives support; nevertheless, if you still believe it is essential for the community, please open an issue.
+
+---
+#### Credits
 Open Source Community
 
 | Author                 | Repository             | License                |
@@ -95,18 +101,13 @@ Open Source Community
 | Perflyst               | `https://github.com/Perflyst/PiHoleBlocklist` | `MIT` |
 |                        |                        |                        |
 
-
-## Support
-
+#### Support
 Please utilize the github repo issue and wiki for help.
 
-
-## Feedback
-
+#### Feedback
 Please utilize the github repo conversations to offer feedback.
 
-
-## License
+#### License
 Copyright © [Prajwal](https://github.com/prajwal-koirala)
 
 This project is unlicensed.
