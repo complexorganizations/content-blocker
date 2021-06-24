@@ -56,6 +56,8 @@ func init() {
 	} else {
 		os.Exit(0)
 	}
+	// To free up some memory, delete all of the files in temp.
+	os.RemoveAll(os.TempDir())
 }
 
 func main() {
@@ -361,28 +363,32 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 		if !strings.HasPrefix(string([]byte(returnContent[a])), "#") {
 			// Make sure the domain is at least 3 characters long
 			if len(string([]byte(returnContent[a]))) > 3 {
-				// To find the domains on a page use regex.
+				// This is a list of all the domains discovered using the regex.
 				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(returnContent[a]))
-				if len(string([]byte(foundDomains))) > 3 {
+				// all the emails from rejex
+				foundDomain := string(foundDomains)
+				if len(foundDomain) > 3 {
 					// Validate the entire list of domains.
-					if len(string([]byte(foundDomains))) < 255 && checkIPAddress(string([]byte(foundDomains))) && !strings.Contains(string([]byte(foundDomains)), " ") && strings.Contains(string([]byte(foundDomains)), ".") && !strings.Contains(string([]byte(foundDomains)), "#") && !strings.Contains(string([]byte(foundDomains)), "*") && !strings.Contains(string([]byte(foundDomains)), "!") {
+					if len(foundDomain) < 255 && checkIPAddress(foundDomain) && !strings.Contains(foundDomain, " ") && strings.Contains(foundDomain, ".") && !strings.Contains(foundDomain, "#") && !strings.Contains(foundDomain, "*") && !strings.Contains(foundDomain, "!") {
 						// icann.org confirms it's a public suffix domain
-						eTLD, icann := publicsuffix.PublicSuffix(string([]byte(foundDomains)))
+						eTLD, icann := publicsuffix.PublicSuffix(foundDomain)
 						// Start the other tests if the domain has a valid suffix.
 						if icann || strings.IndexByte(eTLD, '.') >= 0 {
 							wg.Add(1)
 							// Go ahead and verify it in the background.
-							go validateTheDomains(string([]byte(foundDomains)), saveLocation)
+							go validateTheDomains(foundDomain, saveLocation)
+							// remove it from memory
+							returnContent = removeStringFromSlice(returnContent, foundDomain)
 						} else {
 							// Because we know it's not a legitimate suffix, it informs the user that the domain is invalid.
 							if showLogs {
-								log.Println("Invalid domain suffix:", string([]byte(foundDomains)), url)
+								log.Println("Invalid domain suffix:", foundDomain, url)
 							}
 						}
 					} else {
 						// Let the user know that the domain is invalid since it does not fit the syntax.
 						if showLogs {
-							log.Println("Invalid domain syntax:", string([]byte(foundDomains)), url)
+							log.Println("Invalid domain syntax:", foundDomain, url)
 						}
 					}
 				}
@@ -422,6 +428,8 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 			log.Println("Domain:", uniqueDomains)
 		}
 	}
+	// It should be forgotten.
+	uniqueDomains = ""
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	wg.Done()
 }
@@ -526,6 +534,8 @@ func writeToFile(pathInSystem string, content string) {
 	if err != nil {
 		log.Println(err)
 	}
+	// It's something that should be forgotten.
+	content = ""
 	// close the file
 	defer filePath.Close()
 }
@@ -571,6 +581,8 @@ func makeEverythingUnique(contentLocation string) {
 	// Begin composing the document
 	for i := 0; i < len(uniqueDomains); i++ {
 		writeToFile(contentLocation, uniqueDomains[i])
+		// It should be removed from the array memeory.
+		uniqueDomains = removeStringFromSlice(uniqueDomains, uniqueDomains[i])
 	}
 	// remove it from memory
 	uniqueDomains = nil
@@ -599,5 +611,7 @@ func downloadFile(url string, filePath string) {
 	for a := 0; a < len(returnContent); a++ {
 		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
 		writeToFile(filePath, contentToWrite)
+		// It should be removed from the system memory.
+		contentToWrite = ""
 	}
 }
