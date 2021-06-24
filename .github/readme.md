@@ -77,8 +77,11 @@ How can I get credit if I own one of the lists you're using?
 Is it possible for you to remove my domain off the blacklist if I pay you?
 - No
 
-What's the best way to get my list in here?
-- To be considered for inclusion, your list must be updated at least once every 90 days and contain at least 100 domains.
+What's the best way to get my list(s) in here?
+- There are no special requirements for submitting your list(s) to the repo, however we do urge that they be of good quality and updated on a regular basis.
+
+What's the most efficient method for me to get my list(s) out of here?
+- Make the list(s) private so we can't scrape the information out of them.
 
 Why isn't there a list of IP addresses?
 - They may simply go on to the next IP and continue from there, thus banning IPs is worthless.
