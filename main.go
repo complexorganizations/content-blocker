@@ -243,6 +243,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/xiaomi",
 		"https://raw.githubusercontent.com/piwik/referrer-spam-blacklist/master/spammers.txt",
 		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
+		"https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestdomains.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
