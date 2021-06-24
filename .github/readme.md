@@ -95,6 +95,9 @@ What are the reasons behind the exclusion of so many financial domains and subdo
 Why doesn't your repo have a git history?
 - We would top out github's limits, under a day due to huge amounts of change.
 
+How would i build for docker?
+- Build `docker build -t content-blocker .` run `docker run -it --rm --name content-blocker-running content-blocker`
+
 ---
 #### Credits
 Open Source Community
