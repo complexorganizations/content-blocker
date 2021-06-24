@@ -55,16 +55,6 @@ func init() {
 		update = false
 		install = false
 	}
-	// Remove the old files from your system if they are found.
-	os.Remove(allInOneBlockList)
-	os.Remove(advertisementConfig)
-	os.Remove(maliciousConfig)
-	os.Remove(socialEngineeringConfig)
-	os.Remove(explicitConfig)
-	// Read through all of the exclusion domains before appending them.
-	if fileExists(localExclusion) {
-		exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
-	}
 }
 
 func main() {
@@ -74,6 +64,16 @@ func main() {
 	}
 	// Lists should be updated.
 	if update {
+		// Remove the old files from your system if they are found.
+		os.Remove(allInOneBlockList)
+		os.Remove(advertisementConfig)
+		os.Remove(maliciousConfig)
+		os.Remove(socialEngineeringConfig)
+		os.Remove(explicitConfig)
+		// Read through all of the exclusion domains before appending them.
+		if fileExists(localExclusion) {
+			exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
+		}
 		// Scrape all of the domains and save them afterwards.
 		startScraping()
 		// We'll make everything distinctive once everything is finished.
