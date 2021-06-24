@@ -92,6 +92,12 @@ What is the procedure for creating a new category?
 What are the reasons behind the exclusion of so many financial domains and subdomains?
 - We just erase such entries if any of the list authors try to mess with them.
 
+Why doesn't your repo have a git history?
+- We would top out github's 100MB limit, under a day due to huge amounts of change.
+
+Why are you using Git LFS?
+- The maximum file size on github is 100MB, and merely uploading them requires git lfs.
+
 ---
 #### Credits
 Open Source Community
