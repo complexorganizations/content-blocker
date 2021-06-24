@@ -50,7 +50,7 @@ What's the best way to add my own exclusions?
 - Simply open the `configs/exclusion` file, add a domain, and submit a pull request; if your pull request is merged, the domain will be excluded the next time the list is updated.
 
 Is the list updated on a regular basis?
-- We strive to update the list every 24 hours, but this cannot be guaranteed, and if it is not updated for any reason please let us know.
+- We strive to update the list every 12 hours, but this cannot be guaranteed, and if it is not updated for any reason please let us know.
 
 Why are you only banning it on the DNS level rather than the system level?
 - It's a good idea to prohibit something on a system level rather than a DNS level, however some devices can't prohibit it on a system level (for example, smart devices), therefore a dns level is preferred.
