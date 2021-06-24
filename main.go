@@ -586,9 +586,9 @@ func downloadFile(url string, filePath string) {
 	for scanner.Scan() {
 		returnContent = append(returnContent, scanner.Text())
 	}
+	os.Remove(filePath)
 	for a := 0; a < len(returnContent); a++ {
 		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
-		os.Remove(filePath)
 		writeToFile(filePath, contentToWrite)
 	}
 }
