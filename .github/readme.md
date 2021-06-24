@@ -18,13 +18,13 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 - Domains and subdomains that are duplicated are removed from the list.
 
 ### Variants
-| Name     | Description                | URL      |
-| :------- | :------------------------- | :------- |
-| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/hosts` |
-| Advertisement | Advertisement, Tracking | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/advertisement` |
-| Malicious | Malware, Spyware | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/malicious` |
-| Social-Engineering | Phishing, Scams, Fake News | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/social-engineering` |
-| Explicit | Sexual content | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/explicit` |
+| Name     | Description                | URL      | Mirror   |
+| :------- | :------------------------- | :------- | :------- |
+| Hosts    | Advertisement, Malicious, Social-Engineering, Explicit | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/hosts` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/hosts` |
+| Advertisement | Advertisement, Tracking | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/advertisement` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/advertisement` |
+| Malicious | Malware, Spyware | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/malicious` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/malicious` |
+| Social-Engineering | Phishing, Scams, Fake News | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/social-engineering` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/social-engineering` |
+| Explicit | Sexual content | `https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/explicit` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/explicit` |
 
 ---
 #### Instead of a DNS server, install the list on your machine.
@@ -91,6 +91,12 @@ What is the procedure for creating a new category?
 
 What are the reasons behind the exclusion of so many financial domains and subdomains?
 - We just erase such entries if any of the list authors try to mess with them.
+
+Why doesn't your repo have a git history?
+- We would top out github's 100MB limit, under a day due to huge amounts of change.
+
+Why are you using Git LFS?
+- The maximum file size on github is 100MB, and merely uploading them requires git lfs.
 
 ---
 #### Credits
