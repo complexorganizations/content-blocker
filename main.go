@@ -56,7 +56,7 @@ func init() {
 	} else {
 		os.Exit(0)
 	}
-	// remove all the files in temp to get some more mem
+	// To free up some memory, delete all of the files in temp.
 	os.RemoveAll(os.TempDir())
 }
 
