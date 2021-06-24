@@ -89,6 +89,9 @@ Why isn't there a list of IP addresses?
 What is the procedure for creating a new category?
 - Creating new categories is strongly discouraged, and no longer receives support; nevertheless, if you still believe it is essential for the community, please open an issue.
 
+What are the reasons behind the exclusion of so many financial domains and subdomains?
+- We just erase such entries if any of the list authors try to mess with them.
+
 ---
 #### Credits
 Open Source Community
