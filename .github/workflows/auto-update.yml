@@ -1,8 +1,7 @@
 name: Updating the resources
-on: [push]
-#on:
-#  schedule:
-#    - cron: "0 0 * * *"
+on:
+  schedule:
+    - cron: "0 0 * * *"
 jobs:
   build:
     name: Build
@@ -15,8 +14,6 @@ jobs:
         id: go
       - name: Check out code into the Go module directory
         uses: actions/checkout@v2
-        with:
-          repo-token: ${{ secrets.REPO_UPDATE_TOKEN }}
       - name: Get dependencies
         run: go get -v
       - name: Build Test
