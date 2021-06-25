@@ -479,7 +479,8 @@ func validateDomainViaLookupTXT(domain string) bool {
 
 // Make an HTTP request to the website to see whether it's up and running.
 func validateDomainViaHTTP(domain string) bool {
-	_, err := http.Get(domain)
+	httpValue := fmt.Sprint("http://" + domain)
+	_, err := http.Get(httpValue)
 	return err == nil
 }
 
