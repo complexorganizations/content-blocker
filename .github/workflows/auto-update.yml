@@ -1,7 +1,8 @@
 name: Updating the resources
-on:
-  schedule:
-    - cron: "0 0 * * *"
+on: [push]
+#on:
+#  schedule:
+#    - cron: "0 0 * * *"
 jobs:
   build:
     name: Build
