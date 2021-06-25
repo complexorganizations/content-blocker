@@ -405,7 +405,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 func validateTheDomains(uniqueDomains string, locatioToSave string) {
 	if validation {
 		// Validate each and every found domain.
-		if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) {
+		if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) || validateDomainViaHTTP(uniqueDomains) {
 			// Maintain a list of all authorized domains.
 			writeToFile(locatioToSave, uniqueDomains)
 			// Save it to all in one.
@@ -475,6 +475,13 @@ func validateDomainViaLookupMX(domain string) bool {
 func validateDomainViaLookupTXT(domain string) bool {
 	valid, _ := net.LookupTXT(domain)
 	return len(valid) >= 1
+}
+
+// Make an HTTP request to the website to see whether it's up and running.
+func validateDomainViaHTTP(domain string) bool {
+	httpValue := fmt.Sprint("http://" + domain)
+	_, err := http.Get(httpValue)
+	return err == nil
 }
 
 // Using host, see if the domain is legitimate.
