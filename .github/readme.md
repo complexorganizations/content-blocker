@@ -47,6 +47,16 @@ Make a new, up-to-date list.
 go run main.go -update -validation
 ```
 
+#### Using Docker to update the listings.
+Let's begin by downloading the dockerfile and creating the image.
+```
+docker build -t content-blocker https://raw.githubusercontent.com/complexorganizations/content-blocker/main/Dockerfile
+```
+Let's convert the image to a cointainer and then begin updating it.
+```
+docker run -it --name content-blocker-running content-blocker
+```
+
 ---
 #### Compatibility
 | Operating System(s)    | Tested                 |
