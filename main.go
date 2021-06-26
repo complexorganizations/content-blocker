@@ -551,7 +551,6 @@ func writeToFile(pathInSystem string, content string) {
 	}
 	// It's something that should be forgotten.
 	content = ""
-	debug.FreeOSMemory()
 	// close the file
 	defer filePath.Close()
 }
@@ -633,7 +632,7 @@ func downloadFile(url string, filePath string) {
 		writeToFile(filePath, contentToWrite)
 		// It should be removed from the system memory.
 		contentToWrite = ""
-		debug.FreeOSMemory()
 		returnContent = removeStringFromSlice(returnContent, returnContent[a])
 	}
+	debug.FreeOSMemory()
 }
