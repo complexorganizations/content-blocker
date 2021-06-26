@@ -35,7 +35,8 @@ var (
 	socialEngineeringArray  []string
 	exclusionArray          []string
 	err                     error
-	wg                      sync.WaitGroup
+	scrapeWaitGroup         sync.WaitGroup
+	validationWaitGroup     sync.WaitGroup
 	validation              bool
 	showLogs                bool
 	update                  bool
@@ -294,7 +295,7 @@ func startScraping() {
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
-			wg.Add(1)
+			scrapeWaitGroup.Add(1)
 			// Begin searching and confirming the domains you've discovered.
 			go findTheDomains(uniqueAdvertisement[i], advertisementConfig, advertisementArray)
 			// To save memory, remove the string from the array.
@@ -304,7 +305,7 @@ func startScraping() {
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
-			wg.Add(1)
+			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
 			go findTheDomains(uniqueMalicious[i], maliciousConfig, maliciousArray)
 			// Remove it from the memory.
@@ -314,7 +315,7 @@ func startScraping() {
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
 		if validURL(uniqueSocialEngineering[i]) {
-			wg.Add(1)
+			scrapeWaitGroup.Add(1)
 			// Begin searching for and confirming the domains you've discovered.
 			go findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig, socialEngineeringArray)
 			// Remove it from memeory
@@ -324,7 +325,7 @@ func startScraping() {
 	// Explicit
 	for i := 0; i < len(uniqueExplicit); i++ {
 		if validURL(uniqueExplicit[i]) {
-			wg.Add(1)
+			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
 			go findTheDomains(uniqueExplicit[i], explicitConfig, exclusionArray)
 			// Remove it from memeory
@@ -334,7 +335,7 @@ func startScraping() {
 	// Clear the memory via force.
 	debug.FreeOSMemory()
 	// We'll just wait for it to finish as a group.
-	wg.Wait()
+	scrapeWaitGroup.Wait()
 }
 
 func findTheDomains(url string, saveLocation string, returnContent []string) {
@@ -380,7 +381,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 						eTLD, icann := publicsuffix.PublicSuffix(foundDomain)
 						// Start the other tests if the domain has a valid suffix.
 						if icann || strings.IndexByte(eTLD, '.') >= 0 {
-							wg.Add(1)
+							validationWaitGroup.Add(1)
 							// Go ahead and verify it in the background.
 							go validateTheDomains(foundDomain, saveLocation)
 							// remove it from memory
@@ -404,7 +405,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 		defer response.Body.Close()
 	}
 	// While the validation is being performed, we wait.
-	wg.Wait()
+	validationWaitGroup.Wait()
 	returnContent = nil
 	debug.FreeOSMemory()
 }
@@ -439,7 +440,7 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 	uniqueDomains = ""
 	debug.FreeOSMemory()
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
-	wg.Done()
+	validationWaitGroup.Done()
 }
 
 // Take a list of domains and make them one-of-a-kind
