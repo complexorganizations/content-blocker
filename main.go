@@ -13,6 +13,7 @@ import (
 	"os"
 	"regexp"
 	"runtime"
+	"runtime/debug"
 	"sort"
 	"strings"
 	"sync"
@@ -288,6 +289,8 @@ func startScraping() {
 	socialEngineering = nil
 	uniqueExplicit := makeUnique(explicit)
 	explicit = nil
+	// Set the maximum number of threads for this app.
+	debug.SetMaxThreads(100000000)
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
