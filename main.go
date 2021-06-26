@@ -289,8 +289,8 @@ func startScraping() {
 	socialEngineering = nil
 	uniqueExplicit := makeUnique(explicit)
 	explicit = nil
-	// Set the maximum number of threads for this app.
-	debug.SetMaxThreads(100000000)
+	// Clear the memory via force.
+	debug.FreeOSMemory()
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
@@ -331,6 +331,9 @@ func startScraping() {
 			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
 		}
 	}
+	// Clear the memory via force.
+	debug.FreeOSMemory()
+	// We'll just wait for it to finish as a group.
 	wg.Wait()
 }
 
@@ -617,7 +620,10 @@ func downloadFile(url string, filePath string) {
 	for scanner.Scan() {
 		returnContent = append(returnContent, scanner.Text())
 	}
+	// Remove the original file before rewriting it.
 	os.Remove(filePath)
+	// Get as much free memoey as possible from the system.
+	debug.FreeOSMemory()
 	for a := 0; a < len(returnContent); a++ {
 		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
 		writeToFile(filePath, contentToWrite)
