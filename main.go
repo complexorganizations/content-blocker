@@ -301,6 +301,7 @@ func startScraping() {
 			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
 		}
 	}
+wg.Wait()
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
@@ -311,6 +312,7 @@ func startScraping() {
 			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
 		}
 	}
+wg.Wait()
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
 		if validURL(uniqueSocialEngineering[i]) {
@@ -321,6 +323,7 @@ func startScraping() {
 			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
 		}
 	}
+wg.Wait()
 	// Explicit
 	for i := 0; i < len(uniqueExplicit); i++ {
 		if validURL(uniqueExplicit[i]) {
