@@ -1,6 +1,6 @@
-FROM golang:latest
-WORKDIR /go/src/content-blocker
-COPY . .
-RUN go get -v /go/src/content-blocker
-RUN go build /go/src/content-blocker
-CMD ["content-blocker -update -validation"]
+FROM ubuntu:latest
+RUN sudo apt-get update && \
+    sudo apt-get install software-properties-common git -y && \
+    sudo add-apt-repository ppa:longsleep/golang-backports -y && \
+    sudo apt-get install golang-go -y && \
+    sudo git clone https://github.com/complexorganizations/content-blocker $HOME/content-blocker
