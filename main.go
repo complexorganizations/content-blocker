@@ -406,6 +406,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	// While the validation is being performed, we wait.
 	wg.Wait()
 	returnContent = nil
+	debug.FreeOSMemory()
 }
 
 func validateTheDomains(uniqueDomains string, locatioToSave string) {
@@ -436,6 +437,7 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 	}
 	// It should be forgotten.
 	uniqueDomains = ""
+	debug.FreeOSMemory()
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	wg.Done()
 }
@@ -549,6 +551,7 @@ func writeToFile(pathInSystem string, content string) {
 	}
 	// It's something that should be forgotten.
 	content = ""
+	debug.FreeOSMemory()
 	// close the file
 	defer filePath.Close()
 }
@@ -599,6 +602,7 @@ func makeEverythingUnique(contentLocation string) {
 	}
 	// remove it from memory
 	uniqueDomains = nil
+	debug.FreeOSMemory()
 }
 
 // Download a file in your system
@@ -629,6 +633,7 @@ func downloadFile(url string, filePath string) {
 		writeToFile(filePath, contentToWrite)
 		// It should be removed from the system memory.
 		contentToWrite = ""
+		debug.FreeOSMemory()
 		returnContent = removeStringFromSlice(returnContent, returnContent[a])
 	}
 }
