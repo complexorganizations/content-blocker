@@ -100,11 +100,11 @@ func installInSystem() {
 	var userInput int
 	fmt.Scanln(&userInput)
 	// Set up the lists on your computer.
-	hosts := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/hosts"
-	advertisement := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/advertisement"
-	malicious := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/malicious"
-	socialEngineering := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/social-engineering"
-	explicit := "https://media.githubusercontent.com/media/complexorganizations/content-blocker/main/configs/explicit"
+	hosts := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts"
+	advertisement := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
+	malicious := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
+	socialEngineering := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering"
+	explicit := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit"
 	// Take user input and check the operating system.
 	var systemHostFile string
 	switch runtime.GOOS {
