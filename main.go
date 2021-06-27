@@ -51,7 +51,7 @@ func init() {
 		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
 		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
-		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list into your operating system.")
+		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
 		flag.Parse()
 		validation = *tempValidation
 		showLogs = *tempLog
