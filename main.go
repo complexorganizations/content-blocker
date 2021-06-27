@@ -41,6 +41,7 @@ var (
 	showLogs                bool
 	update                  bool
 	install                 bool
+	uninstall               bool
 )
 
 func init() {
@@ -50,11 +51,13 @@ func init() {
 		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
 		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
+		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list into your operating system.")
 		flag.Parse()
 		validation = *tempValidation
 		showLogs = *tempLog
 		update = *tempUpdate
 		install = *tempInstall
+		uninstall = *tempUninstall
 	} else {
 		os.Exit(0)
 	}
@@ -66,6 +69,10 @@ func main() {
 	// In your system, place the host file.
 	if install {
 		installInSystem()
+	}
+	// Uninstall the host file from your system
+	if uninstall {
+		uninstallInSystem()
 	}
 	// Lists should be updated.
 	if update {
@@ -129,6 +136,18 @@ func installInSystem() {
 	default:
 		os.Exit(0)
 	}
+}
+
+// Remove it from your computer's operating system.
+func uninstallInSystem() {
+	var systemHostFile string
+	switch runtime.GOOS {
+	case "windows":
+		systemHostFile = `C:\Windows\System32\drivers\etc\hosts`
+	case "darwin", "linux":
+		systemHostFile = `/etc/hosts`
+	}
+	os.Remove(systemHostFil)
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
