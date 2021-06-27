@@ -625,5 +625,6 @@ func downloadFile(url string, filePath string) {
 		returnContent = removeStringFromSlice(returnContent, returnContent[a])
 	}
 	// Get as much free memoey as possible from the system.
+	returnContent = nil
 	debug.FreeOSMemory()
 }
