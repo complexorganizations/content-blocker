@@ -290,8 +290,6 @@ func startScraping() {
 	socialEngineering = nil
 	uniqueExplicit := makeUnique(explicit)
 	explicit = nil
-	// Clear the memory via force.
-	debug.FreeOSMemory()
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
@@ -371,7 +369,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 		// Check to see if the string includes a # prefix, and if it does, skip it.
 		if !strings.HasPrefix(string([]byte(returnContent[a])), "#") {
 			// Make sure the domain is at least 3 characters long
-			if len(string([]byte(returnContent[a]))) > 3 {
+			if len(string([]byte(returnContent[a]))) > 1 {
 				// This is a list of all the domains discovered using the regex.
 				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(returnContent[a]))
 				// all the emails from rejex
@@ -406,7 +404,6 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	}
 	// While the validation is being performed, we wait.
 	validationWaitGroup.Wait()
-	returnContent = nil
 	debug.FreeOSMemory()
 }
 
@@ -436,8 +433,6 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 			log.Println("Domain:", uniqueDomains)
 		}
 	}
-	// It should be forgotten.
-	uniqueDomains = ""
 	debug.FreeOSMemory()
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	validationWaitGroup.Done()
@@ -550,8 +545,6 @@ func writeToFile(pathInSystem string, content string) {
 	if err != nil {
 		log.Println(err)
 	}
-	// It's something that should be forgotten.
-	content = ""
 	// close the file
 	defer filePath.Close()
 }
@@ -626,14 +619,11 @@ func downloadFile(url string, filePath string) {
 	}
 	// Remove the original file before rewriting it.
 	os.Remove(filePath)
-	// Get as much free memoey as possible from the system.
-	debug.FreeOSMemory()
 	for a := 0; a < len(returnContent); a++ {
 		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
 		writeToFile(filePath, contentToWrite)
-		// It should be removed from the system memory.
-		contentToWrite = ""
 		returnContent = removeStringFromSlice(returnContent, returnContent[a])
 	}
+	// Get as much free memoey as possible from the system.
 	debug.FreeOSMemory()
 }
