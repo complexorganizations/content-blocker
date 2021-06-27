@@ -359,6 +359,8 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	for scanner.Scan() {
 		returnContent = append(returnContent, scanner.Text())
 	}
+	// When you're finished, close the body.
+	response.Body.Close()
 	for a := 0; a < len(returnContent); a++ {
 		// If the string begins with a "!", inform the user that it is most likely a browser-level ad block list rather than a domain-level ad block list.
 		if strings.HasPrefix(string([]byte(returnContent[a])), "!") {
@@ -401,8 +403,6 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 				}
 			}
 		}
-		// When you're finished, close the body.
-		defer response.Body.Close()
 	}
 	// While the validation is being performed, we wait.
 	validationWaitGroup.Wait()
