@@ -23,25 +23,30 @@ import (
 )
 
 var (
+	// Location of the configuration in the local system path
 	allInOneBlockList       = "configs/hosts"
 	advertisementConfig     = "configs/advertisement"
 	maliciousConfig         = "configs/malicious"
 	socialEngineeringConfig = "configs/social-engineering"
 	localExclusion          = "configs/exclusion"
 	explicitConfig          = "configs/explicit"
-	exclusionDomains        []string
-	advertisementArray      []string
-	maliciousArray          []string
-	socialEngineeringArray  []string
-	exclusionArray          []string
-	err                     error
-	scrapeWaitGroup         sync.WaitGroup
-	validationWaitGroup     sync.WaitGroup
-	validation              bool
-	showLogs                bool
-	update                  bool
-	install                 bool
-	uninstall               bool
+	// Memorandum with a domain list.
+	exclusionDomains       []string
+	advertisementArray     []string
+	maliciousArray         []string
+	socialEngineeringArray []string
+	exclusionArray         []string
+	// Go routines using waitgrops.
+	scrapeWaitGroup     sync.WaitGroup
+	validationWaitGroup sync.WaitGroup
+	// The user expresses his or her opinion on what should be done.
+	validation bool
+	showLogs   bool
+	update     bool
+	install    bool
+	uninstall  bool
+	// err stands for error.
+	err error
 )
 
 func init() {
