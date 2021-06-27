@@ -147,7 +147,7 @@ func uninstallInSystem() {
 	case "darwin", "linux":
 		systemHostFile = `/etc/hosts`
 	}
-	os.Remove(systemHostFil)
+	os.Remove(systemHostFile)
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
