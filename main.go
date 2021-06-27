@@ -124,7 +124,7 @@ func installInSystem() {
 	case "windows":
 		systemHostFile = `C:\Windows\System32\drivers\etc\hosts`
 	case "darwin", "linux":
-		systemHostFile = `/etc/hosts`
+		systemHostFile = "/etc/hosts"
 	}
 	// Select the list you want to install in your system.
 	switch userInput {
@@ -150,7 +150,7 @@ func uninstallInSystem() {
 	case "windows":
 		systemHostFile = `C:\Windows\System32\drivers\etc\hosts`
 	case "darwin", "linux":
-		systemHostFile = `/etc/hosts`
+		systemHostFile = "/etc/hosts"
 	}
 	os.Remove(systemHostFile)
 }
