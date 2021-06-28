@@ -40,11 +40,12 @@ var (
 	scrapeWaitGroup     sync.WaitGroup
 	validationWaitGroup sync.WaitGroup
 	// The user expresses his or her opinion on what should be done.
-	validation bool
-	showLogs   bool
-	update     bool
-	install    bool
-	uninstall  bool
+	validation  bool
+	showLogs    bool
+	update      bool
+	install     bool
+	uninstall   bool
+	performance bool
 	// err stands for error.
 	err error
 )
@@ -57,12 +58,14 @@ func init() {
 		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
+		tempPerformance := flag.Bool("performance", false, "Don't put too much strain on the system.")
 		flag.Parse()
 		validation = *tempValidation
 		showLogs = *tempLog
 		update = *tempUpdate
 		install = *tempInstall
 		uninstall = *tempUninstall
+		performance = *tempPerformance
 	} else {
 		os.Exit(0)
 	}
@@ -324,6 +327,9 @@ func startScraping() {
 			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
 		}
 	}
+	if performance {
+		scrapeWaitGroup.Wait()
+	}
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
@@ -333,6 +339,9 @@ func startScraping() {
 			// Remove it from the memory.
 			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
 		}
+	}
+	if performance {
+		scrapeWaitGroup.Wait()
 	}
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
@@ -344,6 +353,9 @@ func startScraping() {
 			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
 		}
 	}
+	if performance {
+		scrapeWaitGroup.Wait()
+	}
 	// Explicit
 	for i := 0; i < len(uniqueExplicit); i++ {
 		if validURL(uniqueExplicit[i]) {
@@ -354,10 +366,9 @@ func startScraping() {
 			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Clear the memory via force.
 	debug.FreeOSMemory()
-	// We'll just wait for it to finish as a group.
-	scrapeWaitGroup.Wait()
 }
 
 func findTheDomains(url string, saveLocation string, returnContent []string) {
@@ -426,8 +437,8 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 			}
 		}
 	}
-	// While the validation is being performed, we wait.
 	scrapeWaitGroup.Done()
+	// While the validation is being performed, we wait.
 	validationWaitGroup.Wait()
 	debug.FreeOSMemory()
 }
