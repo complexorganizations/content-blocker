@@ -1,8 +1,8 @@
 name: Updating the resources
-on: [push]
-#on:
-#  schedule:
-#    - cron: "0 0 * * *"
+#on: [push]
+on:
+  schedule:
+    - cron: "0 0 * * *"
 jobs:
   build:
     name: Build
@@ -20,7 +20,7 @@ jobs:
       - name: Build Test
         run: go build -v .
       - name: Generating new resources.
-        run: ./content-blocker # -update -validation
+        run: ./content-blocker -update -validation
       - name: Update resources
         run: |
           git config user.name github-actions
