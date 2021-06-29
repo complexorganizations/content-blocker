@@ -321,7 +321,6 @@ func startScraping() {
 			go findTheDomains(content, advertisementConfig, advertisementArray)
 		}
 	}
-	scrapeWaitGroup.Wait()
 	// Malicious
 	for _, content := range uniqueMalicious {
 		if validURL(content) {
@@ -330,7 +329,6 @@ func startScraping() {
 			go findTheDomains(content, maliciousConfig, maliciousArray)
 		}
 	}
-	scrapeWaitGroup.Wait()
 	// Social Engineering
 	for _, content := range uniqueSocialEngineering {
 		if validURL(content) {
@@ -339,7 +337,6 @@ func startScraping() {
 			go findTheDomains(content, socialEngineeringConfig, socialEngineeringArray)
 		}
 	}
-	scrapeWaitGroup.Wait()
 	// Explicit
 	for _, content := range uniqueExplicit {
 		if validURL(content) {
@@ -348,6 +345,7 @@ func startScraping() {
 			go findTheDomains(content, explicitConfig, exclusionArray)
 		}
 	}
+	// We'll just wait for it to finish as a group.
 	scrapeWaitGroup.Wait()
 	// Clear the memory via force.
 	debug.FreeOSMemory()
