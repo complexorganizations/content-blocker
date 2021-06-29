@@ -183,7 +183,6 @@ func uninstallInSystem() {
 func startScraping() {
 	// Advertisement && Tracking
 	advertisement := []string{
-		"https://block.energized.pro/ultimate/formats/domains.txt",
 		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
 		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
 		"https://raw.githubusercontent.com/DRSDavidSoft/additional-hosts/master/domains/blacklist/adservers-and-trackers.txt",
