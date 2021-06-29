@@ -338,8 +338,6 @@ func startScraping() {
 			scrapeWaitGroup.Add(1)
 			// Begin searching and confirming the domains you've discovered.
 			go findTheDomains(content, advertisementConfig, advertisementArray)
-			// To save memory, remove the string from the array.
-			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, content)
 		}
 	}
 	//scrapeWaitGroup.Wait()
@@ -349,8 +347,6 @@ func startScraping() {
 			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
 			go findTheDomains(content, maliciousConfig, maliciousArray)
-			// Remove it from the memory.
-			uniqueMalicious = removeStringFromSlice(uniqueMalicious, content)
 		}
 	}
 	//scrapeWaitGroup.Wait()
@@ -424,8 +420,6 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 							validationWaitGroup.Add(1)
 							// Go ahead and verify it in the background.
 							go validateTheDomains(foundDomain, saveLocation)
-							// remove it from memory
-							returnContent = removeStringFromSlice(returnContent, foundDomain)
 						} else {
 							// Because we know it's not a legitimate suffix, it informs the user that the domain is invalid.
 							if showLogs {
@@ -630,8 +624,6 @@ func makeEverythingUnique(contentLocation string) {
 	// Begin composing the document
 	for _, content := range uniqueDomains {
 		writeToFile(contentLocation, content)
-		// It should be removed from the array memeory.
-		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
 	// remove it from memory
 	uniqueDomains = nil
@@ -665,7 +657,6 @@ func downloadFile(url string, filePath string) {
 	for _, content := range returnContent {
 		contentToWrite := fmt.Sprintln("0.0.0.0", content)
 		writeToFile(filePath, contentToWrite)
-		returnContent = removeStringFromSlice(returnContent, content)
 	}
 	// Get as much free memoey as possible from the system.
 	returnContent = nil
