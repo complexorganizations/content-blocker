@@ -342,7 +342,7 @@ func startScraping() {
 			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, content)
 		}
 	}
-	scrapeWaitGroup.Wait()
+	//scrapeWaitGroup.Wait()
 	// Malicious
 	for _, content := range uniqueMalicious {
 		if validURL(content) {
@@ -353,7 +353,7 @@ func startScraping() {
 			uniqueMalicious = removeStringFromSlice(uniqueMalicious, content)
 		}
 	}
-	scrapeWaitGroup.Wait()
+	//scrapeWaitGroup.Wait()
 	// Social Engineering
 	for _, content := range uniqueSocialEngineering {
 		if validURL(content) {
@@ -362,7 +362,7 @@ func startScraping() {
 			go findTheDomains(content, socialEngineeringConfig, socialEngineeringArray)
 		}
 	}
-	scrapeWaitGroup.Wait()
+	//scrapeWaitGroup.Wait()
 	// Explicit
 	for _, content := range uniqueExplicit {
 		if validURL(content) {
