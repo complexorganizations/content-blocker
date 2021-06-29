@@ -31,13 +31,8 @@ var (
 	localExclusion          = "configs/exclusion"
 	explicitConfig          = "configs/explicit"
 	// Memorandum with a domain list.
-	exclusionDomains       []string
-	advertisementArray     []string
-	maliciousArray         []string
-	socialEngineeringArray []string
-	exclusionArray         []string
+	exclusionDomains []string
 	// Go routines using waitgrops.
-	scrapeWaitGroup     sync.WaitGroup
 	validationWaitGroup sync.WaitGroup
 	// The user expresses his or her opinion on what should be done.
 	validation bool
@@ -93,12 +88,6 @@ func main() {
 		}
 		// Scrape all of the domains and save them afterwards.
 		startScraping()
-		// We'll make everything distinctive once everything is finished.
-		makeEverythingUnique(allInOneBlockList)
-		makeEverythingUnique(advertisementConfig)
-		makeEverythingUnique(maliciousConfig)
-		makeEverythingUnique(socialEngineeringConfig)
-		makeEverythingUnique(explicitConfig)
 	}
 }
 
@@ -159,208 +148,65 @@ func uninstallInSystem() {
 func startScraping() {
 	// Advertisement && Tracking
 	advertisement := []string{
-		"https://block.energized.pro/ultimate/formats/domains.txt",
-		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
-		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
-		"https://raw.githubusercontent.com/DRSDavidSoft/additional-hosts/master/domains/blacklist/adservers-and-trackers.txt",
-		"https://raw.githubusercontent.com/Ewpratten/youtube_ad_blocklist/master/blocklist.txt",
-		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/AmazonFireTV.txt",
-		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SessionReplay.txt",
-		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt",
-		"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
-		"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
-		"https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/cameleon_at_sysctl.org/master/domains.list",
-		"https://raw.githubusercontent.com/VeleSila/yhosts/master/hosts",
-		"https://raw.githubusercontent.com/allendema/noplaylist/main/NoPlayList.txt",
-		"https://raw.githubusercontent.com/anthony-wang/PiHoleBlocklist/master/hosts1.txt",
-		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
-		"https://raw.githubusercontent.com/anudeepND/youtubeadsblacklist/master/domainlist.txt",
-		"https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/domains.txt",
-		"https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
-		"https://raw.githubusercontent.com/cbuijs/shallalist/master/adv/domains",
-		"https://raw.githubusercontent.com/cbuijs/shallalist/master/tracker/domains",
-		"https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/huawei-trackers.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smart-tv-ads-tracking.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smartphone-ads-tracking.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/spotify-ads-tracking.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/windows10-spying-erm-i-mean-telemetry-lol.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/xiaomi-ads-tracking.txt",
-		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/advertisement.txt",
-		"https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts",
-		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds-Ultra.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/adguarddns-justdomains.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easylist-justdomains.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easyprivacy-justdomains.txt",
-		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/black.list",
-		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/huluads.txt",
-		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt",
-		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
-		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
-		"https://raw.githubusercontent.com/matomo-org/referrer-spam-blacklist/master/spammers.txt",
-		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/list.txt",
-		"https://raw.githubusercontent.com/mhxion/pornaway/master/hosts/porn_ads.txt",
-		"https://raw.githubusercontent.com/migueldemoura/ublock-umatrix-rulesets/master/Hosts/ads-tracking",
-		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
-		"https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt",
-		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
-		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/hosts.txt",
-		"https://raw.githubusercontent.com/tiuxo/hosts/master/ads",
-		"https://raw.githubusercontent.com/xlimit91/xlimit91-block-list/master/blacklist.txt",
-		"https://raw.githubusercontent.com/yous/YousList/master/hosts.txt",
+		"https://raw.githubusercontent.com/complexorganizations/content-blocker/main/test/random-data-one",
 	}
 	// Malicious
 	malicious := []string{
-		"https://badmojr.github.io/1Hosts/Pro/domains.txt",
-		"https://gitlab.com/andryou/block/raw/master/chibi-strict-domains",
-		"https://gitlab.com/andryou/block/raw/master/kouhai-strict-domains",
-		"https://gitlab.com/andryou/block/raw/master/senpai-strict-domains",
-		"https://gitlab.com/curben/urlhaus-filter/-/raw/master/urlhaus-filter-domains.txt",
-		"https://gitlab.com/quidsup/notrack-blocklists/-/raw/master/notrack-blocklist.txt",
-		"https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Regular%20Hosts.txt",
-		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
-		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
-		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling/hosts",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/extensions/fakenews/hosts",
-		"https://raw.githubusercontent.com/Strappazzon/teleme7ry/master/rules.txt",
-		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/domains/domains0.list",
-		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/domains/domains1.list",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/crypto.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/drugs.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/gambling.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
-		"https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts",
-		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
-		"https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/hosts.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/avg-avast-data-mining-full-block.txt",
-		"https://raw.githubusercontent.com/furkun/ProtectorHosts/main/hosts",
-		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/fraudulent.txt",
-		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/malware.txt",
-		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/ransomware.txt",
-		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/scam.txt",
-		"https://raw.githubusercontent.com/herrbischoff/trackers/master/domains.txt",
-		"https://raw.githubusercontent.com/infinitytec/blocklists/master/scams-and-phishing.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/nocoin-justdomains.txt",
-		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/hate-and-junk-extended.txt",
-		"https://raw.githubusercontent.com/matomo-org/referrer-spam-list/master/spammers.txt",
-		"https://raw.githubusercontent.com/migueldemoura/ublock-umatrix-rulesets/master/Hosts/malware",
-		"https://raw.githubusercontent.com/missdeer/blocklist/master/toblock-without-shorturl.lst",
-		"https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts",
-		"https://raw.githubusercontent.com/mitchellkrogza/The-Big-List-of-Hacked-Malware-Web-Sites/master/hosts",
-		"https://raw.githubusercontent.com/nextdns/cname-cloaking-blocklist/master/domains",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/alexa",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/apple",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/huawei",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/roku",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/samsung",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/sonos",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/windows",
-		"https://raw.githubusercontent.com/nextdns/metadata/master/privacy/native/xiaomi",
-		"https://raw.githubusercontent.com/piwik/referrer-spam-blacklist/master/spammers.txt",
-		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
-		"https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestdomains.txt",
+		"https://raw.githubusercontent.com/complexorganizations/content-blocker/main/test/random-data-two",
 	}
 	// Social Engineering
 	socialEngineering := []string{
-		"https://blocklist.cyberthreatcoalition.org/vetted/domain.txt",
-		"https://phishing.army/download/phishing_army_blocklist_extended.txt",
-		"https://raw.githubusercontent.com/MetaMask/eth-phishing-detect/master/src/hosts.txt",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Scam",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/abuse.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/fraud.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/scam.txt",
-		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/phishing.txt",
-		"https://raw.githubusercontent.com/merkleID/covid-domains/master/full-domains-list.txt",
-		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
-		"https://raw.githubusercontent.com/sk-cat/fluffy-blocklist/main/domains",
-		"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
+		"https://raw.githubusercontent.com/complexorganizations/content-blocker/main/test/random-data-three",
+		"https://raw.githubusercontent.com/complexorganizations/content-blocker/main/test/random-data-five",
 	}
 	// Adult content
 	explicit := []string{
-		"https://block.energized.pro/porn/formats/domains.txt",
-		"https://block.energized.pro/extensions/porn-lite/formats/domains.txt",
-		"https://raw.githubusercontent.com/4skinSkywalker/Anti-Porn-HOSTS-File/master/HOSTS.txt",
-		"https://raw.githubusercontent.com/Bon-Appetit/porn-domains/master/block.txt",
-		"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/0.0.0.0/hosts",
-		"https://raw.githubusercontent.com/Import-External-Sources/pornhosts/master/download_here/0.0.0.0/hosts",
-		"https://raw.githubusercontent.com/Sinfonietta/hostfiles/master/pornography-hosts",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/porn.txt",
-		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
-		"https://raw.githubusercontent.com/mhxion/pornaway/master/hosts/porn_sites.txt",
-		"https://raw.githubusercontent.com/tiuxo/hosts/master/porn",
-		"https://raw.githubusercontent.com/chadmayfield/my-pihole-blocklists/master/lists/pi_blocklist_porn_all.list",
+		"https://raw.githubusercontent.com/complexorganizations/content-blocker/main/test/random-data-four",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
 	advertisement = nil
+	// fmt.Println(uniqueAdvertisement)
 	uniqueMalicious := makeUnique(malicious)
+	// fmt.Println(uniqueMalicious)
 	malicious = nil
 	uniqueSocialEngineering := makeUnique(socialEngineering)
+	// fmt.Println(uniqueSocialEngineering)
 	socialEngineering = nil
 	uniqueExplicit := makeUnique(explicit)
+	// fmt.Println(uniqueExplicit)
 	explicit = nil
 	// Advertisement
 	for i := 0; i < len(uniqueAdvertisement); i++ {
 		if validURL(uniqueAdvertisement[i]) {
-			scrapeWaitGroup.Add(1)
 			// Begin searching and confirming the domains you've discovered.
-			go findTheDomains(uniqueAdvertisement[i], advertisementConfig, advertisementArray)
-			// To save memory, remove the string from the array.
-			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
+			findTheDomains(uniqueAdvertisement[i], advertisementConfig)
 		}
 	}
 	// Malicious
 	for i := 0; i < len(uniqueMalicious); i++ {
 		if validURL(uniqueMalicious[i]) {
-			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(uniqueMalicious[i], maliciousConfig, maliciousArray)
-			// Remove it from the memory.
-			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
+			findTheDomains(uniqueMalicious[i], maliciousConfig)
 		}
 	}
 	// Social Engineering
 	for i := 0; i < len(uniqueSocialEngineering); i++ {
 		if validURL(uniqueSocialEngineering[i]) {
-			scrapeWaitGroup.Add(1)
-			// Begin searching for and confirming the domains you've discovered.
-			go findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig, socialEngineeringArray)
-			// Remove it from memeory
-			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
+			findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig)
 		}
 	}
 	// Explicit
 	for i := 0; i < len(uniqueExplicit); i++ {
 		if validURL(uniqueExplicit[i]) {
-			scrapeWaitGroup.Add(1)
-			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(uniqueExplicit[i], explicitConfig, exclusionArray)
-			// Remove it from memeory
-			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
+			findTheDomains(uniqueExplicit[i], explicitConfig)
 		}
 	}
 	// Clear the memory via force.
 	debug.FreeOSMemory()
-	// We'll just wait for it to finish as a group.
-	scrapeWaitGroup.Wait()
 }
 
-func findTheDomains(url string, saveLocation string, returnContent []string) {
+func findTheDomains(url string, saveLocation string) {
 	// Send a request to acquire all the information you need.
 	response, err := http.Get(url)
 	if err != nil {
@@ -378,12 +224,17 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	// Scraped data is read and appended to an array.
 	scanner := bufio.NewScanner(bytes.NewReader(body))
 	scanner.Split(bufio.ScanLines)
+	var returnContent []string
 	for scanner.Scan() {
 		returnContent = append(returnContent, scanner.Text())
+	}
+	for _, content := range returnContent {
+		writeToFile("whole", content)
 	}
 	// When you're finished, close the body.
 	response.Body.Close()
 	for a := 0; a < len(returnContent); a++ {
+		writeToFile("complete", returnContent[a])
 		// If the string begins with a "!", inform the user that it is most likely a browser-level ad block list rather than a domain-level ad block list.
 		if strings.HasPrefix(string([]byte(returnContent[a])), "!") {
 			if showLogs {
@@ -398,6 +249,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(returnContent[a]))
 				// all the emails from rejex
 				foundDomain := string(foundDomains)
+				writeToFile("regex", foundDomain)
 				if len(foundDomain) > 3 {
 					// Validate the entire list of domains.
 					if len(foundDomain) < 255 && checkIPAddress(foundDomain) && !strings.Contains(foundDomain, " ") && strings.Contains(foundDomain, ".") && !strings.Contains(foundDomain, "#") && !strings.Contains(foundDomain, "*") && !strings.Contains(foundDomain, "!") {
@@ -427,7 +279,6 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 		}
 	}
 	// While the validation is being performed, we wait.
-	scrapeWaitGroup.Done()
 	validationWaitGroup.Wait()
 	debug.FreeOSMemory()
 }
