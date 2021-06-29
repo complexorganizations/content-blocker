@@ -82,11 +82,26 @@ func main() {
 	// Lists should be updated.
 	if update {
 		// Remove the old files from your system if they are found.
-		os.Remove(allInOneBlockList)
-		os.Remove(advertisementConfig)
-		os.Remove(maliciousConfig)
-		os.Remove(socialEngineeringConfig)
-		os.Remove(explicitConfig)
+		err = os.Remove(allInOneBlockList)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(advertisementConfig)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(maliciousConfig)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(socialEngineeringConfig)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(explicitConfig)
+		if err != nil {
+			log.Println(err)
+		}
 		// Read through all of the exclusion domains before appending them.
 		if fileExists(localExclusion) {
 			exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
@@ -152,7 +167,10 @@ func uninstallInSystem() {
 	case "darwin", "linux":
 		systemHostFile = "/etc/hosts"
 	}
-	os.Remove(systemHostFile)
+	err = os.Remove(systemHostFile)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
@@ -456,7 +474,6 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 			log.Println("Domain:", uniqueDomains)
 		}
 	}
-	debug.FreeOSMemory()
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	validationWaitGroup.Done()
 }
@@ -465,10 +482,10 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 func makeUnique(randomStrings []string) []string {
 	flag := make(map[string]bool)
 	var uniqueString []string
-	for i := 0; i < len(randomStrings); i++ {
-		if !flag[randomStrings[i]] {
-			flag[randomStrings[i]] = true
-			uniqueString = append(uniqueString, randomStrings[i])
+	for _, content := range randomStrings {
+		if !flag[content] {
+			flag[content] = true
+			uniqueString = append(uniqueString, content)
 		}
 	}
 	return uniqueString
@@ -547,9 +564,9 @@ func fileExists(filename string) bool {
 // Remove a string from a slice
 func removeStringFromSlice(originalSlice []string, removeString string) []string {
 	// go though the array
-	for i := 0; i < len(originalSlice); i++ {
+	for i, content := range originalSlice {
 		// if the array matches with the string, you remove it from the array
-		if originalSlice[i] == removeString {
+		if content == removeString {
 			return append(originalSlice[:i], originalSlice[i+1:]...)
 		}
 	}
@@ -602,8 +619,8 @@ func makeEverythingUnique(contentLocation string) {
 	// Sort the entire string.
 	sort.Strings(uniqueDomains)
 	// Remove all the exclusions domains from the list.
-	for a := 0; a < len(exclusionDomains); a++ {
-		uniqueDomains = removeStringFromSlice(uniqueDomains, exclusionDomains[a])
+	for _, content := range uniqueDomains {
+		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
 	// Delete the original file and rewrite it.
 	err = os.Remove(contentLocation)
@@ -611,10 +628,10 @@ func makeEverythingUnique(contentLocation string) {
 		log.Println(err)
 	}
 	// Begin composing the document
-	for i := 0; i < len(uniqueDomains); i++ {
-		writeToFile(contentLocation, uniqueDomains[i])
+	for _, content := range uniqueDomains {
+		writeToFile(contentLocation, content)
 		// It should be removed from the array memeory.
-		uniqueDomains = removeStringFromSlice(uniqueDomains, uniqueDomains[i])
+		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
 	// remove it from memory
 	uniqueDomains = nil
@@ -641,11 +658,14 @@ func downloadFile(url string, filePath string) {
 		returnContent = append(returnContent, scanner.Text())
 	}
 	// Remove the original file before rewriting it.
-	os.Remove(filePath)
-	for a := 0; a < len(returnContent); a++ {
-		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
+	err = os.Remove(filePath)
+	if err != nil {
+		log.Println(err)
+	}
+	for _, content := range returnContent {
+		contentToWrite := fmt.Sprintln("0.0.0.0", content)
 		writeToFile(filePath, contentToWrite)
-		returnContent = removeStringFromSlice(returnContent, returnContent[a])
+		returnContent = removeStringFromSlice(returnContent, content)
 	}
 	// Get as much free memoey as possible from the system.
 	returnContent = nil
