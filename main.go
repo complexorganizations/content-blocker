@@ -315,49 +315,47 @@ func startScraping() {
 	uniqueExplicit := makeUnique(explicit)
 	explicit = nil
 	// Advertisement
-	for i := 0; i < len(uniqueAdvertisement); i++ {
-		if validURL(uniqueAdvertisement[i]) {
+	for _, content := range uniqueAdvertisement {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin searching and confirming the domains you've discovered.
-			go findTheDomains(uniqueAdvertisement[i], advertisementConfig, advertisementArray)
+			go findTheDomains(content, advertisementConfig, advertisementArray)
 			// To save memory, remove the string from the array.
-			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
+			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, content)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Malicious
-	for i := 0; i < len(uniqueMalicious); i++ {
-		if validURL(uniqueMalicious[i]) {
+	for _, content := range uniqueMalicious {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(uniqueMalicious[i], maliciousConfig, maliciousArray)
+			go findTheDomains(content, maliciousConfig, maliciousArray)
 			// Remove it from the memory.
-			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
+			uniqueMalicious = removeStringFromSlice(uniqueMalicious, content)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Social Engineering
-	for i := 0; i < len(uniqueSocialEngineering); i++ {
-		if validURL(uniqueSocialEngineering[i]) {
+	for _, content := range uniqueSocialEngineering {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin searching for and confirming the domains you've discovered.
-			go findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig, socialEngineeringArray)
-			// Remove it from memeory
-			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
+			go findTheDomains(content, socialEngineeringConfig, socialEngineeringArray)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Explicit
-	for i := 0; i < len(uniqueExplicit); i++ {
-		if validURL(uniqueExplicit[i]) {
+	for _, content := range uniqueExplicit {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(uniqueExplicit[i], explicitConfig, exclusionArray)
-			// Remove it from memeory
-			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
+			go findTheDomains(content, explicitConfig, exclusionArray)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Clear the memory via force.
 	debug.FreeOSMemory()
-	// We'll just wait for it to finish as a group.
-	scrapeWaitGroup.Wait()
 }
 
 func findTheDomains(url string, saveLocation string, returnContent []string) {
@@ -383,19 +381,19 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	}
 	// When you're finished, close the body.
 	response.Body.Close()
-	for a := 0; a < len(returnContent); a++ {
+	for _, content := range returnContent {
 		// If the string begins with a "!", inform the user that it is most likely a browser-level ad block list rather than a domain-level ad block list.
-		if strings.HasPrefix(string([]byte(returnContent[a])), "!") {
+		if strings.HasPrefix(content, "!") {
 			if showLogs {
 				log.Println("Error: Most likely, this is a browser-level block list rather than a DNS-level block list.", url)
 			}
 		}
 		// Check to see if the string includes a # prefix, and if it does, skip it.
-		if !strings.HasPrefix(string([]byte(returnContent[a])), "#") {
+		if !strings.HasPrefix(content, "#") {
 			// Make sure the domain is at least 3 characters long
-			if len(string([]byte(returnContent[a]))) > 1 {
+			if len(content) > 1 {
 				// This is a list of all the domains discovered using the regex.
-				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(returnContent[a]))
+				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(content))
 				// all the emails from rejex
 				foundDomain := string(foundDomains)
 				if len(foundDomain) > 3 {
@@ -426,8 +424,8 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 			}
 		}
 	}
-	// While the validation is being performed, we wait.
 	scrapeWaitGroup.Done()
+	// While the validation is being performed, we wait.
 	validationWaitGroup.Wait()
 	debug.FreeOSMemory()
 }
