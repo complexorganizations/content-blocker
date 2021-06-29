@@ -82,11 +82,26 @@ func main() {
 	// Lists should be updated.
 	if update {
 		// Remove the old files from your system if they are found.
-		os.Remove(allInOneBlockList)
-		os.Remove(advertisementConfig)
-		os.Remove(maliciousConfig)
-		os.Remove(socialEngineeringConfig)
-		os.Remove(explicitConfig)
+		err = os.Remove(allInOneBlockList)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(advertisementConfig)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(maliciousConfig)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(socialEngineeringConfig)
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Remove(explicitConfig)
+		if err != nil {
+			log.Println(err)
+		}
 		// Read through all of the exclusion domains before appending them.
 		if fileExists(localExclusion) {
 			exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
@@ -152,7 +167,10 @@ func uninstallInSystem() {
 	case "darwin", "linux":
 		systemHostFile = "/etc/hosts"
 	}
-	os.Remove(systemHostFile)
+	err = os.Remove(systemHostFile)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
@@ -315,49 +333,47 @@ func startScraping() {
 	uniqueExplicit := makeUnique(explicit)
 	explicit = nil
 	// Advertisement
-	for i := 0; i < len(uniqueAdvertisement); i++ {
-		if validURL(uniqueAdvertisement[i]) {
+	for _, content := range uniqueAdvertisement {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin searching and confirming the domains you've discovered.
-			go findTheDomains(uniqueAdvertisement[i], advertisementConfig, advertisementArray)
+			go findTheDomains(content, advertisementConfig, advertisementArray)
 			// To save memory, remove the string from the array.
-			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, uniqueAdvertisement[i])
+			uniqueAdvertisement = removeStringFromSlice(uniqueAdvertisement, content)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Malicious
-	for i := 0; i < len(uniqueMalicious); i++ {
-		if validURL(uniqueMalicious[i]) {
+	for _, content := range uniqueMalicious {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(uniqueMalicious[i], maliciousConfig, maliciousArray)
+			go findTheDomains(content, maliciousConfig, maliciousArray)
 			// Remove it from the memory.
-			uniqueMalicious = removeStringFromSlice(uniqueMalicious, uniqueMalicious[i])
+			uniqueMalicious = removeStringFromSlice(uniqueMalicious, content)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Social Engineering
-	for i := 0; i < len(uniqueSocialEngineering); i++ {
-		if validURL(uniqueSocialEngineering[i]) {
+	for _, content := range uniqueSocialEngineering {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin searching for and confirming the domains you've discovered.
-			go findTheDomains(uniqueSocialEngineering[i], socialEngineeringConfig, socialEngineeringArray)
-			// Remove it from memeory
-			uniqueSocialEngineering = removeStringFromSlice(uniqueSocialEngineering, uniqueSocialEngineering[i])
+			go findTheDomains(content, socialEngineeringConfig, socialEngineeringArray)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Explicit
-	for i := 0; i < len(uniqueExplicit); i++ {
-		if validURL(uniqueExplicit[i]) {
+	for _, content := range uniqueExplicit {
+		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(uniqueExplicit[i], explicitConfig, exclusionArray)
-			// Remove it from memeory
-			uniqueExplicit = removeStringFromSlice(uniqueExplicit, uniqueExplicit[i])
+			go findTheDomains(content, explicitConfig, exclusionArray)
 		}
 	}
+	scrapeWaitGroup.Wait()
 	// Clear the memory via force.
 	debug.FreeOSMemory()
-	// We'll just wait for it to finish as a group.
-	scrapeWaitGroup.Wait()
 }
 
 func findTheDomains(url string, saveLocation string, returnContent []string) {
@@ -383,19 +399,19 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	}
 	// When you're finished, close the body.
 	response.Body.Close()
-	for a := 0; a < len(returnContent); a++ {
+	for _, content := range returnContent {
 		// If the string begins with a "!", inform the user that it is most likely a browser-level ad block list rather than a domain-level ad block list.
-		if strings.HasPrefix(string([]byte(returnContent[a])), "!") {
+		if strings.HasPrefix(content, "!") {
 			if showLogs {
 				log.Println("Error: Most likely, this is a browser-level block list rather than a DNS-level block list.", url)
 			}
 		}
 		// Check to see if the string includes a # prefix, and if it does, skip it.
-		if !strings.HasPrefix(string([]byte(returnContent[a])), "#") {
+		if !strings.HasPrefix(content, "#") {
 			// Make sure the domain is at least 3 characters long
-			if len(string([]byte(returnContent[a]))) > 1 {
+			if len(content) > 1 {
 				// This is a list of all the domains discovered using the regex.
-				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(returnContent[a]))
+				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(content))
 				// all the emails from rejex
 				foundDomain := string(foundDomains)
 				if len(foundDomain) > 3 {
@@ -426,8 +442,8 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 			}
 		}
 	}
-	// While the validation is being performed, we wait.
 	scrapeWaitGroup.Done()
+	// While the validation is being performed, we wait.
 	validationWaitGroup.Wait()
 	debug.FreeOSMemory()
 }
@@ -458,7 +474,6 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 			log.Println("Domain:", uniqueDomains)
 		}
 	}
-	debug.FreeOSMemory()
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	validationWaitGroup.Done()
 }
@@ -467,10 +482,10 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 func makeUnique(randomStrings []string) []string {
 	flag := make(map[string]bool)
 	var uniqueString []string
-	for i := 0; i < len(randomStrings); i++ {
-		if !flag[randomStrings[i]] {
-			flag[randomStrings[i]] = true
-			uniqueString = append(uniqueString, randomStrings[i])
+	for _, content := range randomStrings {
+		if !flag[content] {
+			flag[content] = true
+			uniqueString = append(uniqueString, content)
 		}
 	}
 	return uniqueString
@@ -549,9 +564,9 @@ func fileExists(filename string) bool {
 // Remove a string from a slice
 func removeStringFromSlice(originalSlice []string, removeString string) []string {
 	// go though the array
-	for i := 0; i < len(originalSlice); i++ {
+	for i, content := range originalSlice {
 		// if the array matches with the string, you remove it from the array
-		if originalSlice[i] == removeString {
+		if content == removeString {
 			return append(originalSlice[:i], originalSlice[i+1:]...)
 		}
 	}
@@ -604,8 +619,8 @@ func makeEverythingUnique(contentLocation string) {
 	// Sort the entire string.
 	sort.Strings(uniqueDomains)
 	// Remove all the exclusions domains from the list.
-	for a := 0; a < len(exclusionDomains); a++ {
-		uniqueDomains = removeStringFromSlice(uniqueDomains, exclusionDomains[a])
+	for _, content := range uniqueDomains {
+		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
 	// Delete the original file and rewrite it.
 	err = os.Remove(contentLocation)
@@ -613,10 +628,10 @@ func makeEverythingUnique(contentLocation string) {
 		log.Println(err)
 	}
 	// Begin composing the document
-	for i := 0; i < len(uniqueDomains); i++ {
-		writeToFile(contentLocation, uniqueDomains[i])
+	for _, content := range uniqueDomains {
+		writeToFile(contentLocation, content)
 		// It should be removed from the array memeory.
-		uniqueDomains = removeStringFromSlice(uniqueDomains, uniqueDomains[i])
+		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
 	// remove it from memory
 	uniqueDomains = nil
@@ -643,11 +658,14 @@ func downloadFile(url string, filePath string) {
 		returnContent = append(returnContent, scanner.Text())
 	}
 	// Remove the original file before rewriting it.
-	os.Remove(filePath)
-	for a := 0; a < len(returnContent); a++ {
-		contentToWrite := fmt.Sprintln("0.0.0.0", returnContent[a])
+	err = os.Remove(filePath)
+	if err != nil {
+		log.Println(err)
+	}
+	for _, content := range returnContent {
+		contentToWrite := fmt.Sprintln("0.0.0.0", content)
 		writeToFile(filePath, contentToWrite)
-		returnContent = removeStringFromSlice(returnContent, returnContent[a])
+		returnContent = removeStringFromSlice(returnContent, content)
 	}
 	// Get as much free memoey as possible from the system.
 	returnContent = nil
