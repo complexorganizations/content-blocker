@@ -404,7 +404,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	}
 	scrapeWaitGroup.Done()
 	// While the validation is being performed, we wait.
-	validationWaitGroup.Wait()
+	defer validationWaitGroup.Wait()
 	debug.FreeOSMemory()
 }
 
