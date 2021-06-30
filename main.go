@@ -66,8 +66,6 @@ func init() {
 	} else {
 		os.Exit(0)
 	}
-	// To free up some memory, delete all of the files in temp.
-	os.RemoveAll(os.TempDir())
 	// Options that aren't valid
 	if !update && validation {
 		log.Fatal("Error: This is an incorrect option in order to utilize validation, the lists must be updated.")
