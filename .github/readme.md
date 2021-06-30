@@ -6,7 +6,7 @@
 	</a>
 </p>
 
-Content blocker is a DNS level blocker that can block anything on the DNS level, eliminating the need for the user to download an additional application. It works on internet of things devices.
+Content blocker is a DNS level blocker that can block anything on the DNS level, removing the need for the user to download a separate program.
 
 ### Features
 
