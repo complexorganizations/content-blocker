@@ -212,8 +212,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling/hosts",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/extensions/fakenews/hosts",
-		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/domains/domains0.list",
-		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/domains/domains1.list",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/crypto.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/drugs.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
