@@ -229,6 +229,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/scam.txt",
 		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
 		"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
+		"https://block.energized.pro/ultimate/formats/domains.txt",
 	}
 	// Adult content
 	explicit := []string{
@@ -239,6 +240,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/porn.txt",
 		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
 		"https://raw.githubusercontent.com/tiuxo/hosts/master/porn",
+		"https://block.energized.pro/porn/formats/domains.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
