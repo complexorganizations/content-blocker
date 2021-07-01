@@ -40,11 +40,10 @@ var (
 	scrapeWaitGroup     sync.WaitGroup
 	validationWaitGroup sync.WaitGroup
 	// The user expresses his or her opinion on what should be done.
-	validation bool
-	showLogs   bool
-	update     bool
-	install    bool
-	uninstall  bool
+	showLogs  bool
+	update    bool
+	install   bool
+	uninstall bool
 	// err stands for error.
 	err error
 )
@@ -53,22 +52,16 @@ func init() {
 	// If any user input flags are provided, use them.
 	if len(os.Args) > 1 {
 		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
-		tempValidation := flag.Bool("validation", false, "Choose whether or not to do domain validation.")
 		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
 		flag.Parse()
 		update = *tempUpdate
-		validation = *tempValidation
 		showLogs = *tempLog
 		install = *tempInstall
 		uninstall = *tempUninstall
 	} else {
 		os.Exit(0)
-	}
-	// Options that aren't valid
-	if !update && validation {
-		log.Fatal("Error: This is an incorrect option in order to utilize validation, the lists must be updated.")
 	}
 }
 
@@ -409,29 +402,19 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 }
 
 func validateTheDomains(uniqueDomains string, locatioToSave string) {
-	if validation {
-		// Validate each and every found domain.
-		if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) || validateDomainViaHTTP(uniqueDomains) {
-			// Maintain a list of all authorized domains.
-			writeToFile(locatioToSave, uniqueDomains)
-			// Save it to all in one.
-			writeToFile(allInOneBlockList, uniqueDomains)
-			if showLogs {
-				log.Println("Valid domain:", uniqueDomains)
-			}
-		} else {
-			// Let the users know if there are any issues while verifying the domain.
-			if showLogs {
-				log.Println("Error validating domain:", uniqueDomains)
-			}
+	// Validate each and every found domain.
+	if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) || validateDomainViaHTTP(uniqueDomains) {
+		// Maintain a list of all authorized domains.
+		writeToFile(locatioToSave, uniqueDomains)
+		// Save it to all in one.
+		writeToFile(allInOneBlockList, uniqueDomains)
+		if showLogs {
+			log.Println("Valid domain:", uniqueDomains)
 		}
 	} else {
-		// To the list, add all of the domains.
-		writeToFile(allInOneBlockList, uniqueDomains)
-		// Add it to the list of one-of-a-kind items.
-		writeToFile(locatioToSave, uniqueDomains)
+		// Let the users know if there are any issues while verifying the domain.
 		if showLogs {
-			log.Println("Domain:", uniqueDomains)
+			log.Println("Error validating domain:", uniqueDomains)
 		}
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
