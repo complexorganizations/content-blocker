@@ -24,7 +24,6 @@ import (
 
 var (
 	// Location of the configuration in the local system path
-	allInOneBlockList       = "configs/hosts"
 	advertisementConfig     = "configs/advertisement"
 	maliciousConfig         = "configs/malicious"
 	socialEngineeringConfig = "configs/social-engineering"
@@ -79,10 +78,6 @@ func main() {
 		// Max ammount of go routines
 		debug.SetMaxThreads(10000)
 		// Remove the old files from your system if they are found.
-		err = os.Remove(allInOneBlockList)
-		if err != nil {
-			log.Println(err)
-		}
 		err = os.Remove(advertisementConfig)
 		if err != nil {
 			log.Println(err)
@@ -106,7 +101,6 @@ func main() {
 		// Scrape all of the domains and save them afterwards.
 		startScraping()
 		// We'll make everything distinctive once everything is finished.
-		makeEverythingUnique(allInOneBlockList)
 		makeEverythingUnique(advertisementConfig)
 		makeEverythingUnique(maliciousConfig)
 		makeEverythingUnique(socialEngineeringConfig)
@@ -117,15 +111,13 @@ func main() {
 // Configure your system to use the lists.
 func installInSystem() {
 	fmt.Println("Which of the following lists would you like to add to your system?")
-	fmt.Println("1. Hosts")
-	fmt.Println("2. Advertisement")
-	fmt.Println("3. Malicious")
-	fmt.Println("4. Social-Engineering")
-	fmt.Println("5. Explicit")
+	fmt.Println("1. Advertisement")
+	fmt.Println("2. Malicious")
+	fmt.Println("3. Social-Engineering")
+	fmt.Println("4. Explicit")
 	var userInput int
 	fmt.Scanln(&userInput)
 	// Set up the lists on your computer.
-	hosts := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts"
 	advertisement := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
 	malicious := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
 	socialEngineering := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering"
@@ -141,14 +133,12 @@ func installInSystem() {
 	// Select the list you want to install in your system.
 	switch userInput {
 	case 1:
-		downloadFile(hosts, systemHostFile)
-	case 2:
 		downloadFile(advertisement, systemHostFile)
-	case 3:
+	case 2:
 		downloadFile(malicious, systemHostFile)
-	case 4:
+	case 3:
 		downloadFile(socialEngineering, systemHostFile)
-	case 5:
+	case 4:
 		downloadFile(explicit, systemHostFile)
 	default:
 		os.Exit(0)
@@ -366,8 +356,6 @@ func validateTheDomains(uniqueDomains string, locatioToSave string) {
 	if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) || validateDomainViaHTTP(uniqueDomains) {
 		// Maintain a list of all authorized domains.
 		writeToFile(locatioToSave, uniqueDomains)
-		// Save it to all in one.
-		writeToFile(allInOneBlockList, uniqueDomains)
 		if showLogs {
 			log.Println("Valid domain:", uniqueDomains)
 		}
