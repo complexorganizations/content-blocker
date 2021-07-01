@@ -186,21 +186,16 @@ func startScraping() {
 		"https://raw.githubusercontent.com/anudeepND/youtubeadsblacklist/master/domainlist.txt",
 		"https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/domains.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
-		"https://raw.githubusercontent.com/cbuijs/shallalist/master/adv/domains",
-		"https://raw.githubusercontent.com/cbuijs/shallalist/master/tracker/domains",
 		"https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
-		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds-Ultra.txt",
 		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/adguarddns-justdomains.txt",
 		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easylist-justdomains.txt",
+		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
 		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
 		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/list.txt",
-		"https://raw.githubusercontent.com/migueldemoura/ublock-umatrix-rulesets/master/Hosts/ads-tracking",
 		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
 		"https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt",
 		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
-		"https://raw.githubusercontent.com/tiuxo/hosts/master/ads",
-		"https://raw.githubusercontent.com/yous/YousList/master/hosts.txt",
 	}
 	// Malicious
 	malicious := []string{
