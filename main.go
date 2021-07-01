@@ -190,6 +190,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
 		"https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt",
 		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
+		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 	}
 	// Malicious
 	malicious := []string{
@@ -201,9 +202,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
 		"https://raw.githubusercontent.com/allendema/noplaylist/main/NoPlayList.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts",
 		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
 		"https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/hosts.txt",
@@ -230,6 +229,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
 		"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
 		"https://block.energized.pro/ultimate/formats/domains.txt",
+		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
 		"https://hblock.molinero.dev/hosts_domains.txt",
 	}
 	// Adult content
