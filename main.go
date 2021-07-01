@@ -230,6 +230,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
 		"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
 		"https://block.energized.pro/ultimate/formats/domains.txt",
+		"https://hblock.molinero.dev/hosts_domains.txt",
 	}
 	// Adult content
 	explicit := []string{
