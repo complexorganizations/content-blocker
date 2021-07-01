@@ -76,6 +76,8 @@ func main() {
 	// Lists should be updated.
 	if update {
 		// Clear your memories as much as possible
+		os.RemoveAll(os.TempDir())
+		os.Mkdir(os.TempDir(), 0777)
 		debug.FreeOSMemory()
 		// Max ammount of go routines
 		debug.SetMaxThreads(10000)
