@@ -522,7 +522,7 @@ func makeEverythingUnique(contentLocation string) {
 	// Sort the entire string.
 	sort.Strings(uniqueDomains)
 	// Remove all the exclusions domains from the list.
-	for _, content := range uniqueDomains {
+	for _, content := range exclusionDomains {
 		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
 	// Delete the original file and rewrite it.
