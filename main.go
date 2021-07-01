@@ -75,6 +75,8 @@ func main() {
 	}
 	// Lists should be updated.
 	if update {
+		// Clear your memories as much as possible
+		debug.FreeOSMemory()
 		// Max ammount of go routines
 		debug.SetMaxThreads(10000)
 		// Remove the old files from your system if they are found.
@@ -277,10 +279,10 @@ func startScraping() {
 			go findTheDomains(content, explicitConfig, exclusionArray)
 		}
 	}
-	// We'll just wait for it to finish as a group.
-	scrapeWaitGroup.Wait()
 	// Clear the memory via force.
 	debug.FreeOSMemory()
+	// We'll just wait for it to finish as a group.
+	scrapeWaitGroup.Wait()
 }
 
 func findTheDomains(url string, saveLocation string, returnContent []string) {
@@ -345,10 +347,10 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 			}
 		}
 	}
+	debug.FreeOSMemory()
 	scrapeWaitGroup.Done()
 	// While the validation is being performed, we wait.
 	validationWaitGroup.Wait()
-	debug.FreeOSMemory()
 }
 
 func validateTheDomains(uniqueDomains string, locatioToSave string) {
