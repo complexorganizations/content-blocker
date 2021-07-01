@@ -1,11 +1,5 @@
 # content-blocker
 
-<p align="center">
-	<a href="https://github.com/complexorganizations/content-blocker/actions/workflows/auto-update.yml">
-		<img alt="Update" src="https://github.com/complexorganizations/content-blocker/actions/workflows/auto-update.yml/badge.svg" target="_blank" />
-	</a>
-</p>
-
 Content blocker is a DNS level blocker that can block anything on the DNS level, removing the need for the user to download a separate program.
 
 ### Features
