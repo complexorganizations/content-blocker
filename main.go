@@ -172,7 +172,7 @@ func uninstallInSystem() {
 
 // Replace the URLs in this section to create your own list or add new lists.
 func startScraping() {
-	// Advertisement && Tracking
+	// Advertisement
 	advertisement := []string{
 		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
 		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
@@ -182,20 +182,15 @@ func startScraping() {
 		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SessionReplay.txt",
 		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt",
 		"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
-		"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
 		"https://raw.githubusercontent.com/Spam404/lists/master/main-blacklist.txt",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/cameleon_at_sysctl.org/master/domains.list",
-		"https://raw.githubusercontent.com/allendema/noplaylist/main/NoPlayList.txt",
 		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
 		"https://raw.githubusercontent.com/anudeepND/youtubeadsblacklist/master/domainlist.txt",
 		"https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/domains.txt",
 		"https://raw.githubusercontent.com/bigdargon/hostsVN/master/hosts",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
 		"https://raw.githubusercontent.com/cbuijs/shallalist/master/adv/domains",
 		"https://raw.githubusercontent.com/cbuijs/shallalist/master/tracker/domains",
 		"https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
@@ -203,18 +198,15 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smart-tv-ads-tracking.txt",
 		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/smartphone-ads-tracking.txt",
 		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/spotify-ads-tracking.txt",
-		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/windows10-spying-erm-i-mean-telemetry-lol.txt",
 		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/xiaomi-ads-tracking.txt",
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/advertisement.txt",
 		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds-Ultra.txt",
 		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/adguarddns-justdomains.txt",
 		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easylist-justdomains.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easyprivacy-justdomains.txt",
 		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/black.list",
 		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/huluads.txt",
 		"https://raw.githubusercontent.com/kboghdady/youTube_ads_4_pi-hole/master/youtubelist.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
-		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
 		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/list.txt",
 		"https://raw.githubusercontent.com/migueldemoura/ublock-umatrix-rulesets/master/Hosts/ads-tracking",
 		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
@@ -228,7 +220,6 @@ func startScraping() {
 	malicious := []string{
 		"https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Regular%20Hosts.txt",
 		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
-		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
 		"https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/android-tracking.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
@@ -239,8 +230,11 @@ func startScraping() {
 		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/Ultimate.Hosts.Blacklist/master/domains/domains1.list",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/crypto.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/drugs.txt",
+		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
+		"https://raw.githubusercontent.com/ftpmorph/ftprivacy/master/blocklists/windows10-spying-erm-i-mean-telemetry-lol.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/gambling.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
+		"https://raw.githubusercontent.com/allendema/noplaylist/main/NoPlayList.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
@@ -252,6 +246,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/fraudulent.txt",
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/malware.txt",
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/ransomware.txt",
+		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easyprivacy-justdomains.txt",
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/scam.txt",
 		"https://raw.githubusercontent.com/infinitytec/blocklists/master/scams-and-phishing.txt",
 		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/nocoin-justdomains.txt",
@@ -262,6 +257,9 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mitchellkrogza/The-Big-List-of-Hacked-Malware-Web-Sites/master/hosts",
 		"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
 		"https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestdomains.txt",
+		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
+		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
+		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
