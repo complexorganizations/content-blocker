@@ -239,7 +239,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/abuse.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/fraud.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/scam.txt",
-		"https://raw.githubusercontent.com/merkleID/covid-domains/master/full-domains-list.txt",
 		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
 		"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
 	}
@@ -251,7 +250,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/porn.txt",
 		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
-		"https://raw.githubusercontent.com/mhxion/pornaway/master/hosts/porn_sites.txt",
 		"https://raw.githubusercontent.com/tiuxo/hosts/master/porn",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
