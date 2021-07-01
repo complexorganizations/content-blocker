@@ -199,7 +199,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
 		"https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt",
 		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
-		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/hosts.txt",
 		"https://raw.githubusercontent.com/tiuxo/hosts/master/ads",
 		"https://raw.githubusercontent.com/yous/YousList/master/hosts.txt",
 	}
@@ -213,7 +212,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling/hosts",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/extensions/fakenews/hosts",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/crypto.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/drugs.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/gambling.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
