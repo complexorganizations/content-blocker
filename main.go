@@ -38,7 +38,7 @@ var (
 	// Go routines using waitgrops.
 	scrapeWaitGroup     sync.WaitGroup
 	validationWaitGroup sync.WaitGroup
-	uniqueWaitGroup sync.WaitGroup
+	uniqueWaitGroup     sync.WaitGroup
 	// The user expresses his or her opinion on what should be done.
 	showLogs  bool
 	update    bool
