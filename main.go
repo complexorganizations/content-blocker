@@ -122,7 +122,7 @@ func installInSystem() {
 	var userInput int
 	fmt.Scanln(&userInput)
 	// Set up the lists on your computer.
-	advertisement := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
+	advertisement := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement"
 	malicious := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious"
 	socialEngineering := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering"
 	explicit := "https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit"
