@@ -360,7 +360,7 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 
 func validateTheDomains(uniqueDomains string, locatioToSave string) {
 	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupIP(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) || validateDomainViaHTTP(uniqueDomains) {
+	if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupIP(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) || validateDomainViaHTTP(uniqueDomains) || validateDomainViaHTTPS(uniqueDomains) || validateApplicationViaHTTP(uniqueDomains) || validateApplicationViaHTTPS(uniqueDomains) {
 		// Maintain a list of all authorized domains.
 		writeToFile(locatioToSave, uniqueDomains)
 		if showLogs {
@@ -425,9 +425,30 @@ func validateDomainViaLookupTXT(domain string) bool {
 	return len(valid) >= 1
 }
 
-// Make an HTTP request to the website to see whether it's up and running.
+// Ping the server using http to see if anything is there.
 func validateDomainViaHTTP(domain string) bool {
+	pingThis := fmt.Sprint(domain + ":" + "80")
+	_, err := net.Dial("tcp", pingThis)
+	return err == nil
+}
+
+// Using https, ping the server and see if anything is there.
+func validateDomainViaHTTPS(domain string) bool {
+	pingThis := fmt.Sprint(domain + ":" + "443")
+	_, err := net.Dial("tcp", pingThis)
+	return err == nil
+}
+
+// To check if the website is up and functioning, send an HTTP request to it.
+func validateApplicationViaHTTP(domain string) bool {
 	httpValue := fmt.Sprint("http://" + domain)
+	_, err := http.Get(httpValue)
+	return err == nil
+}
+
+// Send a request to see if the program is running.
+func validateApplicationViaHTTPS(domain string) bool {
+	httpValue := fmt.Sprint("https://" + domain)
 	_, err := http.Get(httpValue)
 	return err == nil
 }
