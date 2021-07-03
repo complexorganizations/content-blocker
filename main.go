@@ -358,18 +358,18 @@ func findTheDomains(url string, saveLocation string, returnContent []string) {
 	validationWaitGroup.Wait()
 }
 
-func validateTheDomains(uniqueDomains string, locatioToSave string) {
+func validateTheDomains(uniqueDomain string, locatioToSave string) {
 	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomains) || validateDomainViaLookupAddr(uniqueDomains) || validateDomainViaLookupIP(uniqueDomains) || validateDomainViaLookupCNAME(uniqueDomains) || validateDomainViaLookupMX(uniqueDomains) || validateDomainViaLookupTXT(uniqueDomains) || validateDomainViaLookupHost(uniqueDomains) || domainRegistration(uniqueDomains) || validateDomainViaHTTP(uniqueDomains) || validateDomainViaHTTPS(uniqueDomains) || validateApplicationViaHTTP(uniqueDomains) || validateApplicationViaHTTPS(uniqueDomains) {
+	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupAddr(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupMX(uniqueDomain) || validateDomainViaLookupTXT(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) || domainRegistration(uniqueDomain) || validateDomainViaHTTP(uniqueDomain) || validateDomainViaHTTPS(uniqueDomain) || validateApplicationViaHTTP(uniqueDomain) || validateApplicationViaHTTPS(uniqueDomain) {
 		// Maintain a list of all authorized domains.
-		writeToFile(locatioToSave, uniqueDomains)
+		writeToFile(locatioToSave, uniqueDomain)
 		if showLogs {
-			log.Println("Valid domain:", uniqueDomains)
+			log.Println("Valid domain:", uniqueDomain)
 		}
 	} else {
 		// Let the users know if there are any issues while verifying the domain.
 		if showLogs {
-			log.Println("Error validating domain:", uniqueDomains)
+			log.Println("Error validating domain:", uniqueDomain)
 		}
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
