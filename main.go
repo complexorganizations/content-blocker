@@ -38,6 +38,7 @@ var (
 	// Go routines using waitgrops.
 	scrapeWaitGroup     sync.WaitGroup
 	validationWaitGroup sync.WaitGroup
+	uniqueWaitGroup     sync.WaitGroup
 	// The user expresses his or her opinion on what should be done.
 	showLogs  bool
 	update    bool
@@ -115,10 +116,23 @@ func main() {
 		// Scrape all of the domains and save them afterwards.
 		startScraping()
 		// We'll make everything distinctive once everything is finished.
-		makeEverythingUnique(advertisementConfig)
-		makeEverythingUnique(maliciousConfig)
-		makeEverythingUnique(socialEngineeringConfig)
-		makeEverythingUnique(explicitConfig)
+		if fileExists(advertisementConfig) {
+			uniqueWaitGroup.Add(1)
+			go makeEverythingUnique(advertisementConfig)
+		}
+		if fileExists(maliciousConfig) {
+			uniqueWaitGroup.Add(1)
+			go makeEverythingUnique(maliciousConfig)
+		}
+		if fileExists(socialEngineeringConfig) {
+			uniqueWaitGroup.Add(1)
+			go makeEverythingUnique(socialEngineeringConfig)
+		}
+		if fileExists(socialEngineeringConfig) {
+			uniqueWaitGroup.Add(1)
+			go makeEverythingUnique(explicitConfig)
+		}
+		uniqueWaitGroup.Wait()
 	}
 }
 
@@ -590,4 +604,5 @@ func downloadFile(url string, filePath string) {
 	// Get as much free memoey as possible from the system.
 	returnContent = nil
 	debug.FreeOSMemory()
+	uniqueWaitGroup.Done()
 }
