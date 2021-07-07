@@ -206,6 +206,7 @@ func startScraping() {
 		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
 		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
+		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
 	}
 	// Malicious
 	malicious := []string{
@@ -228,7 +229,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/Ultimate-Hosts-Blacklist/cameleon_at_sysctl.org/master/domains.list",
 		"https://hblock.molinero.dev/hosts_domains.txt",
-		"https://raw.githubusercontent.com/ookangzheng/dbl-oisd-nl/master/dbl.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
