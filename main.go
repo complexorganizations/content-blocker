@@ -43,6 +43,7 @@ var (
 	uninstall bool
 	search    string
 	combine   bool
+	compress  bool
 	// err stands for error.
 	err error
 )
@@ -56,6 +57,7 @@ func init() {
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
 		tempSearch := flag.String("search", "example.example", "Check to see if a specific domain is on a list.")
 		tempCombine := flag.Bool("combine", false, "If you want to merge the lists into one.")
+		tempCompress := flag.Bool("compress", false, "Divide the file into smaller files that are less than 25 MB each.")
 		flag.Parse()
 		update = *tempUpdate
 		showLogs = *tempLog
@@ -63,6 +65,7 @@ func init() {
 		uninstall = *tempUninstall
 		search = *tempSearch
 		combine = *tempCombine
+		compress = *tempCompress
 	} else {
 		os.Exit(0)
 	}
@@ -145,6 +148,10 @@ func main() {
 	// Combine
 	if combine {
 		combineAllListsTogether()
+	}
+	// Compress
+	if compress {
+		compressFiles()
 	}
 }
 
@@ -453,6 +460,12 @@ func combineAllListsTogether() {
 	for _, content := range completeUniqueDomains {
 		writeToFile(combinedHost, content)
 	}
+}
+
+// Make each file less than 25 MB
+func compressFiles() {
+	var smallDomainList []string
+	smallDomainList = readAndAppend(advertisementConfig, smallDomainList)
 }
 
 // Take a list of domains and make them one-of-a-kind
