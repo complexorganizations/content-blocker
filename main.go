@@ -469,8 +469,8 @@ func compressFiles() {
 	var smallAdvertisementConfig []string
 	smallAdvertisementConfig = readAndAppend(advertisementConfig, smallAdvertisementConfig)
 	// If the folder isn't there, create it.
-	compressedAdvertisementFolder := "configs/compress/advertisement/"
-	if !folderExists(compressedAdvertisementFolder) {
+	compressedAdvertisementFolder := "configs/compress/advertisement"
+	if folderExists(compressedAdvertisementFolder) {
 		err = os.Mkdir(compressedAdvertisementFolder, 0755)
 		if err != nil {
 			log.Println(err)
@@ -497,7 +497,7 @@ func compressFiles() {
 	smallExplicitConfig = readAndAppend(explicitConfig, smallExplicitConfig)
 	// If the folder isn't there, create it.
 	compressedExplicitFolder := "configs/compress/explicit/"
-	if !folderExists(compressedExplicitFolder) {
+	if folderExists(compressedExplicitFolder) {
 		err = os.Mkdir(compressedExplicitFolder, 0755)
 		if err != nil {
 			log.Println(err)
@@ -524,7 +524,7 @@ func compressFiles() {
 	smallMaliciousConfig = readAndAppend(maliciousConfig, smallMaliciousConfig)
 	// If the folder isn't there, create it.
 	compressedMaliciousFolder := "configs/compress/malicious/"
-	if !folderExists(compressedMaliciousFolder) {
+	if folderExists(compressedMaliciousFolder) {
 		err = os.Mkdir(compressedMaliciousFolder, 0755)
 		if err != nil {
 			log.Println(err)
@@ -551,7 +551,7 @@ func compressFiles() {
 	smallSocialEngineeringConfig = readAndAppend(socialEngineeringConfig, smallSocialEngineeringConfig)
 	// If the folder isn't there, create it.
 	compressedEngineeringFolder := "configs/compress/social-engineering/"
-	if !folderExists(compressedEngineeringFolder) {
+	if folderExists(compressedEngineeringFolder) {
 		err = os.Mkdir(compressedEngineeringFolder, 0755)
 		if err != nil {
 			log.Println(err)
