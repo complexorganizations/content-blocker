@@ -52,7 +52,7 @@ func init() {
 		tempLog := flag.Bool("logs", false, "Check the weather before deciding whether or not to display logs.")
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
-		tempSearch := flag.String("search", "ThisIsARandomDomainNameJustForThisExample.com", "Check to see if a specific domain is on a list.")
+		tempSearch := flag.String("search", "example.example", "Check to see if a specific domain is on a list.")
 		flag.Parse()
 		update = *tempUpdate
 		showLogs = *tempLog
@@ -135,7 +135,7 @@ func main() {
 		exclusionCleanup(localExclusion)
 	}
 	// Search
-	if len(search) > 1 && search != "ThisIsARandomDomainNameJustForThisExample.com" {
+	if len(search) > 1 && search != "example.example" {
 		findAllMatchingDomains(search)
 	}
 }
