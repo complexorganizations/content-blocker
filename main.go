@@ -465,20 +465,112 @@ func combineAllListsTogether() {
 
 // Make each file less than 25 MB
 func compressFiles() {
+	// Advertisement
 	var smallAdvertisementConfig []string
 	smallAdvertisementConfig = readAndAppend(advertisementConfig, smallAdvertisementConfig)
-	randomFileName := fmt.Sprint("configs/compress/advertisement/" + randomString(20))
-	// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-	for _, content := range smallAdvertisementConfig {
-		var completeLength int
-		// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-		if completeLength == 26214400 || completeLength == 0 {
-			completeLength = 0
-			randomFileName = fmt.Sprint("configs/compress/advertisement/" + randomString(20))
+	// If the folder isn't there, create it.
+	compressedAdvertisementFolder := "configs/compress/advertisement/"
+	if !folderExists(compressedAdvertisementFolder) {
+		err = os.Mkdir(compressedAdvertisementFolder, 0755)
+		if err != nil {
+			log.Println(err)
 		}
-		completeLength = len(content) + completeLength
-		if completeLength <= 26214400 {
-			writeToFile(randomFileName, content)
+	}
+	if len(smallAdvertisementConfig) > 26214400 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomCompressAdvertisementName := fmt.Sprint(compressedAdvertisementFolder + randomString(20))
+		for _, content := range smallAdvertisementConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomCompressAdvertisementName = fmt.Sprint(compressedAdvertisementFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomCompressAdvertisementName, content)
+			}
+		}
+	}
+	// Explicit
+	var smallExplicitConfig []string
+	smallExplicitConfig = readAndAppend(explicitConfig, smallExplicitConfig)
+	// If the folder isn't there, create it.
+	compressedExplicitFolder := "configs/compress/explicit/"
+	if !folderExists(compressedExplicitFolder) {
+		err = os.Mkdir(compressedExplicitFolder, 0755)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if len(smallExplicitConfig) > 26214400 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomCompressExplicitConfig := fmt.Sprint(compressedExplicitFolder + randomString(20))
+		for _, content := range smallExplicitConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomCompressExplicitConfig = fmt.Sprint(compressedExplicitFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomCompressExplicitConfig, content)
+			}
+		}
+	}
+	// Malicious
+	var smallMaliciousConfig []string
+	smallMaliciousConfig = readAndAppend(maliciousConfig, smallMaliciousConfig)
+	// If the folder isn't there, create it.
+	compressedMaliciousFolder := "configs/compress/malicious/"
+	if !folderExists(compressedMaliciousFolder) {
+		err = os.Mkdir(compressedMaliciousFolder, 0755)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if len(smallMaliciousConfig) > 26214400 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomCompressMaliciousConfig := fmt.Sprint(compressedMaliciousFolder + randomString(20))
+		for _, content := range smallMaliciousConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomCompressMaliciousConfig = fmt.Sprint(compressedMaliciousFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomCompressMaliciousConfig, content)
+			}
+		}
+	}
+	// Social Engineering
+	var smallSocialEngineeringConfig []string
+	smallSocialEngineeringConfig = readAndAppend(socialEngineeringConfig, smallSocialEngineeringConfig)
+	// If the folder isn't there, create it.
+	compressedEngineeringFolder := "configs/compress/social-engineering/"
+	if !folderExists(compressedEngineeringFolder) {
+		err = os.Mkdir(compressedEngineeringFolder, 0755)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if len(smallSocialEngineeringConfig) > 26214400 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomSocialEngineeringConfig := fmt.Sprint(compressedEngineeringFolder + randomString(20))
+		for _, content := range smallSocialEngineeringConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomSocialEngineeringConfig = fmt.Sprint(compressedEngineeringFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomSocialEngineeringConfig, content)
+			}
 		}
 	}
 }
@@ -591,6 +683,15 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+// Check to see if a folder already exists.
+func folderExists(foldername string) bool {
+	info, err := os.Stat(foldername)
+	if err != nil {
+		return false
+	}
+	return info.IsDir()
 }
 
 // Generate a random string
