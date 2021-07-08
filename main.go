@@ -442,13 +442,13 @@ func findAllMatchingDomains(domain string) {
 	}
 }
 
+// Bring all of the listings together in one location.
 func combineAllListsTogether() {
 	var completeDomainList []string
 	completeDomainList = readAndAppend(advertisementConfig, completeDomainList)
 	completeDomainList = readAndAppend(maliciousConfig, completeDomainList)
 	completeDomainList = readAndAppend(socialEngineeringConfig, completeDomainList)
 	completeDomainList = readAndAppend(explicitConfig, completeDomainList)
-	fmt.Println(len(completeDomainList))
 	completeUniqueDomains := makeUnique(completeDomainList)
 	for _, content := range completeUniqueDomains {
 		writeToFile(combinedHost, content)
