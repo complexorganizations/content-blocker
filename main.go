@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"crypto/rand"
 	"flag"
 	"fmt"
 	"io"
@@ -43,6 +44,7 @@ var (
 	uninstall bool
 	search    string
 	combine   bool
+	compress  bool
 	// err stands for error.
 	err error
 )
@@ -56,6 +58,7 @@ func init() {
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
 		tempSearch := flag.String("search", "example.example", "Check to see if a specific domain is on a list.")
 		tempCombine := flag.Bool("combine", false, "If you want to merge the lists into one.")
+		tempCompress := flag.Bool("compress", false, "Divide the file into smaller files that are less than 25 MB each.")
 		flag.Parse()
 		update = *tempUpdate
 		showLogs = *tempLog
@@ -63,6 +66,7 @@ func init() {
 		uninstall = *tempUninstall
 		search = *tempSearch
 		combine = *tempCombine
+		compress = *tempCompress
 	} else {
 		os.Exit(0)
 	}
@@ -145,6 +149,10 @@ func main() {
 	// Combine
 	if combine {
 		combineAllListsTogether()
+	}
+	// Compress
+	if compress {
+		compressFiles()
 	}
 }
 
@@ -455,6 +463,118 @@ func combineAllListsTogether() {
 	}
 }
 
+// Make each file less than 25 MB
+func compressFiles() {
+	// Advertisement
+	var smallAdvertisementConfig []string
+	smallAdvertisementConfig = readAndAppend(advertisementConfig, smallAdvertisementConfig)
+	// If the folder isn't there, create it.
+	compressedAdvertisementFolder := "configs/compress/advertisement/"
+	if !folderExists(compressedAdvertisementFolder) {
+		err = os.MkdirAll(compressedAdvertisementFolder, 0755)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if len(smallAdvertisementConfig) > 1048576 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomCompressAdvertisementName := fmt.Sprint(compressedAdvertisementFolder + randomString(20))
+		for _, content := range smallAdvertisementConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomCompressAdvertisementName = fmt.Sprint(compressedAdvertisementFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomCompressAdvertisementName, content)
+			}
+		}
+	}
+	// Explicit
+	var smallExplicitConfig []string
+	smallExplicitConfig = readAndAppend(explicitConfig, smallExplicitConfig)
+	// If the folder isn't there, create it.
+	compressedExplicitFolder := "configs/compress/explicit/"
+	if !folderExists(compressedExplicitFolder) {
+		err = os.MkdirAll(compressedExplicitFolder, 0755)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if len(smallExplicitConfig) > 26214400 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomCompressExplicitConfig := fmt.Sprint(compressedExplicitFolder + randomString(20))
+		for _, content := range smallExplicitConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomCompressExplicitConfig = fmt.Sprint(compressedExplicitFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomCompressExplicitConfig, content)
+			}
+		}
+	}
+	// Malicious
+	var smallMaliciousConfig []string
+	smallMaliciousConfig = readAndAppend(maliciousConfig, smallMaliciousConfig)
+	// If the folder isn't there, create it.
+	compressedMaliciousFolder := "configs/compress/malicious/"
+	if !folderExists(compressedMaliciousFolder) {
+		err = os.MkdirAll(compressedMaliciousFolder, 0755)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if len(smallMaliciousConfig) > 26214400 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomCompressMaliciousConfig := fmt.Sprint(compressedMaliciousFolder + randomString(20))
+		for _, content := range smallMaliciousConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomCompressMaliciousConfig = fmt.Sprint(compressedMaliciousFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomCompressMaliciousConfig, content)
+			}
+		}
+	}
+	// Social Engineering
+	var smallSocialEngineeringConfig []string
+	smallSocialEngineeringConfig = readAndAppend(socialEngineeringConfig, smallSocialEngineeringConfig)
+	// If the folder isn't there, create it.
+	compressedEngineeringFolder := "configs/compress/social-engineering/"
+	if !folderExists(compressedEngineeringFolder) {
+		err = os.MkdirAll(compressedEngineeringFolder, 0755)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+	if len(smallSocialEngineeringConfig) > 26214400 {
+		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+		randomSocialEngineeringConfig := fmt.Sprint(compressedEngineeringFolder + randomString(20))
+		for _, content := range smallSocialEngineeringConfig {
+			var completeLength int
+			completeLength = len(content) + completeLength
+			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+			if completeLength == 26214400 {
+				completeLength = 0
+				randomSocialEngineeringConfig = fmt.Sprint(compressedEngineeringFolder + randomString(20))
+			}
+			if completeLength <= 26214400 {
+				writeToFile(randomSocialEngineeringConfig, content)
+			}
+		}
+	}
+}
+
 // Take a list of domains and make them one-of-a-kind
 func makeUnique(randomStrings []string) []string {
 	flag := make(map[string]bool)
@@ -559,10 +679,27 @@ func validURL(uri string) bool {
 // Check to see if a file already exists.
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
+	if err != nil {
 		return false
 	}
 	return !info.IsDir()
+}
+
+// Check to see if a folder already exists.
+func folderExists(foldername string) bool {
+	info, err := os.Stat(foldername)
+	if err != nil {
+		return false
+	}
+	return info.IsDir()
+}
+
+// Generate a random string
+func randomString(bytesSize int) string {
+	randomBytes := make([]byte, bytesSize)
+	rand.Read(randomBytes)
+	randomString := fmt.Sprintf("%X", randomBytes)
+	return randomString
 }
 
 // Remove a string from a slice
