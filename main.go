@@ -476,20 +476,18 @@ func compressFiles() {
 			log.Println(err)
 		}
 	}
-	if len(smallAdvertisementConfig) > 1048576 {
-		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomCompressAdvertisementName := fmt.Sprint(compressedAdvertisementFolder + randomString(20))
-		for _, content := range smallAdvertisementConfig {
-			var completeLength int
-			completeLength = len(content) + completeLength
-			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeLength == 26214400 {
-				completeLength = 0
-				randomCompressAdvertisementName = fmt.Sprint(compressedAdvertisementFolder + randomString(20))
-			}
-			if completeLength <= 26214400 {
-				writeToFile(randomCompressAdvertisementName, content)
-			}
+	// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+	randomCompressAdvertisementName := fmt.Sprint(compressedAdvertisementFolder + randomString(20))
+	for _, content := range smallAdvertisementConfig {
+		var completeLength int
+		completeLength = len(content) + completeLength
+		// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+		if completeLength == 26214400 {
+			completeLength = 0
+			randomCompressAdvertisementName = fmt.Sprint(compressedAdvertisementFolder + randomString(20))
+		}
+		if completeLength <= 26214400 {
+			writeToFile(randomCompressAdvertisementName, content)
 		}
 	}
 	// Explicit
@@ -503,20 +501,18 @@ func compressFiles() {
 			log.Println(err)
 		}
 	}
-	if len(smallExplicitConfig) > 26214400 {
-		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomCompressExplicitConfig := fmt.Sprint(compressedExplicitFolder + randomString(20))
-		for _, content := range smallExplicitConfig {
-			var completeLength int
-			completeLength = len(content) + completeLength
-			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeLength == 26214400 {
-				completeLength = 0
-				randomCompressExplicitConfig = fmt.Sprint(compressedExplicitFolder + randomString(20))
-			}
-			if completeLength <= 26214400 {
-				writeToFile(randomCompressExplicitConfig, content)
-			}
+	// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+	randomCompressExplicitConfig := fmt.Sprint(compressedExplicitFolder + randomString(20))
+	for _, content := range smallExplicitConfig {
+		var completeLength int
+		completeLength = len(content) + completeLength
+		// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+		if completeLength == 26214400 {
+			completeLength = 0
+			randomCompressExplicitConfig = fmt.Sprint(compressedExplicitFolder + randomString(20))
+		}
+		if completeLength <= 26214400 {
+			writeToFile(randomCompressExplicitConfig, content)
 		}
 	}
 	// Malicious
@@ -530,20 +526,18 @@ func compressFiles() {
 			log.Println(err)
 		}
 	}
-	if len(smallMaliciousConfig) > 26214400 {
-		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomCompressMaliciousConfig := fmt.Sprint(compressedMaliciousFolder + randomString(20))
-		for _, content := range smallMaliciousConfig {
-			var completeLength int
-			completeLength = len(content) + completeLength
-			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeLength == 26214400 {
-				completeLength = 0
-				randomCompressMaliciousConfig = fmt.Sprint(compressedMaliciousFolder + randomString(20))
-			}
-			if completeLength <= 26214400 {
-				writeToFile(randomCompressMaliciousConfig, content)
-			}
+	// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+	randomCompressMaliciousConfig := fmt.Sprint(compressedMaliciousFolder + randomString(20))
+	for _, content := range smallMaliciousConfig {
+		var completeLength int
+		completeLength = len(content) + completeLength
+		// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+		if completeLength == 26214400 {
+			completeLength = 0
+			randomCompressMaliciousConfig = fmt.Sprint(compressedMaliciousFolder + randomString(20))
+		}
+		if completeLength <= 26214400 {
+			writeToFile(randomCompressMaliciousConfig, content)
 		}
 	}
 	// Social Engineering
@@ -557,20 +551,18 @@ func compressFiles() {
 			log.Println(err)
 		}
 	}
-	if len(smallSocialEngineeringConfig) > 26214400 {
-		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomSocialEngineeringConfig := fmt.Sprint(compressedEngineeringFolder + randomString(20))
-		for _, content := range smallSocialEngineeringConfig {
-			var completeLength int
-			completeLength = len(content) + completeLength
-			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeLength == 26214400 {
-				completeLength = 0
-				randomSocialEngineeringConfig = fmt.Sprint(compressedEngineeringFolder + randomString(20))
-			}
-			if completeLength <= 26214400 {
-				writeToFile(randomSocialEngineeringConfig, content)
-			}
+	// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+	randomSocialEngineeringConfig := fmt.Sprint(compressedEngineeringFolder + randomString(20))
+	for _, content := range smallSocialEngineeringConfig {
+		var completeLength int
+		completeLength = len(content) + completeLength
+		// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+		if completeLength == 26214400 {
+			completeLength = 0
+			randomSocialEngineeringConfig = fmt.Sprint(compressedEngineeringFolder + randomString(20))
+		}
+		if completeLength <= 26214400 {
+			writeToFile(randomSocialEngineeringConfig, content)
 		}
 	}
 }
