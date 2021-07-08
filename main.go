@@ -466,6 +466,10 @@ func combineAllListsTogether() {
 func compressFiles() {
 	var smallDomainList []string
 	smallDomainList = readAndAppend(advertisementConfig, smallDomainList)
+	fmt.Println(len(smallDomainList))
+	for _, content := range smallDomainList {
+		writeToFile("test", content)
+	}
 }
 
 // Take a list of domains and make them one-of-a-kind
@@ -572,10 +576,25 @@ func validURL(uri string) bool {
 // Check to see if a file already exists.
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
+	if err != nil {
 		return false
 	}
 	return !info.IsDir()
+}
+
+// Get the file size
+func fileSize(filePath string) string {
+	file, err := os.Open(filePath)
+	if err != nil {
+		log.Println(err)
+	}
+	size, err := file.Stat()
+	if err != nil {
+		log.Println(err)
+	}
+	file.Close()
+	fileSizeInByte := fmt.Sprint(size)
+	return fileSizeInByte
 }
 
 // Remove a string from a slice
