@@ -469,14 +469,14 @@ func compressFiles() {
 	var smallAdvertisementConfig []string
 	smallAdvertisementConfig = readAndAppend(advertisementConfig, smallAdvertisementConfig)
 	// If the folder isn't there, create it.
-	compressedAdvertisementFolder := "configs/compress/advertisement"
+	compressedAdvertisementFolder := "configs/compress/advertisement/"
 	if !folderExists(compressedAdvertisementFolder) {
 		err = os.MkdirAll(compressedAdvertisementFolder, 0755)
 		if err != nil {
 			log.Println(err)
 		}
 	}
-	if len(smallAdvertisementConfig) > 26214400 {
+	if len(smallAdvertisementConfig) > 1048576 {
 		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
 		randomCompressAdvertisementName := fmt.Sprint(compressedAdvertisementFolder + randomString(20))
 		for _, content := range smallAdvertisementConfig {
