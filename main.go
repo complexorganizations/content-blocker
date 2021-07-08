@@ -471,7 +471,7 @@ func compressFiles() {
 	// If the folder isn't there, create it.
 	compressedAdvertisementFolder := "configs/compress/advertisement"
 	if !folderExists(compressedAdvertisementFolder) {
-		err = os.Mkdir(compressedAdvertisementFolder, 0755)
+		err = os.MkdirAll(compressedAdvertisementFolder, 0755)
 		if err != nil {
 			log.Println(err)
 		}
@@ -498,7 +498,7 @@ func compressFiles() {
 	// If the folder isn't there, create it.
 	compressedExplicitFolder := "configs/compress/explicit/"
 	if !folderExists(compressedExplicitFolder) {
-		err = os.Mkdir(compressedExplicitFolder, 0755)
+		err = os.MkdirAll(compressedExplicitFolder, 0755)
 		if err != nil {
 			log.Println(err)
 		}
@@ -525,7 +525,7 @@ func compressFiles() {
 	// If the folder isn't there, create it.
 	compressedMaliciousFolder := "configs/compress/malicious/"
 	if !folderExists(compressedMaliciousFolder) {
-		err = os.Mkdir(compressedMaliciousFolder, 0755)
+		err = os.MkdirAll(compressedMaliciousFolder, 0755)
 		if err != nil {
 			log.Println(err)
 		}
@@ -552,7 +552,7 @@ func compressFiles() {
 	// If the folder isn't there, create it.
 	compressedEngineeringFolder := "configs/compress/social-engineering/"
 	if !folderExists(compressedEngineeringFolder) {
-		err = os.Mkdir(compressedEngineeringFolder, 0755)
+		err = os.MkdirAll(compressedEngineeringFolder, 0755)
 		if err != nil {
 			log.Println(err)
 		}
