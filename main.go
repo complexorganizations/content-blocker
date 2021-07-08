@@ -466,9 +466,15 @@ func combineAllListsTogether() {
 func compressFiles() {
 	var smallDomainList []string
 	smallDomainList = readAndAppend(advertisementConfig, smallDomainList)
-	fmt.Println(len(smallDomainList))
+	var contentLenght string
+	var completeLength string
 	for _, content := range smallDomainList {
-		writeToFile("test", content)
+		// writeToFile("test", content)
+		contentLenght = fmt.Sprintln(len(content))
+		if completeLength == "10" {
+			// 25 MB
+			// Write a new file
+		}
 	}
 }
 
@@ -580,21 +586,6 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
-}
-
-// Get the file size
-func fileSize(filePath string) string {
-	file, err := os.Open(filePath)
-	if err != nil {
-		log.Println(err)
-	}
-	size, err := file.Stat()
-	if err != nil {
-		log.Println(err)
-	}
-	file.Close()
-	fileSizeInByte := fmt.Sprint(size)
-	return fileSizeInByte
 }
 
 // Remove a string from a slice
