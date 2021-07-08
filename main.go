@@ -24,11 +24,12 @@ import (
 
 var (
 	// Location of the configuration in the local system path
+	combinedHost            = "configs/hosts"
 	advertisementConfig     = "configs/advertisement"
 	maliciousConfig         = "configs/malicious"
 	socialEngineeringConfig = "configs/social-engineering"
-	localExclusion          = "configs/exclusion"
 	explicitConfig          = "configs/explicit"
+	localExclusion          = "configs/exclusion"
 	// Memorandum with a domain list.
 	exclusionDomains []string
 	// Go routines using waitgrops.
@@ -41,6 +42,7 @@ var (
 	install   bool
 	uninstall bool
 	search    string
+	combine   bool
 	// err stands for error.
 	err error
 )
@@ -53,12 +55,14 @@ func init() {
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
 		tempSearch := flag.String("search", "example.example", "Check to see if a specific domain is on a list.")
+		tempCombine := flag.Bool("combine", false, "If you want to merge the lists into one.")
 		flag.Parse()
 		update = *tempUpdate
 		showLogs = *tempLog
 		install = *tempInstall
 		uninstall = *tempUninstall
 		search = *tempSearch
+		combine = *tempCombine
 	} else {
 		os.Exit(0)
 	}
@@ -137,6 +141,10 @@ func main() {
 	// Search
 	if len(search) > 1 && search != "example.example" {
 		findAllMatchingDomains(search)
+	}
+	// Combine
+	if combine {
+		combineAllListsTogether()
 	}
 }
 
@@ -431,6 +439,19 @@ func findAllMatchingDomains(domain string) {
 		if strings.Contains(content, domain) {
 			fmt.Println("Found Domain:", content, "Location:", localExclusion)
 		}
+	}
+}
+
+func combineAllListsTogether() {
+	var completeDomainList []string
+	completeDomainList = readAndAppend(advertisementConfig, completeDomainList)
+	completeDomainList = readAndAppend(maliciousConfig, completeDomainList)
+	completeDomainList = readAndAppend(socialEngineeringConfig, completeDomainList)
+	completeDomainList = readAndAppend(explicitConfig, completeDomainList)
+	fmt.Println(len(completeDomainList))
+	completeUniqueDomains := makeUnique(completeDomainList)
+	for _, content := range completeUniqueDomains {
+		writeToFile(combinedHost, content)
 	}
 }
 
