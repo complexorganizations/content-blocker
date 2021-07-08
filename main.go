@@ -483,7 +483,7 @@ func compressFiles() {
 		for _, content := range smallAdvertisementConfig {
 			completeAdvertisementConfigLength = len(content) + completeAdvertisementConfigLength
 			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeAdvertisementConfigLength <= 26214400 {
+			if completeAdvertisementConfigLength >= 26214400 {
 				completeAdvertisementConfigLength = 0
 				randomCompressAdvertisementName = fmt.Sprint(compressedAdvertisementFolder + randomString(20))
 			}
@@ -510,7 +510,7 @@ func compressFiles() {
 		for _, content := range smallExplicitConfig {
 			completeexplicitConfigLength = len(content) + completeexplicitConfigLength
 			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeexplicitConfigLength <= 26214400 {
+			if completeexplicitConfigLength >= 26214400 {
 				completeexplicitConfigLength = 0
 				randomCompressExplicitConfig = fmt.Sprint(compressedExplicitFolder + randomString(20))
 			}
@@ -537,7 +537,7 @@ func compressFiles() {
 		for _, content := range smallMaliciousConfig {
 			completeMaliciousConfigLength = len(content) + completeMaliciousConfigLength
 			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeMaliciousConfigLength <= 26214400 {
+			if completeMaliciousConfigLength >= 26214400 {
 				completeMaliciousConfigLength = 0
 				randomCompressMaliciousConfig = fmt.Sprint(compressedMaliciousFolder + randomString(20))
 			}
@@ -564,7 +564,7 @@ func compressFiles() {
 		for _, content := range smallSocialEngineeringConfig {
 			completeSocialEngineeringConfigLength = len(content) + completeSocialEngineeringConfigLength
 			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeSocialEngineeringConfigLength <= 26214400 {
+			if completeSocialEngineeringConfigLength >= 26214400 {
 				completeSocialEngineeringConfigLength = 0
 				randomSocialEngineeringConfig = fmt.Sprint(compressedEngineeringFolder + randomString(20))
 			}
