@@ -469,14 +469,14 @@ func compressFiles() {
 	smallDomainList = readAndAppend(advertisementConfig, smallDomainList)
 	var completeLength int
 	completeLength = 0
+	randomFileName := randomString(20)
+	// Reset if its 0
+	if completeLength == 26214400 {
+		completeLength = 0
+		randomFileName = randomString(20)
+	}
 	for _, content := range smallDomainList {
 		completeLength = len(content) + completeLength
-		randomFileName := randomString(20)
-		// Reset if its 0
-		if completeLength == 26214400 {
-			completeLength = 0
-			randomFileName = randomString(20)
-		}
 		if completeLength <= 26214400 {
 			writeToFile(randomFileName, content)
 		}
