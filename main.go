@@ -465,17 +465,17 @@ func combineAllListsTogether() {
 
 // Make each file less than 25 MB
 func compressFiles() {
-	var smallDomainList []string
-	smallDomainList = readAndAppend(advertisementConfig, smallDomainList)
-	var completeLength int
-	completeLength = 0
-	randomFileName := randomString(20)
-	// Reset if its 0
-	if completeLength == 26214400 {
-		completeLength = 0
-		randomFileName = randomString(20)
-	}
-	for _, content := range smallDomainList {
+	var smallAdvertisementConfig []string
+	smallAdvertisementConfig = readAndAppend(advertisementConfig, smallAdvertisementConfig)
+	randomFileName := fmt.Sprint("configs/compress/advertisement/" + randomString(20))
+	// If the file is less than 25 megabytes, write it and then determine the maximum file size.
+	for _, content := range smallAdvertisementConfig {
+		var completeLength int
+		// If the maximum file size is 25 MB, set it to 0 and create a new file name.
+		if completeLength == 26214400 || completeLength == 0 {
+			completeLength = 0
+			randomFileName = fmt.Sprint("configs/compress/advertisement/" + randomString(20))
+		}
 		completeLength = len(content) + completeLength
 		if completeLength <= 26214400 {
 			writeToFile(randomFileName, content)
