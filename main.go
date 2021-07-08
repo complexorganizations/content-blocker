@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"crypto/rand"
 	"flag"
 	"fmt"
 	"io"
@@ -466,14 +467,12 @@ func combineAllListsTogether() {
 func compressFiles() {
 	var smallDomainList []string
 	smallDomainList = readAndAppend(advertisementConfig, smallDomainList)
-	var contentLenght string
-	var completeLength string
+	var completeLength int
+	completeLength = 0
 	for _, content := range smallDomainList {
-		// writeToFile("test", content)
-		contentLenght = fmt.Sprintln(len(content))
-		if completeLength == "10" {
-			// 25 MB
-			// Write a new file
+		completeLength = len(content) + completeLength
+		if completeLength <= 26214400 {
+			writeToFile(randomString(20), content)
 		}
 	}
 }
@@ -586,6 +585,14 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
+}
+
+// Generate a random string
+func randomString(bytesSize int) string {
+	randomBytes := make([]byte, bytesSize)
+	rand.Read(randomBytes)
+	randomString := fmt.Sprintf("%X", randomBytes)
+	return randomString
 }
 
 // Remove a string from a slice
