@@ -19,13 +19,6 @@ jobs:
         run: go get .
       - name: Build Test
         run: go build .
-      - name: Creating system that can scale.
-        run: |
-          sudo rm -r /etc/resolv.conf
-          sudo echo "nameserver 8.8.8.8
-          nameserver 8.8.4.4
-          nameserver 2001:4860:4860::8888
-          nameserver 2001:4860:4860::8844" >>/etc/resolv.conf
       - name: Generating new resources.
         run: ./content-blocker -update
       - name: Update resources
