@@ -266,7 +266,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/127.0.0.1/hosts",
 		"https://raw.githubusercontent.com/Sinfonietta/hostfiles/master/pornography-hosts",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/porn.txt",
 		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
