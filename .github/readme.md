@@ -128,6 +128,9 @@ For the exclusion domain, why aren't you using match all?
 If I installed it, how would I uninstall it?
 - `go run main.go -uninstall`
 
+Why are the lists so small?
+- These are host files for end users to use; the goal is to block the most active domains, not to construct a host file with 999999999* domains.
+
 ---
 #### System Requirements
 - Memory: 1GB
