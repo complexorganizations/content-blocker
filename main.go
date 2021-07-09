@@ -191,18 +191,22 @@ func updateTheLists() {
 		uniqueWaitGroup.Add(1)
 		go makeEverythingUnique(advertisementConfig)
 	}
+	log.Println("Debug: the first unique wait group")
 	if fileExists(maliciousConfig) {
 		uniqueWaitGroup.Add(1)
 		go makeEverythingUnique(maliciousConfig)
 	}
+	log.Println("Debug: the second unique wait group")
 	if fileExists(socialEngineeringConfig) {
 		uniqueWaitGroup.Add(1)
 		go makeEverythingUnique(socialEngineeringConfig)
 	}
+	log.Println("Debug: the third unique wait group")
 	if fileExists(socialEngineeringConfig) {
 		uniqueWaitGroup.Add(1)
 		go makeEverythingUnique(explicitConfig)
 	}
+	log.Println("Debug: the fourth unique wait group")
 	uniqueWaitGroup.Wait()
 	exclusionCleanup(localExclusion)
 }
@@ -281,6 +285,7 @@ func startScraping() {
 		}
 	}
 	scrapeWaitGroup.Wait()
+	log.Println("Debug: Finished the first scrape wait group")
 	// Malicious
 	for _, content := range uniqueMalicious {
 		if validURL(content) {
@@ -290,6 +295,7 @@ func startScraping() {
 		}
 	}
 	scrapeWaitGroup.Wait()
+	log.Println("Debug: Finished the second scrape wait group")
 	// Social Engineering
 	for _, content := range uniqueSocialEngineering {
 		if validURL(content) {
@@ -299,6 +305,7 @@ func startScraping() {
 		}
 	}
 	scrapeWaitGroup.Wait()
+	log.Println("Debug: Finished the third scrape wait group")
 	// Explicit
 	for _, content := range uniqueExplicit {
 		if validURL(content) {
@@ -309,6 +316,7 @@ func startScraping() {
 	}
 	// We'll just wait for it to finish as a group.
 	scrapeWaitGroup.Wait()
+	log.Println("Debug: Finished the scrape wait group")
 	// Clear the memory via force.
 	debug.FreeOSMemory()
 }
