@@ -1,7 +1,7 @@
 name: Updating the resources
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 */12 * * *"
 jobs:
   build:
     name: Build
