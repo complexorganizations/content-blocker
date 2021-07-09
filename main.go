@@ -217,12 +217,10 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
-		"https://raw.githubusercontent.com/badmojr/1Hosts/master/Xtra/domains.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
 		"https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
 		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
-		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
 	}
 	// Malicious
 	malicious := []string{
