@@ -221,8 +221,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
 		"https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
 		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/adguarddns-justdomains.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easylist-justdomains.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
 		"https://raw.githubusercontent.com/mkb2091/blockconvert/master/output/domains.txt",
 	}
