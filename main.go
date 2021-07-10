@@ -213,7 +213,6 @@ func startScraping() {
 	advertisement := []string{
 		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
 		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
-		"https://raw.githubusercontent.com/DRSDavidSoft/additional-hosts/master/domains/blacklist/adservers-and-trackers.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
@@ -225,7 +224,6 @@ func startScraping() {
 	// Malicious
 	malicious := []string{
 		"https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Regular%20Hosts.txt",
-		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareDomains.txt",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
