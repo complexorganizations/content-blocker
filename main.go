@@ -180,12 +180,12 @@ func updateTheLists() {
 			log.Println(err)
 		}
 	}
+	// Scrape all of the domains and save them afterwards.
+	startScraping()
 	// Read through all of the exclusion domains before appending them.
 	if fileExists(localExclusion) {
 		exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
 	}
-	// Scrape all of the domains and save them afterwards.
-	startScraping()
 	// We'll make everything distinctive once everything is finished.
 	if fileExists(advertisementConfig) {
 		uniqueWaitGroup.Add(1)
