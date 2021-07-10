@@ -1,5 +1,5 @@
 name: Updating the resources
-on: [pull_request]
+on: [push]
 #on:
 #  schedule:
 #    - cron: "0 0 * * *"
