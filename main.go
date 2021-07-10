@@ -229,8 +229,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
