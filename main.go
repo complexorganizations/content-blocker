@@ -229,8 +229,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
@@ -277,7 +275,6 @@ func startScraping() {
 			go findTheDomains(content, advertisementConfig)
 		}
 	}
-	scrapeWaitGroup.Wait()
 	// Malicious
 	for _, content := range uniqueMalicious {
 		if validURL(content) {
@@ -286,7 +283,6 @@ func startScraping() {
 			go findTheDomains(content, maliciousConfig)
 		}
 	}
-	scrapeWaitGroup.Wait()
 	// Social Engineering
 	for _, content := range uniqueSocialEngineering {
 		if validURL(content) {
@@ -295,7 +291,6 @@ func startScraping() {
 			go findTheDomains(content, socialEngineeringConfig)
 		}
 	}
-	scrapeWaitGroup.Wait()
 	// Explicit
 	for _, content := range uniqueExplicit {
 		if validURL(content) {
