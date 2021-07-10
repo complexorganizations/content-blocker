@@ -229,13 +229,11 @@ func startScraping() {
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
 		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
-		"https://raw.githubusercontent.com/allendema/noplaylist/main/NoPlayList.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/malware.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/piracy.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
-		"https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts",
 		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
 		"https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestdomains.txt",
 		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easyprivacy-justdomains.txt",
@@ -261,7 +259,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/127.0.0.1/hosts",
 		"https://raw.githubusercontent.com/Sinfonietta/hostfiles/master/pornography-hosts",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
-		"https://raw.githubusercontent.com/mhhakim/pihole-blocklist/master/porn.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueAdvertisement := makeUnique(advertisement)
