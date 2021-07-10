@@ -3,18 +3,17 @@
 Content blocker is a DNS level blocker that can block anything on the DNS level, removing the need for the user to download a separate program.
 
 ---
-# Note: If you wish to assist with the project, most of the code is quite stable, so we don't need developers; what we need is for someone to summit host url(s).
----
-
 ### Features
 
 - content blocker is a general purpose blocker that can block practically anything on the internet, but is most commonly used to block advertisements, tracking, and pornography.
 - DNS queries on the DNS server are canceled, saving bandwidth.
 
+---
 ### Goals
 - Lists containing valid hosts that have been unified.
 - Domains and subdomains that are duplicated are removed from the list.
 
+---
 ### Variants
 | Name     | Description                | URL      | Mirror   |
 | :------- | :------------------------- | :------- | :------- |
