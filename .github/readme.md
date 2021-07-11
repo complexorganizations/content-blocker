@@ -109,9 +109,6 @@ What are the reasons behind the exclusion of so many financial domains and subdo
 Why doesn't your repo have a git history?
 - We would top out github's limits, under a day due to huge amounts of change.
 
-What are the prerequisites for my lists to be utilized in this project?
-- If you wish to add a list, it must include at least 100 domains and be updated at least once a month.
-
 Why aren't you using regex to find them all instead of going line by line?
 - While using regex to discover them all is extremely cost effective, this method will not work on all domains, leaving you with a broken domain.
 
