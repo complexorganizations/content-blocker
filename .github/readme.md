@@ -17,10 +17,7 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 ### Variants
 | Name     | Description                | URL      | Mirror   |
 | :------- | :------------------------- | :------- | :------- |
-| Advertisement | Advertisement, Tracking | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/advertisement` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/advertisement` |
-| Malicious | Malware, Spyware | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/malicious` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/malicious` |
-| Social-Engineering | Phishing, Scams, Fake News | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/social-engineering` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/social-engineering` |
-| Explicit | Sexual content | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/explicit` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/explicit` |
+| Hosts | Advertisement, Tracking, Malware, Spyware, Phishing | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/hosts` |
 
 ---
 Let's begin by copying the repository to your own machine.
