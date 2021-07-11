@@ -61,7 +61,6 @@ func init() {
 		search = *tempSearch
 		compress = *tempCompress
 	} else {
-		exclusionCleanup(localExclusion)
 		os.Exit(0)
 	}
 }
