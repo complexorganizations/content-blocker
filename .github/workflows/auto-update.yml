@@ -1,5 +1,5 @@
 name: Updating the resources
-on: [push]
+#on: [push]
 #on:
 #  schedule:
 #    - cron: "0 0 * * *"
