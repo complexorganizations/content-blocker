@@ -25,12 +25,8 @@ import (
 
 var (
 	// Location of the configuration in the local system path
-	combinedHost            = "configs/hosts"
-	advertisementConfig     = "configs/advertisement"
-	maliciousConfig         = "configs/malicious"
-	socialEngineeringConfig = "configs/social-engineering"
-	explicitConfig          = "configs/explicit"
-	localExclusion          = "configs/exclusion"
+	combinedHost   = "configs/hosts"
+	localExclusion = "configs/exclusion"
 	// Memorandum with a domain list.
 	exclusionDomains []string
 	// Go routines using waitgrops.
@@ -43,7 +39,6 @@ var (
 	install   bool
 	uninstall bool
 	search    string
-	combine   bool
 	compress  bool
 	// err stands for error.
 	err error
@@ -57,7 +52,6 @@ func init() {
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
 		tempSearch := flag.String("search", "example.example", "Check to see if a specific domain is on a list.")
-		tempCombine := flag.Bool("combine", false, "If you want to merge the lists into one.")
 		tempCompress := flag.Bool("compress", false, "Divide the file into smaller files that are less than 25 MB each.")
 		flag.Parse()
 		update = *tempUpdate
@@ -65,9 +59,9 @@ func init() {
 		install = *tempInstall
 		uninstall = *tempUninstall
 		search = *tempSearch
-		combine = *tempCombine
 		compress = *tempCompress
 	} else {
+		exclusionCleanup(localExclusion)
 		os.Exit(0)
 	}
 }
@@ -89,10 +83,6 @@ func main() {
 	if len(search) > 1 && search != "example.example" {
 		findAllMatchingDomains(search)
 	}
-	// Combine
-	if combine {
-		combineAllListsTogether()
-	}
 	// Compress
 	if compress {
 		compressFiles()
@@ -101,14 +91,6 @@ func main() {
 
 // Configure your system to use the lists.
 func installInSystem() {
-	fmt.Println("Which of the following lists would you like to add to your system?")
-	fmt.Println("1. Advertisement")
-	fmt.Println("2. Malicious")
-	fmt.Println("3. Social-Engineering")
-	fmt.Println("4. Explicit")
-	var userInput int
-	fmt.Scanln(&userInput)
-	// Take user input and check the operating system.
 	var systemHostFile string
 	switch runtime.GOOS {
 	case "windows":
@@ -116,18 +98,11 @@ func installInSystem() {
 	case "darwin", "linux":
 		systemHostFile = "/etc/hosts"
 	}
-	// Select the list you want to install in your system.
-	switch userInput {
-	case 1:
-		writeHostFile(advertisementConfig, systemHostFile)
-	case 2:
-		writeHostFile(maliciousConfig, systemHostFile)
-	case 3:
-		writeHostFile(socialEngineeringConfig, systemHostFile)
-	case 4:
-		writeHostFile(explicitConfig, systemHostFile)
-	default:
-		os.Exit(0)
+	// Install in your system.
+	if !fileExists(systemHostFile) {
+		writeHostFile(combinedHost, systemHostFile)
+	} else {
+		log.Fatal("Error: There is already a system host file presnet.")
 	}
 }
 
@@ -140,9 +115,11 @@ func uninstallInSystem() {
 	case "darwin", "linux":
 		systemHostFile = "/etc/hosts"
 	}
-	err = os.Remove(systemHostFile)
-	if err != nil {
-		log.Println(err)
+	if fileExists(systemHostFile) {
+		err = os.Remove(systemHostFile)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 }
 
@@ -156,26 +133,8 @@ func updateTheLists() {
 	// Max ammount of go routines
 	debug.SetMaxThreads(10000)
 	// Remove the old files from your system if they are found.
-	if fileExists(advertisementConfig) {
-		err = os.Remove(advertisementConfig)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	if fileExists(maliciousConfig) {
-		err = os.Remove(maliciousConfig)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	if fileExists(socialEngineeringConfig) {
-		err = os.Remove(socialEngineeringConfig)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	if fileExists(explicitConfig) {
-		err = os.Remove(explicitConfig)
+	if fileExists(combinedHost) {
+		err = os.Remove(combinedHost)
 		if err != nil {
 			log.Println(err)
 		}
@@ -187,21 +146,9 @@ func updateTheLists() {
 		exclusionDomains = readAndAppend(localExclusion, exclusionDomains)
 	}
 	// We'll make everything distinctive once everything is finished.
-	if fileExists(advertisementConfig) {
+	if fileExists(combinedHost) {
 		uniqueWaitGroup.Add(1)
-		go makeEverythingUnique(advertisementConfig)
-	}
-	if fileExists(maliciousConfig) {
-		uniqueWaitGroup.Add(1)
-		go makeEverythingUnique(maliciousConfig)
-	}
-	if fileExists(socialEngineeringConfig) {
-		uniqueWaitGroup.Add(1)
-		go makeEverythingUnique(socialEngineeringConfig)
-	}
-	if fileExists(socialEngineeringConfig) {
-		uniqueWaitGroup.Add(1)
-		go makeEverythingUnique(explicitConfig)
+		go makeEverythingUnique(combinedHost)
 	}
 	uniqueWaitGroup.Wait()
 	exclusionCleanup(localExclusion)
@@ -209,69 +156,26 @@ func updateTheLists() {
 
 // Replace the URLs in this section to create your own list or add new lists.
 func startScraping() {
-	// Advertisement
-	advertisement := []string{
-		//"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-		//"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
-		//"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
-		//"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
-	}
-	// Malicious
-	malicious := []string{
-		//"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
-		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
-	}
-	// Social Engineering
-	socialEngineering := []string{
+	combinedHostsURL := []string{
+		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
 		"https://raw.githubusercontent.com/MetaMask/eth-phishing-detect/master/src/hosts.txt",
-		//"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
-	}
-	// Adult content
-	explicit := []string{
-		//"https://block.energized.pro/porn/formats/domains.txt",
-		//"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/127.0.0.1/hosts",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
+		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
+		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
+		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
+		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
+		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
+		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
-	uniqueAdvertisement := makeUnique(advertisement)
-	advertisement = nil
-	uniqueMalicious := makeUnique(malicious)
-	malicious = nil
-	uniqueSocialEngineering := makeUnique(socialEngineering)
-	socialEngineering = nil
-	uniqueExplicit := makeUnique(explicit)
-	explicit = nil
+	uniqueURL := makeUnique(combinedHostsURL)
+	combinedHostsURL = nil
 	// Advertisement
-	for _, content := range uniqueAdvertisement {
+	for _, content := range uniqueURL {
 		if validURL(content) {
 			scrapeWaitGroup.Add(1)
 			// Begin searching and confirming the domains you've discovered.
-			go findTheDomains(content, advertisementConfig)
-		}
-	}
-	// Malicious
-	for _, content := range uniqueMalicious {
-		if validURL(content) {
-			scrapeWaitGroup.Add(1)
-			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(content, maliciousConfig)
-		}
-	}
-	// Social Engineering
-	for _, content := range uniqueSocialEngineering {
-		if validURL(content) {
-			scrapeWaitGroup.Add(1)
-			// Begin searching for and confirming the domains you've discovered.
-			go findTheDomains(content, socialEngineeringConfig)
-		}
-	}
-	// Explicit
-	for _, content := range uniqueExplicit {
-		if validURL(content) {
-			scrapeWaitGroup.Add(1)
-			// Begin looking for and verifying the domains you've found.
-			go findTheDomains(content, explicitConfig)
+			go findTheDomains(content, combinedHost)
 		}
 	}
 	// We'll just wait for it to finish as a group.
@@ -369,37 +273,13 @@ func validateTheDomains(uniqueDomain string, locatioToSave string) {
 
 // Find all the matching domains in your lists
 func findAllMatchingDomains(domain string) {
-	// Advertisement
-	var advertisementConfigArray []string
-	advertisementConfigArray = readAndAppend(advertisementConfig, advertisementConfigArray)
-	for _, content := range advertisementConfigArray {
+	// combined
+	var combinedConfigArray []string
+	combinedConfigArray = readAndAppend(combinedHost, combinedConfigArray)
+	for _, content := range combinedConfigArray {
 		// if the array matches with the string, you remove it from the array
 		if strings.Contains(content, domain) {
-			fmt.Println("Found Domain:", content, "Location:", advertisementConfig)
-		}
-	}
-	// Malicious
-	var maliciousConfigArray []string
-	maliciousConfigArray = readAndAppend(maliciousConfig, maliciousConfigArray)
-	for _, content := range maliciousConfigArray {
-		if strings.Contains(content, domain) {
-			fmt.Println("Found Domain:", content, "Location:", maliciousConfig)
-		}
-	}
-	// Malicious
-	var socialEngineeringConfigArray []string
-	socialEngineeringConfigArray = readAndAppend(socialEngineeringConfig, socialEngineeringConfigArray)
-	for _, content := range socialEngineeringConfigArray {
-		if strings.Contains(content, domain) {
-			fmt.Println("Found Domain:", content, "Location:", socialEngineeringConfig)
-		}
-	}
-	// Explicit
-	var explicitConfigArray []string
-	explicitConfigArray = readAndAppend(explicitConfig, explicitConfigArray)
-	for _, content := range explicitConfigArray {
-		if strings.Contains(content, domain) {
-			fmt.Println("Found Domain:", content, "Location:", explicitConfig)
+			fmt.Println("Found Domain:", content, "Location:", combinedHost)
 		}
 	}
 	// Exclusion
@@ -412,24 +292,11 @@ func findAllMatchingDomains(domain string) {
 	}
 }
 
-// Bring all of the listings together in one location.
-func combineAllListsTogether() {
-	var completeDomainList []string
-	completeDomainList = readAndAppend(advertisementConfig, completeDomainList)
-	completeDomainList = readAndAppend(maliciousConfig, completeDomainList)
-	completeDomainList = readAndAppend(socialEngineeringConfig, completeDomainList)
-	completeDomainList = readAndAppend(explicitConfig, completeDomainList)
-	completeUniqueDomains := makeUnique(completeDomainList)
-	for _, content := range completeUniqueDomains {
-		writeToFile(combinedHost, content)
-	}
-}
-
 // Make each file less than 25 MB
 func compressFiles() {
 	// Advertisement
 	var smallAdvertisementConfig []string
-	smallAdvertisementConfig = readAndAppend(advertisementConfig, smallAdvertisementConfig)
+	smallAdvertisementConfig = readAndAppend(combinedHost, smallAdvertisementConfig)
 	// If the folder isn't there, create it.
 	compressedAdvertisementFolder := "configs/compress/advertisement/"
 	if !folderExists(compressedAdvertisementFolder) {
@@ -438,7 +305,7 @@ func compressFiles() {
 			log.Println(err)
 		}
 	}
-	if fileSize(advertisementConfig) > 25600 {
+	if fileSize(combinedHost) > 25600 {
 		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
 		randomCompressAdvertisementName := fmt.Sprint(compressedAdvertisementFolder + randomString(20))
 		var completeAdvertisementConfigLength int
@@ -451,87 +318,6 @@ func compressFiles() {
 			}
 			if completeAdvertisementConfigLength <= 26214400 {
 				writeToFile(randomCompressAdvertisementName, content)
-			}
-		}
-	}
-	// Explicit
-	var smallExplicitConfig []string
-	smallExplicitConfig = readAndAppend(explicitConfig, smallExplicitConfig)
-	// If the folder isn't there, create it.
-	compressedExplicitFolder := "configs/compress/explicit/"
-	if !folderExists(compressedExplicitFolder) {
-		err = os.MkdirAll(compressedExplicitFolder, 0755)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	if fileSize(explicitConfig) > 25600 {
-		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomCompressExplicitConfig := fmt.Sprint(compressedExplicitFolder + randomString(20))
-		var completeexplicitConfigLength int
-		for _, content := range smallExplicitConfig {
-			completeexplicitConfigLength = len(content) + completeexplicitConfigLength
-			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeexplicitConfigLength >= 26214400 {
-				completeexplicitConfigLength = 0
-				randomCompressExplicitConfig = fmt.Sprint(compressedExplicitFolder + randomString(20))
-			}
-			if completeexplicitConfigLength <= 26214400 {
-				writeToFile(randomCompressExplicitConfig, content)
-			}
-		}
-	}
-	// Malicious
-	var smallMaliciousConfig []string
-	smallMaliciousConfig = readAndAppend(maliciousConfig, smallMaliciousConfig)
-	// If the folder isn't there, create it.
-	compressedMaliciousFolder := "configs/compress/malicious/"
-	if !folderExists(compressedMaliciousFolder) {
-		err = os.MkdirAll(compressedMaliciousFolder, 0755)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	if fileSize(maliciousConfig) > 25600 {
-		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomCompressMaliciousConfig := fmt.Sprint(compressedMaliciousFolder + randomString(20))
-		var completeMaliciousConfigLength int
-		for _, content := range smallMaliciousConfig {
-			completeMaliciousConfigLength = len(content) + completeMaliciousConfigLength
-			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeMaliciousConfigLength >= 26214400 {
-				completeMaliciousConfigLength = 0
-				randomCompressMaliciousConfig = fmt.Sprint(compressedMaliciousFolder + randomString(20))
-			}
-			if completeMaliciousConfigLength <= 26214400 {
-				writeToFile(randomCompressMaliciousConfig, content)
-			}
-		}
-	}
-	// Social Engineering
-	var smallSocialEngineeringConfig []string
-	smallSocialEngineeringConfig = readAndAppend(socialEngineeringConfig, smallSocialEngineeringConfig)
-	// If the folder isn't there, create it.
-	compressedEngineeringFolder := "configs/compress/social-engineering/"
-	if !folderExists(compressedEngineeringFolder) {
-		err = os.MkdirAll(compressedEngineeringFolder, 0755)
-		if err != nil {
-			log.Println(err)
-		}
-	}
-	if fileSize(socialEngineeringConfig) > 25600 {
-		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomSocialEngineeringConfig := fmt.Sprint(compressedEngineeringFolder + randomString(20))
-		var completeSocialEngineeringConfigLength int
-		for _, content := range smallSocialEngineeringConfig {
-			completeSocialEngineeringConfigLength = len(content) + completeSocialEngineeringConfigLength
-			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeSocialEngineeringConfigLength >= 26214400 {
-				completeSocialEngineeringConfigLength = 0
-				randomSocialEngineeringConfig = fmt.Sprint(compressedEngineeringFolder + randomString(20))
-			}
-			if completeSocialEngineeringConfigLength <= 26214400 {
-				writeToFile(randomSocialEngineeringConfig, content)
 			}
 		}
 	}
