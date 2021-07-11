@@ -211,12 +211,9 @@ func updateTheLists() {
 func startScraping() {
 	// Advertisement
 	advertisement := []string{
-		"https://raw.githubusercontent.com/259095/someonewhocares/main/list",
 		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ads.txt",
 		"https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
 		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
@@ -224,36 +221,18 @@ func startScraping() {
 	// Malicious
 	malicious := []string{
 		"https://raw.githubusercontent.com/BlackJack8/iOSAdblockList/master/Regular%20Hosts.txt",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Tracking",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/ransomware.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
 		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
-		"https://raw.githubusercontent.com/davidonzo/Threat-Intel/master/lists/latestdomains.txt",
-		"https://raw.githubusercontent.com/justdomains/blocklists/master/lists/easyprivacy-justdomains.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
 		"https://raw.githubusercontent.com/notracking/hosts-blocklists/master/hostnames.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
 		"https://raw.githubusercontent.com/MetaMask/eth-phishing-detect/master/src/hosts.txt",
-		"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Scam",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/abuse.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/fraud.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/scam.txt",
 		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
-		"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
-		"https://raw.githubusercontent.com/blocklistproject/Lists/master/phishing.txt",
-		"https://raw.githubusercontent.com/durablenapkin/scamblocklist/master/hosts.txt",
-		"https://raw.githubusercontent.com/infinitytec/blocklists/master/scams-and-phishing.txt",
 	}
 	// Adult content
 	explicit := []string{
-		"https://raw.githubusercontent.com/Bon-Appetit/porn-domains/master/block.txt",
 		"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/127.0.0.1/hosts",
-		"https://raw.githubusercontent.com/Sinfonietta/hostfiles/master/pornography-hosts",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
