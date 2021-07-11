@@ -27,6 +27,7 @@ var (
 	// Location of the configuration in the local system path
 	combinedHost   = "configs/hosts"
 	localExclusion = "configs/exclusion"
+	localInclusion = "configs/inclusion"
 	// Memorandum with a domain list.
 	exclusionDomains []string
 	// Go routines using waitgrops.
@@ -150,17 +151,16 @@ func updateTheLists() {
 		go makeEverythingUnique(combinedHost)
 	}
 	uniqueWaitGroup.Wait()
-	exclusionCleanup(localExclusion)
+	finalCleanup(localExclusion)
+	finalCleanup(localInclusion)
 }
 
 // Replace the URLs in this section to create your own list or add new lists.
 func startScraping() {
 	combinedHostsURL := []string{
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
-		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/hate-and-junk-extended.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueURL := makeUnique(combinedHostsURL)
@@ -531,14 +531,14 @@ func makeEverythingUnique(contentLocation string) {
 }
 
 // Clean up the exclusions because users may have altered them.
-func exclusionCleanup(filePath string) {
-	var exclusionContent []string
-	exclusionContent = readAndAppend(filePath, exclusionContent)
-	sort.Strings(exclusionContent)
+func finalCleanup(filePath string) {
+	var finalCleanupContent []string
+	finalCleanupContent = readAndAppend(filePath, finalCleanupContent)
+	sort.Strings(finalCleanupContent)
 	// Make each domain one-of-a-kind.
-	uniqueExclusionContent := makeUnique(exclusionContent)
+	uniqueExclusionContent := makeUnique(finalCleanupContent)
 	// It is recommended that the array be deleted from memory.
-	exclusionContent = nil
+	finalCleanupContent = nil
 	// Remove the original file before rewriting it.
 	err = os.Remove(filePath)
 	if err != nil {
