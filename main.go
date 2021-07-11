@@ -52,7 +52,7 @@ func init() {
 		tempInstall := flag.Bool("install", false, "Install the list into your operating system.")
 		tempUninstall := flag.Bool("uninstall", false, "Uninstall the list from your operating system.")
 		tempSearch := flag.String("search", "example.example", "Check to see if a specific domain is on a list.")
-		tempCompress := flag.Bool("compress", false, "Divide the file into smaller files that are less than 25 MB each.")
+		tempCompress := flag.Bool("compress", false, "Divide the hosts file into smaller files that are less than 25 MB each.")
 		flag.Parse()
 		update = *tempUpdate
 		showLogs = *tempLog
@@ -169,7 +169,7 @@ func startScraping() {
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueURL := makeUnique(combinedHostsURL)
 	combinedHostsURL = nil
-	// Advertisement
+	// Hosts
 	for _, content := range uniqueURL {
 		if validURL(content) {
 			scrapeWaitGroup.Add(1)
@@ -293,30 +293,30 @@ func findAllMatchingDomains(domain string) {
 
 // Make each file less than 25 MB
 func compressFiles() {
-	// Advertisement
-	var smallAdvertisementConfig []string
-	smallAdvertisementConfig = readAndAppend(combinedHost, smallAdvertisementConfig)
+	// Hosts
+	var smallHostsConfig []string
+	smallHostsConfig = readAndAppend(combinedHost, smallHostsConfig)
 	// If the folder isn't there, create it.
-	compressedAdvertisementFolder := "configs/compress/advertisement/"
-	if !folderExists(compressedAdvertisementFolder) {
-		err = os.MkdirAll(compressedAdvertisementFolder, 0755)
+	compressedHostsFolder := "configs/compress/hosts/"
+	if !folderExists(compressedHostsFolder) {
+		err = os.MkdirAll(compressedHostsFolder, 0755)
 		if err != nil {
 			log.Println(err)
 		}
 	}
 	if fileSize(combinedHost) > 25600 {
 		// If the file is less than 25 megabytes, write it and then determine the maximum file size.
-		randomCompressAdvertisementName := fmt.Sprint(compressedAdvertisementFolder + randomString(20))
-		var completeAdvertisementConfigLength int
-		for _, content := range smallAdvertisementConfig {
-			completeAdvertisementConfigLength = len(content) + completeAdvertisementConfigLength
+		randomCompressHostsName := fmt.Sprint(compressedHostsFolder + randomString(20))
+		var completeHostsConfigLength int
+		for _, content := range smallHostsConfig {
+			completeHostsConfigLength = len(content) + completeHostsConfigLength
 			// If the maximum file size is 25 MB, set it to 0 and create a new file name.
-			if completeAdvertisementConfigLength >= 26214400 {
-				completeAdvertisementConfigLength = 0
-				randomCompressAdvertisementName = fmt.Sprint(compressedAdvertisementFolder + randomString(20))
+			if completeHostsConfigLength >= 26214400 {
+				completeHostsConfigLength = 0
+				randomCompressHostsName = fmt.Sprint(randomCompressHostsName + randomString(20))
 			}
-			if completeAdvertisementConfigLength <= 26214400 {
-				writeToFile(randomCompressAdvertisementName, content)
+			if completeHostsConfigLength <= 26214400 {
+				writeToFile(randomCompressHostsName, content)
 			}
 		}
 	}
