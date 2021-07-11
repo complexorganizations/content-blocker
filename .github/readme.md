@@ -139,14 +139,17 @@ Open Source Community
 
 | Author                 | Repository             | License                |
 | ---------------------  | ---------------------  | ---------------------  |
-| StevenBlack            | `https://github.com/StevenBlack/hosts` | MIT |
+| StevenBlack            | `https://github.com/StevenBlack/hosts` | MIT    |
 | LightSwitch            | `https://github.com/lightswitch05/hosts` | Apache License 2.0 |
-| Notracking             | `https://github.com/notracking/hosts-blocklists` | UNKNOWN |
 | AdAway                 | `https://github.com/AdAway/AdAway` | GPLv3+     |
-| DRSDavidSoft           | `https://github.com/DRSDavidSoft/additional-hosts` | MIT |
-| Ewpratten              | `https://github.com/Ewpratten/youtube_ad_blocklist` | GPLv3+ |
-| Perflyst               | `https://github.com/Perflyst/PiHoleBlocklist` | `MIT` |
-|                        |                        |                        |
+| anudeepND              | `https://github.com/anudeepND/blacklist` | MIT  |
+| jerryn70               | `https://github.com/jerryn70/GoodbyeAds` | MIT  |
+| crazy-max              | `https://github.com/crazy-max/WindowsSpyBlocker` | MIT  |
+| MetaMask               | `https://github.com/MetaMask/eth-phishing-detect` | DBADPL |
+| mitchellkrogza         | `https://github.com/mitchellkrogza/Phishing.Database` | MIT |
+| EnergizedProtection    | `https://github.com/EnergizedProtection/block` | MIT |
+| Clefspeare13           | `https://github.com/Clefspeare13/pornhosts` | MIT |
+
 
 #### Support
 Please utilize the github repo issue and wiki for help.
