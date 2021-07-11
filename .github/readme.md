@@ -68,13 +68,13 @@ go run main.go -compress
 ---
 ## Q&A
 What's the best way for me to make my own list?
-- Open the repo after forking and cloning it. Go ahead and change the struct in `startScraping`, replacing the urls there with the lists you wish to use, and then just run the file using the command `go run main.go`.
+- Open the repo after cloning it. Go ahead and change the struct in `startScraping`, replacing the urls there with the lists you wish to use, and then just run the file using the command `go run main.go`.
 
 What's the best way to add my own exclusions?
 - Simply open the `configs/exclusion` file, add a domain, and submit a pull request; if your pull request is merged, the domain will be excluded the next time the list is updated.
 
 Is the list updated on a regular basis?
-- We strive to update the list(s) every week, but this cannot be guaranteed, and if it is not updated for any reason please let us know.
+- We strive to update the list(s) every day, but this cannot be guaranteed, and if it is not updated for any reason please let us know.
 
 Why are you only banning it on the DNS level rather than the system level?
 - It's a good idea to prohibit something on a system level rather than a DNS level, however some devices can't prohibit it on a system level (for example, smart devices), therefore a dns level is preferred.
@@ -97,14 +97,8 @@ What's the most efficient method for me to get my list(s) out of here?
 Why isn't there a list of IP addresses?
 - They may simply go on to the next IP and continue from there, thus banning IPs is worthless.
 
-What is the procedure for creating a new category?
-- Creating new categories is strongly discouraged, and no longer receives support; nevertheless, if you still believe it is essential for the community, please open an issue.
-
 What are the reasons behind the exclusion of so many financial domains and subdomains?
 - We just erase such entries if any of the list authors try to mess with them.
-
-Why doesn't your repo have a git history?
-- We would top out github's limits, under a day due to huge amounts of change.
 
 Why aren't you using regex to find them all instead of going line by line?
 - While using regex to discover them all is extremely cost effective, this method will not work on all domains, leaving you with a broken domain.
