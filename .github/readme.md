@@ -138,14 +138,6 @@ Open Source Community
 | ---------------------  | ---------------------  | ---------------------  |
 | StevenBlack            | `https://github.com/StevenBlack/hosts` | MIT    |
 | LightSwitch            | `https://github.com/lightswitch05/hosts` | Apache License 2.0 |
-| AdAway                 | `https://github.com/AdAway/AdAway` | GPLv3+     |
-| anudeepND              | `https://github.com/anudeepND/blacklist` | MIT  |
-| jerryn70               | `https://github.com/jerryn70/GoodbyeAds` | MIT  |
-| crazy-max              | `https://github.com/crazy-max/WindowsSpyBlocker` | MIT  |
-| MetaMask               | `https://github.com/MetaMask/eth-phishing-detect` | DBADPL |
-| mitchellkrogza         | `https://github.com/mitchellkrogza/Phishing.Database` | MIT |
-| EnergizedProtection    | `https://github.com/EnergizedProtection/block` | MIT |
-| Clefspeare13           | `https://github.com/Clefspeare13/pornhosts` | MIT |
 
 
 #### Support
