@@ -211,26 +211,26 @@ func updateTheLists() {
 func startScraping() {
 	// Advertisement
 	advertisement := []string{
-		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
+		//"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
-		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
-		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
+		//"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
+		//"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
+		//"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
 	}
 	// Malicious
 	malicious := []string{
-		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
+		//"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
 	}
 	// Social Engineering
 	socialEngineering := []string{
 		"https://raw.githubusercontent.com/MetaMask/eth-phishing-detect/master/src/hosts.txt",
-		"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
+		//"https://raw.githubusercontent.com/mitchellkrogza/Phishing.Database/master/phishing-domains-ACTIVE.txt",
 	}
 	// Adult content
 	explicit := []string{
-		"https://block.energized.pro/porn/formats/domains.txt",
-		"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/127.0.0.1/hosts",
+		//"https://block.energized.pro/porn/formats/domains.txt",
+		//"https://raw.githubusercontent.com/Clefspeare13/pornhosts/master/127.0.0.1/hosts",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
