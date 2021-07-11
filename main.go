@@ -156,12 +156,11 @@ func updateTheLists() {
 // Replace the URLs in this section to create your own list or add new lists.
 func startScraping() {
 	combinedHostsURL := []string{
-		"https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt",
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
-		"https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt",
-		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds.txt",
+		"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
 		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/tracking-aggressive-extended.txt",
+		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/hate-and-junk-extended.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueURL := makeUnique(combinedHostsURL)
