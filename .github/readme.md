@@ -5,7 +5,7 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 ---
 ### Features
 
-- content blocker is a general purpose blocker that can block practically anything on the internet, but is most commonly used to block advertisements, tracking, and pornography.
+- content blocker is a general purpose blocker that can block practically anything on the internet, but is most commonly used to block advertisements, tracking, and malware.
 - DNS queries on the DNS server are canceled, saving bandwidth.
 
 ---
@@ -17,7 +17,7 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 ### Variants
 | Name     | Description                | URL      | Mirror   |
 | :------- | :------------------------- | :------- | :------- |
-| Hosts | Advertisement, Tracking, Malware, Spyware, Phishing | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/hosts` |
+| Hosts | Advertisement, Tracking, Malware, Phishing | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/configs/hosts` | `https://gitlab.com/prajwal-koirala/content-blocker/-/raw/main/configs/hosts` |
 
 ---
 Let's begin by copying the repository to your own machine.
@@ -157,4 +157,4 @@ Please utilize the github repo conversations to offer feedback.
 #### License
 Copyright © [Prajwal](https://github.com/prajwal-koirala)
 
-This project is unlicensed.
+The Apache 2.0 license governs the distribution of this project.
