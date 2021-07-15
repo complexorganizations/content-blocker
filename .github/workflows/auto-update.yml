@@ -1,7 +1,8 @@
 name: Updating the resources
-on:
-  schedule:
-    - cron: "0 0 * * *"
+on: [push, pull_request]
+#on:
+#  schedule:
+#    - cron: "0 0 * * *"
 jobs:
   build:
     name: Build
@@ -18,15 +19,20 @@ jobs:
         run: go get .
       - name: Build Test
         run: go build .
+      - name: Update the nameserver
+        run: |
+          sudo rm -f /etc/resolv.conf
+          sudo echo "nameserver 8.8.8.8
+          nameserver 8.8.4.4
+          nameserver 2001:4860:4860::8888
+          nameserver 2001:4860:4860::8844" >>/etc/resolv.conf
+          cat /etc/resolv.conf
       - name: Generating new resources.
         run: ./content-blocker -update -logs
       - name: Update resources
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git checkout --orphan tmp-main
-          git add -A
           git commit -m "Updates are performed automatically. $(date)"
-          git branch -D main
-          git branch -m main
-          git push -f origin main
+          git add .
+          git push
