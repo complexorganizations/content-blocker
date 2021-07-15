@@ -20,7 +20,7 @@ jobs:
       - name: Build Test
         run: go build .
       - name: Generating new resources.
-        run: ./content-blocker -update -logs
+        run: ./content-blocker -update
       - name: Update resources
         run: |
           git config user.name github-actions
