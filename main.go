@@ -18,7 +18,6 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/openrdap/rdap"
 	"golang.org/x/net/publicsuffix"
 )
 
@@ -266,7 +265,7 @@ func findTheDomains(url string, saveLocation string) {
 
 func validateTheDomains(uniqueDomain string, locatioToSave string) {
 	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) || domainRegistration(uniqueDomain) {
+	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) {
 		// Maintain a list of all authorized domains.
 		writeToFile(locatioToSave, uniqueDomain)
 		if showLogs {
@@ -338,13 +337,6 @@ func validateDomainViaLookupCNAME(domain string) bool {
 func validateDomainViaLookupHost(domain string) bool {
 	valid, _ := net.LookupHost(domain)
 	return len(valid) >= 1
-}
-
-// Validate the domain by checking the domain registration.
-func domainRegistration(domain string) bool {
-	client := &rdap.Client{}
-	_, ok := client.QueryDomain(domain)
-	return ok == nil
 }
 
 // Make sure it's not an IP address.
