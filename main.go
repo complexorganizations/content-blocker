@@ -266,7 +266,7 @@ func findTheDomains(url string, saveLocation string) {
 
 func validateTheDomains(uniqueDomain string, locatioToSave string) {
 	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomain) {
+	if validateDomainViaLookupIP(uniqueDomain) {
 		// Maintain a list of all authorized domains.
 		writeToFile(locatioToSave, uniqueDomain)
 		if showLogs {
