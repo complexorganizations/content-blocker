@@ -1,11 +1,9 @@
 name: Updating the resources
-on:
-  schedule:
-    - cron: "0 0 * * *"
+on: [push]
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Set up Go 1.16
         uses: actions/setup-go@v2
@@ -17,16 +15,13 @@ jobs:
       - name: Get dependencies
         run: go get .
       - name: Build Test
-        run: go build .
+        run: go build main.go
       - name: Generating new resources.
-        run: ./content-blocker -update
+        run: .\main.exe -update
       - name: Update resources
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git checkout --orphan tmp-main
-          git add -A
+          git add .
           git commit -m "Updates are performed automatically. $(date)"
-          git branch -D main
-          git branch -m main
-          git push -f origin main
+          git push
