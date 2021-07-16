@@ -400,7 +400,7 @@ func writeToFile(pathInSystem string, content string) {
 		log.Println(err)
 	}
 	// close the file
-	defer filePath.Close()
+	filePath.Close()
 }
 
 // Read and append to array
@@ -417,8 +417,8 @@ func readAndAppend(fileLocation string, arrayName []string) []string {
 	for scanner.Scan() {
 		arrayName = append(arrayName, scanner.Text())
 	}
-	// close the file before func ends
-	defer file.Close()
+	// close the file
+	file.Close()
 	return arrayName
 }
 
