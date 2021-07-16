@@ -18,6 +18,7 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/bobesa/go-domain-util/domainutil"
 	"golang.org/x/net/publicsuffix"
 )
 
@@ -226,6 +227,10 @@ func findTheDomains(url string, saveLocation string) {
 					content = strings.TrimPrefix(content, ".")
 					// If the string has any whitespace, remove it now.
 					content = strings.TrimSpace(content)
+				}
+				// Check to see whether it's a subdomain, then delete it.
+				if domainutil.HasSubdomain(content) {
+					content = domainutil.Domain(content)
 				}
 				// This is a list of all the domains discovered using the regex.
 				foundDomains := regexp.MustCompile(`(?:[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9])?\.)+[a-z0-9][a-z0-9-]{0,61}[a-z0-9]`).Find([]byte(content))
