@@ -27,7 +27,7 @@ jobs:
           sudo prlimit --pid $$ --nofile=500000:500000
           ulimit -a
       - name: Generating new resources.
-        run: .\content-blocker.exe -update
+        run: ./content-blocker -update
       - name: Update resources
         run: |
           git config user.name github-actions
