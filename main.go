@@ -166,6 +166,7 @@ func updateTheLists() {
 func startScraping() {
 	combinedHostsURL := []string{
 		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+		"https://raw.githubusercontent.com/lightswitch05/hosts/master/docs/lists/ads-and-tracking-extended.txt",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueURL := makeUnique(combinedHostsURL)
