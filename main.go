@@ -133,6 +133,7 @@ func updateTheLists() {
 		if err != nil {
 			log.Println(err)
 		}
+		os.WriteFile(combinedHost, []byte(""), 0644)
 	}
 	// Scrape all of the domains and save them afterwards.
 	startScraping()
@@ -271,21 +272,30 @@ func findTheDomains(url string, saveLocation string) {
 }
 
 func validateTheDomains(uniqueDomain string, locatioToSave string) {
-	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) {
-		// Maintain a list of all authorized domains.
-		writeToFile(locatioToSave, uniqueDomain)
-		if showLogs {
-			log.Println("Valid domain:", uniqueDomain)
-		}
-	} else {
-		// Let the users know if there are any issues while verifying the domain.
-		if showLogs {
-			log.Println("Error validating domain:", uniqueDomain)
+	// Make sure we are only validating domains which are not already in the database.
+	var completeLocalDomains []string
+	completeLocalDomains = readAndAppend(combinedHost, completeLocalDomains)
+	completeLocalDomains = readAndAppend(localExclusion, completeLocalDomains)
+	completeLocalDomains = readAndAppend(localInclusion, completeLocalDomains)
+	if !arrayContainsString(completeLocalDomains, uniqueDomain) {
+		// Validate each and every found domain.
+		if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) {
+			// Maintain a list of all authorized domains.
+			writeToFile(locatioToSave, uniqueDomain)
+			if showLogs {
+				log.Println("Valid domain:", uniqueDomain)
+			}
+		} else {
+			// Let the users know if there are any issues while verifying the domain.
+			if showLogs {
+				log.Println("Error validating domain:", uniqueDomain)
+			}
 		}
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	validationWaitGroup.Done()
+	// get the memory back
+	debug.FreeOSMemory()
 }
 
 // Find all the matching domains in your lists
@@ -503,4 +513,14 @@ func copyContentFromOneFileToAnother(originalFilePath string, newFilePath string
 	for _, content := range originalContent {
 		writeToFile(newFilePath, content)
 	}
+}
+
+// Check if the array contains a specefic string
+func arrayContainsString(arrayName []string, document string) bool {
+	for _, content := range arrayName {
+		if content == document {
+			return true
+		}
+	}
+	return false
 }
