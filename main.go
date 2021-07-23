@@ -20,6 +20,7 @@ import (
 
 	"golang.org/x/net/publicsuffix"
 	"golang.org/x/sys/windows"
+	"github.com/openrdap/rdap"
 )
 
 var (
@@ -284,7 +285,7 @@ func findTheDomains(url string, saveLocation string) {
 
 func validateTheDomains(uniqueDomain string, locatioToSave string) {
 	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) {
+	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) || validateDomainViaRDAP(uniqueDomain) {
 		// Maintain a list of all authorized domains.
 		if !arrayContains(savedDomains, uniqueDomain) {
 			savedDomains = append(savedDomains, uniqueDomain)
@@ -359,6 +360,13 @@ func validateDomainViaLookupCNAME(domain string) bool {
 func validateDomainViaLookupHost(domain string) bool {
 	valid, _ := net.LookupHost(domain)
 	return len(valid) >= 1
+}
+
+// Validate the domain using rdap library.
+func validateDomainViaRDAP(domain string) bool {
+	client := &rdap.Client{}
+	_, err := client.QueryDomain(domain)
+	return err == nil
 }
 
 // Make sure it's not an IP address.
