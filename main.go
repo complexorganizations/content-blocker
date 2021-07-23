@@ -18,9 +18,9 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/openrdap/rdap"
 	"golang.org/x/net/publicsuffix"
 	"golang.org/x/sys/windows"
-	"github.com/openrdap/rdap"
 )
 
 var (
