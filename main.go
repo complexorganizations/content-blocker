@@ -18,9 +18,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/openrdap/rdap"
 	"golang.org/x/net/publicsuffix"
-	"golang.org/x/sys/windows"
 )
 
 var (
@@ -88,13 +86,6 @@ func main() {
 
 // Configure your system to use the lists.
 func installInSystem() {
-	// If it's operating on Windows, make sure we're installing the host file as an administrator.
-	if runtime.GOOS == "windows" {
-		// Ascertain that it is operating as root or administrator.
-		if windowsCheckRoot() {
-			log.Fatal("Error: To ensure that this program works, please run it as administrator.")
-		}
-	}
 	var systemHostFile string
 	switch runtime.GOOS {
 	case "windows":
@@ -285,7 +276,7 @@ func findTheDomains(url string, saveLocation string) {
 
 func validateTheDomains(uniqueDomain string, locatioToSave string) {
 	// Validate each and every found domain.
-	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) || validateDomainViaRDAP(uniqueDomain) {
+	if validateDomainViaLookupNS(uniqueDomain) || validateDomainViaLookupIP(uniqueDomain) || validateDomainViaLookupCNAME(uniqueDomain) || validateDomainViaLookupHost(uniqueDomain) {
 		// Maintain a list of all authorized domains.
 		if !arrayContains(savedDomains, uniqueDomain) {
 			savedDomains = append(savedDomains, uniqueDomain)
@@ -360,13 +351,6 @@ func validateDomainViaLookupCNAME(domain string) bool {
 func validateDomainViaLookupHost(domain string) bool {
 	valid, _ := net.LookupHost(domain)
 	return len(valid) >= 1
-}
-
-// Validate the domain using rdap library.
-func validateDomainViaRDAP(domain string) bool {
-	client := &rdap.Client{}
-	_, err := client.QueryDomain(domain)
-	return err == nil
 }
 
 // Make sure it's not an IP address.
@@ -536,21 +520,4 @@ func copyContentFromOneFileToAnother(originalFilePath string, newFilePath string
 	for _, content := range originalContent {
 		writeToFile(newFilePath, content)
 	}
-}
-
-// Ascertain that the program is being used as an administrator.
-func windowsCheckRoot() bool {
-	var sid *windows.SID
-	err = windows.AllocateAndInitializeSid(
-		&windows.SECURITY_NT_AUTHORITY,
-		2,
-		windows.SECURITY_BUILTIN_DOMAIN_RID,
-		windows.DOMAIN_ALIAS_RID_ADMINS,
-		0, 0, 0, 0, 0, 0,
-		&sid)
-	if err != nil {
-		return false
-	}
-	_, err = windows.Token(0).IsMember(sid)
-	return err == nil
 }
