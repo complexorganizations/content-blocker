@@ -97,7 +97,7 @@ func installInSystem() {
 	if !fileExists(systemHostFile) {
 		writeHostFile(combinedHost, systemHostFile)
 	} else {
-		log.Fatal("Error: There is already a system host file presnet.")
+		log.Fatal("Error: There is already a system host file present.")
 	}
 }
 
