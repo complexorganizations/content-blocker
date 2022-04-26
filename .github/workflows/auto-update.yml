@@ -1,0 +1,34 @@
+name: Updating the resources
+on:
+  schedule:
+    - cron: "0 0 * * *"
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v3
+      - name: Get the current version of Go from project.
+        run: type go.mod | select -Skip 2 -First 1 | %{ 'GO_VERSION_FROM_PROJECT={0}' -f ($_ -replace '^.+\s') } >>$env:GITHUB_ENV
+      - name: Set up Go version "${{ env.GO_VERSION_FROM_PROJECT }}"
+        uses: actions/setup-go@v2
+        with:
+          go-version: "${{ env.GO_VERSION_FROM_PROJECT }}"
+        id: go
+      - name: Get dependencies
+        run: go get .
+      - name: Build Test
+        run: go build .
+      - name: Generating new resources.
+        run: .\content-blocker.exe -update
+      - name: Update resources
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout --orphan tmp-main
+          git add -A
+          git commit -m "Updates are performed automatically. $(date)"
+          git branch -D main
+          git branch -m main
+          git push -f origin main
