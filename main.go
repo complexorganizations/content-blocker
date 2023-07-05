@@ -68,8 +68,14 @@ func main() {
 func updateTheLists() {
 	// Clear your memories as much as possible
 	if folderExists(os.TempDir()) {
-		os.RemoveAll(os.TempDir())
-		os.Mkdir(os.TempDir(), 0777)
+		err := os.RemoveAll(os.TempDir())
+		if err != nil {
+			log.Println(err)
+		}
+		err = os.Mkdir(os.TempDir(), 0777)
+		if err != nil {
+			log.Println(err)
+		}
 	} else {
 		log.Println("Error: The system temporary directory could not be found.")
 	}
