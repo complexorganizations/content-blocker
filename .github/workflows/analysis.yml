@@ -9,7 +9,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Check out code into the Go module directory
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Get the current version of Go from project.
         run: type go.mod | select -first 3 | select -last 1 | %{ 'GO_VERSION_FROM_PROJECT={1}' -f ($_ -split ' ') } >>$env:GITHUB_ENV
       - name: Set up Go version "${{ env.GO_VERSION_FROM_PROJECT }}"
