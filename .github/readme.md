@@ -19,10 +19,14 @@ Content blocker is a DNS level blocker that can block anything on the DNS level,
 
 ---
 ### Variants
-| Name     | Description                | GitHub   | Statically | JSDelivr | Combinatronics |
-| :------- | :------------------------- | :------- | :--------- | :------- | :------------- |
-| Hosts | Advertisement, Tracking, Malware, Phishing | `https://raw.githubusercontent.com/complexorganizations/content-blocker/main/assets/hosts` | `https://cdn.statically.io/gh/complexorganizations/content-blocker/main/assets/hosts` | `https://cdn.jsdelivr.net/gh/complexorganizations/content-blocker/assets/hosts` | `https://combinatronics.io/complexorganizations/content-blocker/main/assets/hosts` |
 
+| Name        | Description                                 | GitHub                                                                                             | Statically                                                                                        | jsDelivr                                                                                  | Combinatronics.io                                                                                     |
+| :---------- | :------------------------------------------ | :------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| Hosts       | Advertisement, Tracking, Malware, Phishing  | [GitHub](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/assets/hosts) | [Statically](https://cdn.statically.io/gh/complexorganizations/content-blocker/main/assets/hosts) | [jsDelivr](https://cdn.jsdelivr.net/gh/complexorganizations/content-blocker/assets/hosts) | [Combinatronics.io](https://combinatronics.io/complexorganizations/content-blocker/main/assets/hosts) |
+| Browser Block List | Block list for web browsers | [GitHub](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/assets/browser.txt) | [Statically](https://cdn.statically.io/gh/complexorganizations/content-blocker/main/assets/browser.txt) | [jsDelivr](https://cdn.jsdelivr.net/gh/complexorganizations/content-blocker/assets/browser.txt) | [Combinatronics.io](https://combinatronics.io/complexorganizations/content-blocker/main/assets/browser.txt) |
+
+
+All URLs have been updated for consistency.
 ---
 Let's begin by copying the repository to your own machine.
 ```
