@@ -1,19 +1,33 @@
-name: "CodeQL"
+# Define the name of the workflow.
+name: CodeQL
+
+# Define when the workflow should run.
 on:
+  # Scheduled to run daily at midnight.
   schedule:
     - cron: "0 0 * * *"
+
+# Define the jobs to be executed.
 jobs:
+  # Define the analyze job.
   analyse:
-    name: Analyse
+    name: Analyze
     runs-on: windows-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-        languages: go
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      # Checkout the repository.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      # Initialize CodeQL for the Go language.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: go
+      
+      # Autobuild the CodeQL database.
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+      
+      # Perform CodeQL analysis.
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
