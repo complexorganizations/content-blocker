@@ -1,5 +1,4 @@
-# Define the workflow name.
-name: Update of the Resources
+# Automated Resource Update Workflow
 
 # Define when the workflow should run.
 on:
@@ -17,16 +16,16 @@ on:
 
 # Define the jobs to be executed.
 jobs:
-  # Define the build job.
-  build:
-    name: Build
+  # Job for updating and managing resources.
+  update_resources:
+    name: Update and Manage Resources
     runs-on: windows-latest
     steps:
       # Check out code from the repository.
-      - name: Check out code into the Go module directory
+      - name: Check out code
         uses: actions/checkout@v4
       
-      # Set up the Go programming language version.
+      # Set up the Go version specified in go.mod.
       - name: Set up Go version
         uses: actions/setup-go@v4
         with:
@@ -40,11 +39,11 @@ jobs:
         run: go get .
       
       # Build the Go application.
-      - name: Build Test
+      - name: Build Application
         run: go build .
       
       # Generate new resources using content-blocker.
-      - name: Generating new resources.
+      - name: Generate New Resources
         run: .\content-blocker.exe -update
       
       # Commit and push updates to the repository.
