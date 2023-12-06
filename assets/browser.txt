@@ -1,0 +1,11 @@
+! Title: Content Blocker 
+! Description: This filter is a comprehensive list of online counters and web analytics tools. It's designed to prevent tracking of your online activities.
+! Version: 1.0.0
+! Last modified: %timestamp%
+! Expires: Updated daily
+! Homepage: [GitHub Repository](https://github.com/complexorganizations/content-blocker)
+! License: [License Information](https://raw.githubusercontent.com/complexorganizations/content-blocker/main/.github/license)
+! Forums: [GitHub Repository](https://github.com/complexorganizations/content-blocker/issues)
+
+
+google.com
