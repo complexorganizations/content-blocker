@@ -49,13 +49,13 @@ go run main.go -search="example.com"
 
 #### Compatibility
 
-| Operating System(s) | Tested             |
-| ------------------- | ------------------ |
-| Linux               | :heavy_check_mark: |
-| Windows             | :heavy_check_mark: |
-| MacOS               | :heavy_check_mark: |
-| Android             | :heavy_check_mark: |
-| iOS                 | :heavy_check_mark: |
+| Operating System(s) | Tested |
+| ------------------- | ------ |
+| Linux               | Yes    |
+| Windows             | Yes    |
+| MacOS               | Yes    |
+| Android             | Yes    |
+| iOS                 | Yes    |
 
 ## Q&A
 
