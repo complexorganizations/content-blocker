@@ -1,4 +1,5 @@
 # Automated Resource Update Workflow
+name: Update of the Resources
 
 # Define when the workflow should run.
 on:
