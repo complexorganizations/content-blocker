@@ -183,6 +183,8 @@ func findTheDomains(url string, saveLocation string) {
 			content = strings.TrimSpace(content)
 			// Remove 0.0.0.0 from the beginning of the string.
 			content = strings.TrimPrefix(content, "0.0.0.0")
+			// Remove any whitespace from the string.
+			content = strings.TrimSpace(content)
 			// Validate the entire list of domains.
 			if len(content) < 255 && isDomainSuffixValid(content) {
 				validationWaitGroup.Add(1)
