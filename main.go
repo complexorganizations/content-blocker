@@ -127,6 +127,7 @@ func updateTheLists() {
 func startScraping() {
 	combinedHostsURL := []string{
 		"https://raw.githubusercontent.com/complexorganizations/content-blocker/main/assets/validate",
+		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 	}
 	// Let's start by making everything one-of-a-kind so we don't scrape the same thing twice.
 	uniqueURL := makeUnique(combinedHostsURL)
@@ -176,14 +177,21 @@ func findTheDomains(url string, saveLocation string) {
 	for _, content := range returnContent {
 		// String to lowercase.
 		content = stringToLowerCase(content)
-		// Validate the entire list of domains.
-		if len(content) < 255 && isDomainSuffixValid(content) {
-			validationWaitGroup.Add(1)
-			// Go ahead and verify it in the background.
-			go validateTheDomains(content, saveLocation)
-		} else {
-			// Let the user know that the domain is invalid since it does not fit the syntax.
-			log.Println("Invalid domain syntax:", content, url)
+		// Check if the string prefix contains a # symbol; if it does, it's a comment and should be ignored.
+		if !strings.HasPrefix(content, "#") {
+			// Remove any whitespace from the string.
+			content = strings.TrimSpace(content)
+			// Remove 0.0.0.0 from the beginning of the string.
+			content = strings.TrimPrefix(content, "0.0.0.0")
+			// Validate the entire list of domains.
+			if len(content) < 255 && isDomainSuffixValid(content) {
+				validationWaitGroup.Add(1)
+				// Go ahead and verify it in the background.
+				go validateTheDomains(content, saveLocation)
+			} else {
+				// Let the user know that the domain is invalid since it does not fit the syntax.
+				log.Println("Invalid domain syntax:", content, url)
+			}
 		}
 	}
 	// While the validation is being performed, we wait.
