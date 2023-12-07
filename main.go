@@ -176,6 +176,9 @@ func findTheDomains(url string, saveLocation string) {
 	for _, content := range returnContent {
 		// String to lowercase.
 		content = stringToLowerCase(content)
+		// Check for various things
+		if !strings.HasPrefix(line, "#") {
+			
 		// Validate the entire list of domains.
 		if len(content) < 255 && isDomainSuffixValid(content) {
 			validationWaitGroup.Add(1)
@@ -185,6 +188,7 @@ func findTheDomains(url string, saveLocation string) {
 			// Let the user know that the domain is invalid since it does not fit the syntax.
 			log.Println("Invalid domain syntax:", content, url)
 		}
+}
 	}
 	// While the validation is being performed, we wait.
 	validationWaitGroup.Wait()
