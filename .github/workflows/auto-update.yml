@@ -27,7 +27,7 @@ jobs:
       
       # Set up the Go version specified in go.mod.
       - name: Set up Go version
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v5
         with:
           go-version-file: "go.mod"
           cache: true
