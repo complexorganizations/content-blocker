@@ -20,14 +20,14 @@ jobs:
       
       # Initialize CodeQL for the Go language.
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v3
         with:
           languages: go
       
       # Autobuild the CodeQL database.
       - name: Autobuild
-        uses: github/codeql-action/autobuild@v1
+        uses: github/codeql-action/autobuild@v3
       
       # Perform CodeQL analysis.
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
+        uses: github/codeql-action/analyze@v3
