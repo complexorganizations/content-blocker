@@ -314,6 +314,10 @@ func findTheDomains(url string, saveLocation string) {
 }
 
 func validateTheDomains(uniqueDomain string, locatioToSave string) {
+	// Initialize savedDomains if it's nil
+	if savedDomains == nil {
+		savedDomains = []string{}
+	}
 	// Maintain a list of all authorized domains.
 	if !arrayContains(savedDomains, uniqueDomain) {
 		// Only validate the domain once.
