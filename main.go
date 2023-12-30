@@ -255,6 +255,7 @@ func findTheDomains(url string, saveLocation string) {
 	response, err := http.Get(url)
 	if err != nil {
 		log.Println(err)
+		return // If there is an error, we will exit the function.
 	}
 	// read all the content of the body.
 	body, err := io.ReadAll(response.Body)
