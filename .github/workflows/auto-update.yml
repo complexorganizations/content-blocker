@@ -20,12 +20,12 @@ jobs:
   # Job for updating and managing resources.
   update_resources:
     name: Update and Manage Resources
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       # Check out code from the repository.
       - name: Check out code
         uses: actions/checkout@v4
-      
+
       # Set up the Go version specified in go.mod.
       - name: Set up Go version
         uses: actions/setup-go@v5
@@ -33,25 +33,26 @@ jobs:
           go-version-file: "go.mod"
           cache: true
           check-latest: true
+          stable: true
         id: go
-      
+
       # Get Go dependencies.
       - name: Get dependencies
-        run: go get .
-      
+        run: go mod download
+
       # Build the Go application.
       - name: Build Application
         run: go build .
-      
+
       # Generate new resources using content-blocker.
       - name: Generate New Resources
-        run: .\content-blocker.exe -update
-      
+        run: content-blocker -update
+
       # Commit and push updates to the repository.
       - name: Commit and Push Updates
         run: |
           git config user.name "github-actions"       # Configure GitHub Actions bot as the commit author.
-          git config user.email "github-actions@github.com"
+          git config user.email "github-actions@github.com" # Configure GitHub Actions bot as the commit author.
           git add .                                    # Add changes to the staging area.
           git commit -m "Automated update: $(date)"    # Commit changes with a timestamp.
           git pull --rebase origin main                # Rebase with remote main to avoid conflicts.
