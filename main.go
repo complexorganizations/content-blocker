@@ -432,6 +432,7 @@ func writeToFile(pathInSystem string, content string) {
 	filePath, err := os.OpenFile(pathInSystem, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
+		return
 	}
 	// close the file
 	defer filePath.Close()
@@ -447,7 +448,10 @@ func readAndAppend(fileLocation string, arrayName []string) []string {
 	file, err := os.Open(fileLocation)
 	if err != nil {
 		log.Println(err)
+        	return arrayName
 	}
+    	// Ensure the file is closed when the function returns
+    	defer file.Close()
 	// scan the file, and read the file
 	scanner := bufio.NewScanner(file)
 	// split each line
@@ -456,8 +460,6 @@ func readAndAppend(fileLocation string, arrayName []string) []string {
 	for scanner.Scan() {
 		arrayName = append(arrayName, scanner.Text())
 	}
-	// close the file
-	file.Close()
 	return arrayName
 }
 
