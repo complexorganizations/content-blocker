@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"flag"
-	"fmt"
 	"io"
 	"log"
 	"net"
@@ -37,7 +36,6 @@ var (
 	cleanUpWaitGroup    sync.WaitGroup
 	// The user expresses his or her opinion on what should be done.
 	update bool
-	search string
 	// err stands for error.
 	err error
 )
@@ -46,10 +44,8 @@ func init() {
 	// If any user input flags are provided, use them.
 	if len(os.Args) > 1 {
 		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
-		tempSearch := flag.String("search", "example.example", "Check to see if a specific domain is on a list.")
 		flag.Parse()
 		update = *tempUpdate
-		search = *tempSearch
 	} else {
 		// if there are no flags provided than we close the application.
 		log.Fatal("Error: No flags provided. Please use -help for more information.")
@@ -60,10 +56,6 @@ func main() {
 	// Lists should be updated.
 	if update {
 		updateTheLists()
-	}
-	// Search
-	if len(search) > 1 && search != "example.example" {
-		findAllMatchingDomains(search)
 	}
 }
 
@@ -223,26 +215,6 @@ func validateTheDomains(uniqueDomain string, locatioToSave string) {
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	validationWaitGroup.Done()
-}
-
-// Find all the matching domains in your lists
-func findAllMatchingDomains(domain string) {
-	// Combined
-	var combinedConfigArray []string
-	combinedConfigArray = readAndAppend(combinedHost, combinedConfigArray)
-	for _, content := range combinedConfigArray {
-		if strings.Contains(content, domain) {
-			fmt.Println("Found Domain:", content, "Location:", combinedHost)
-		}
-	}
-	// Exclusion
-	var localExclusionArray []string
-	localExclusionArray = readAndAppend(localExclusion, localExclusionArray)
-	for _, content := range localExclusionArray {
-		if strings.Contains(content, domain) {
-			fmt.Println("Found Domain:", content, "Location:", localExclusion)
-		}
-	}
 }
 
 // Take a list of domains and make them one-of-a-kind
