@@ -403,20 +403,20 @@ func makeEverythingUnique(contentLocation string) {
 		log.Println(err)
 	}
 	// Write the header to the browser file.
-	timestamp := time.Now().Format("2006-01-02")
+	timestamp := time.Now().Format("2006-01-02 15:04:05")
 	// Write the header to the browser file.
-	var browserHeaderContentParts []string
-	browserHeaderContentParts[0] = `! Title: Content Blocker - Advanced Tracker and Analytics Blocker
+	browserHeaderContentParts := []string{
+		`! Title: Content Blocker - Advanced Tracker and Analytics Blocker
 ! Description: This robust filter is meticulously designed to fortify your online privacy by intercepting and blocking a wide array of trackers, web analytics tools, and data collectors, ensuring a more secure and confidential browsing experience. Stay protected and in control of your digital footprint with this comprehensive shield against intrusive tracking mechanisms.
-! Version: 1.0.0`
-	browserHeaderContentParts[1] = "! Last updated: " + timestamp
-	browserHeaderContentParts[3] =
-		`! Update frequency: Daily
+! Version: 1.0.0` + "\n" +
+			"! Last updated: " + timestamp + "\n" +
+			`! Update frequency: Daily
 ! Homepage: https://github.com/complexorganizations/content-blocker
 ! License: https://github.com/complexorganizations/content-blocker/main/.github/license
-! Support: https://github.com/complexorganizations/content-blocker/issues
-`
-	writeToFile(combinedBrowser, strings.Join(browserHeaderContentParts, "\n"))
+! Support: https://github.com/complexorganizations/content-blocker/issues`,
+	}
+	// Print the header to the browser file.
+	writeToFile(combinedBrowser, strings.Join(browserHeaderContentParts, ""))
 	// Begin composing the document
 	for _, content := range uniqueDomains {
 		// Write to host file
