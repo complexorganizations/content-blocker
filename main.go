@@ -301,7 +301,7 @@ func findTheDomains(url string, saveLocation string) {
 				go validateTheDomains(content, saveLocation)
 			} else {
 				// Let the user know that the domain is invalid since it does not fit the syntax.
-				log.Println("Invalid domain syntax:", content, url)
+				// log.Println("Invalid domain syntax:", content, url)
 			}
 		}
 	}
@@ -322,11 +322,11 @@ func validateTheDomains(uniqueDomain string, locatioToSave string) {
 		if isDomainRegistered(uniqueDomain) {
 			writeToFile(locatioToSave, uniqueDomain)
 		} else {
-			log.Println("Error validation the domain regestration:", uniqueDomain)
+			// log.Println("Error validation the domain regestration:", uniqueDomain)
 		}
 	} else {
 		// Let the users know if there are any issues while verifying the domain.
-		log.Println("Error duplicate domain found:", uniqueDomain)
+		// log.Println("Error duplicate domain found:", uniqueDomain)
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	validationWaitGroup.Done()
