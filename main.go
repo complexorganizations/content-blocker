@@ -410,7 +410,6 @@ func makeEverythingUnique(contentLocation string) {
 ! Homepage: https://github.com/complexorganizations/content-blocker
 ! License: https://github.com/complexorganizations/content-blocker/main/.github/license
 ! Support: https://github.com/complexorganizations/content-blocker/issues
-
 `
 	writeToFile(combinedBrowser, browserHeaderContent)
 	// Begin composing the document
