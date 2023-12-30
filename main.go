@@ -21,10 +21,11 @@ import (
 
 var (
 	// Location of the configuration in the local system path
-	combinedHost   = "assets/hosts"
-	localExclusion = "assets/exclusion"
-	localInclusion = "assets/inclusion"
-	localValidate  = "assets/validate"
+	combinedHost    = "assets/hosts"
+	localExclusion  = "assets/exclusion"
+	localInclusion  = "assets/inclusion"
+	localValidate   = "assets/validate"
+	combinedBrowser = "assets/browser.txt"
 	// Memorandum with a domain list.
 	exclusionDomains []string
 	savedDomains     []string
@@ -390,14 +391,32 @@ func makeEverythingUnique(contentLocation string) {
 		}
 		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
-	// Delete the original file and rewrite it.
+	// Delete the original host file and rewrite it.
 	err = os.Remove(contentLocation)
 	if err != nil {
 		log.Println(err)
 	}
+	// Delete the original browser file and rewrite it.
+	err = os.Remove(combinedBrowser)
+	if err != nil {
+		log.Println(err)
+	}
+	// Write the header to the browser file.
+	browserHeaderContent := `! Title: Content Blocker - Advanced Tracker and Analytics Blocker
+	! Description: This robust filter is meticulously designed to fortify your online privacy by intercepting and blocking a wide array of trackers, web analytics tools, and data collectors, ensuring a more secure and confidential browsing experience. Stay protected and in control of your digital footprint with this comprehensive shield against intrusive tracking mechanisms.
+	! Version: 1.0.0
+	! Last updated: %timestamp%
+	! Update frequency: Daily
+	! Homepage: https://github.com/complexorganizations/content-blocker
+	! License: https://github.com/complexorganizations/content-blocker/main/.github/license
+	! Support: https://github.com/complexorganizations/content-blocker/issues`
+	writeToFile(combinedBrowser, browserHeaderContent)
 	// Begin composing the document
 	for _, content := range uniqueDomains {
+		// Write to host file
 		writeToFile(contentLocation, content)
+		// Write to browser file
+		writeToFile(combinedBrowser, content)
 	}
 	// remove it from memory
 	uniqueDomains = nil
