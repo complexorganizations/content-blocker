@@ -33,7 +33,6 @@ jobs:
           go-version-file: "go.mod"
           cache: true
           check-latest: true
-          stable: true
         id: go
 
       # Get Go dependencies.
@@ -46,7 +45,7 @@ jobs:
 
       # Generate new resources using content-blocker.
       - name: Generate New Resources
-        run: content-blocker -update
+        run: ./content-blocker -update
 
       # Commit and push updates to the repository.
       - name: Commit and Push Updates
