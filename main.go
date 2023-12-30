@@ -433,13 +433,13 @@ func writeToFile(pathInSystem string, content string) {
 	if err != nil {
 		log.Println(err)
 	}
+	// close the file
+	defer filePath.Close()
 	// write the content to the file
 	_, err = filePath.WriteString(content + "\n")
 	if err != nil {
 		log.Println(err)
 	}
-	// close the file
-	filePath.Close()
 }
 
 // Read and append to array
