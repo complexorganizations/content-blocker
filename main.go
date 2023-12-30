@@ -413,7 +413,7 @@ func makeEverythingUnique(contentLocation string) {
 			`! Update frequency: Daily
 ! Homepage: https://github.com/complexorganizations/content-blocker
 ! License: https://github.com/complexorganizations/content-blocker/main/.github/license
-! Support: https://github.com/complexorganizations/content-blocker/issues`,
+! Support: https://github.com/complexorganizations/content-blocker/issues` + "\n",
 	}
 	// Print the header to the browser file.
 	writeToFile(combinedBrowser, strings.Join(browserHeaderContentParts, ""))
