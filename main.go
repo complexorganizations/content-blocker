@@ -273,7 +273,7 @@ func findTheDomains(url string, saveLocation string) {
 			if len(content) < 255 && isDomainSuffixValid(content) {
 				validationWaitGroup.Add(1)
 				// Go ahead and verify it in the background.
-				go validateTheDomains(content, saveLocation)
+				go validateTheDomains(&savedDomains, content, saveLocation)
 			} else {
 				if logs {
 					// Let the user know that the domain is invalid since it does not fit the syntax.
