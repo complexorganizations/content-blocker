@@ -18,22 +18,20 @@ jobs:
       # Check out code from the repository.
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
-      
-      # Get the current version of Go from the project and set it as an environment variable.
-      - name: Get the current version of Go from project.
-        run: type go.mod | select -first 3 | select -last 1 | %{ 'GO_VERSION_FROM_PROJECT={1}' -f ($_ -split ' ') } >>$env:GITHUB_ENV
-      
-      # Set up the specified Go version.
-      - name: Set up Go version "${{ env.GO_VERSION_FROM_PROJECT }}"
-        uses: actions/setup-go@v5
+
+      # Set up Go.
+      - name: Set up Go version
+        uses: actions/setup-go@v5.0.0
         with:
-          go-version: "${{ env.GO_VERSION_FROM_PROJECT }}"
+          go-version-file: "go.mod"
+          cache: true
+          check-latest: true
         id: go
-      
+
       # Get Go dependencies.
       - name: Get dependencies
         run: go get .
-      
+
       # Build the Go application.
       - name: Build Test
         run: go build .
