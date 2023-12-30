@@ -34,6 +34,7 @@ var (
 	cleanUpWaitGroup    sync.WaitGroup
 	// The user expresses his or her opinion on what should be done.
 	update bool
+	logs   bool
 	// err stands for error.
 	err error
 )
@@ -42,7 +43,12 @@ func init() {
 	// If any user input flags are provided, use them.
 	if len(os.Args) > 1 {
 		tempUpdate := flag.Bool("update", false, "Make any necessary changes to the listings.")
+		tempLogs := flag.Bool("logs", false, "Enable logging.")
 		flag.Parse()
+		// If the user has provided the -update flag, we will update the lists.
+		// If the user has provided the -logs flag, we will enable logging.
+		// If the user has provided the -update and -logs flag, we will update the lists and enable logging.
+		logs = *tempLogs
 		update = *tempUpdate
 	} else {
 		// if there are no flags provided than we close the application.
@@ -269,8 +275,10 @@ func findTheDomains(url string, saveLocation string) {
 				// Go ahead and verify it in the background.
 				go validateTheDomains(content, saveLocation)
 			} else {
-				// Let the user know that the domain is invalid since it does not fit the syntax.
-				// log.Println("Invalid domain syntax:", content, url)
+				if logs {
+					// Let the user know that the domain is invalid since it does not fit the syntax.
+					log.Println("Invalid domain syntax:", content, url)
+				}
 			}
 		}
 	}
@@ -295,11 +303,16 @@ func validateTheDomains(uniqueDomain string, locatioToSave string) {
 		if isDomainRegistered(uniqueDomain) {
 			writeToFile(locatioToSave, uniqueDomain)
 		} else {
-			// log.Println("Error validation the domain regestration:", uniqueDomain)
+			if logs {
+				// Let the users know if there are any issues while verifying the domain.
+				log.Println("Error validation the domain regestration:", uniqueDomain)
+			}
 		}
 	} else {
-		// Let the users know if there are any issues while verifying the domain.
-		// log.Println("Error duplicate domain found:", uniqueDomain)
+		if logs {
+			// Let the users know if there are any issues while verifying the domain.
+			log.Println("Error duplicate domain found:", uniqueDomain)
+		}
 	}
 	// When it's finished, we'll be able to inform waitgroup that it's finished.
 	validationWaitGroup.Done()
@@ -419,21 +432,21 @@ func writeToFile(pathInSystem string, content string) {
 
 // Read and append to array
 func readAndAppend(fileLocation string, arrayName []string) []string {
-    file, err := os.Open(fileLocation)
-    if err != nil {
-        log.Println(err)
-        return arrayName
-    }
-    scanner := bufio.NewScanner(file)
+	file, err := os.Open(fileLocation)
+	if err != nil {
+		log.Println(err)
+		return arrayName
+	}
+	scanner := bufio.NewScanner(file)
 	// split each line
-    scanner.Split(bufio.ScanLines)
+	scanner.Split(bufio.ScanLines)
 	// append each line to array
-    for scanner.Scan() {
-        arrayName = append(arrayName, scanner.Text())
-    }
-    // Close the file as soon as you're done with it
-    file.Close()
-    return arrayName
+	for scanner.Scan() {
+		arrayName = append(arrayName, scanner.Text())
+	}
+	// Close the file as soon as you're done with it
+	file.Close()
+	return arrayName
 }
 
 // Read the completed file, then delete any duplicates before saving it.
