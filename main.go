@@ -2,9 +2,7 @@ package main
 
 import (
 	"bufio"
-	"bytes"
 	"flag"
-	"io"
 	"log"
 	"net"
 	"net/http"
@@ -257,26 +255,19 @@ func findTheDomains(url string, saveLocation string) {
 		log.Println(err)
 		return // If there is an error, we will exit the function.
 	}
-	// read all the content of the body.
-	body, err := io.ReadAll(response.Body)
-	if err != nil {
-		log.Println(err)
-	}
+	// Ensure the response body is closed when the function returns
+	defer response.Body.Close()
 	// Examine the page's response code.
 	if response.StatusCode == 404 {
 		log.Println("Sorry, but we were unable to scrape the page you requested due to a 404 error.", url)
+		return
 	}
 	// Scraped data is read and appended to an array.
-	scanner := bufio.NewScanner(bytes.NewReader(body))
+	scanner := bufio.NewScanner(response.Body)
 	scanner.Split(bufio.ScanLines)
 	var returnContent []string
 	for scanner.Scan() {
 		returnContent = append(returnContent, scanner.Text())
-	}
-	// When you're finished, close the body.
-	err = response.Body.Close()
-	if err != nil {
-		log.Fatalln(err)
 	}
 	for _, content := range returnContent {
 		// String to lowercase.
@@ -448,10 +439,10 @@ func readAndAppend(fileLocation string, arrayName []string) []string {
 	file, err := os.Open(fileLocation)
 	if err != nil {
 		log.Println(err)
-        	return arrayName
+		return arrayName
 	}
-    	// Ensure the file is closed when the function returns
-    	defer file.Close()
+	// Ensure the file is closed when the function returns
+	defer file.Close()
 	// scan the file, and read the file
 	scanner := bufio.NewScanner(file)
 	// split each line
