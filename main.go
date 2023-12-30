@@ -121,9 +121,6 @@ func updateTheLists() {
 func startScraping() {
 	combinedHostsURL := []string{
 		"https://badmojr.github.io/1Hosts/Pro/domains.txt",
-		"https://block.energized.pro/extensions/xtreme/formats/domains.txt",
-		"https://block.energized.pro/ultimate/formats/domains.txt",
-		"https://blocklist.cyberthreatcoalition.org/vetted/domain.txt",
 		"https://gitlab.com/andryou/block/raw/master/chibi-strict-domains",
 		"https://gitlab.com/andryou/block/raw/master/kouhai-strict-domains",
 		"https://gitlab.com/andryou/block/raw/master/senpai-strict-domains",
@@ -151,8 +148,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/smart-tv.txt",
 		"https://raw.githubusercontent.com/blocklistproject/Lists/master/tracking.txt",
 		"https://raw.githubusercontent.com/bongochong/CombinedPrivacyBlockLists/master/newhosts-final.hosts",
-		"https://raw.githubusercontent.com/cbuijs/shallalist/master/adv/domains",
-		"https://raw.githubusercontent.com/cbuijs/shallalist/master/tracker/domains",
 		"https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt",
 		"https://raw.githubusercontent.com/d3ward/toolz/master/src/d3host.txt",
 		"https://raw.githubusercontent.com/DandelionSprout/adfilt/master/Alternate%20versions%20Anti-Malware%20List/AntiMalwareHosts.txt",
@@ -182,7 +177,6 @@ func startScraping() {
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/phishing.txt",
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/ransomware.txt",
 		"https://raw.githubusercontent.com/hemiipatu/PiHoleBlocklists/master/blocklists/scam.txt",
-		"https://raw.githubusercontent.com/herrbischoff/trackers/master/domains.txt",
 		"https://raw.githubusercontent.com/HorusTeknoloji/TR-PhishingList/master/url-lists.txt",
 		"https://raw.githubusercontent.com/jdlingyu/ad-wars/master/hosts",
 		"https://raw.githubusercontent.com/jerryn70/GoodbyeAds/master/Hosts/GoodbyeAds-Ultra.txt",
