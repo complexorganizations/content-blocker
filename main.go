@@ -290,32 +290,32 @@ func findTheDomains(url string, saveLocation string) {
 	debug.FreeOSMemory()
 }
 
-func validateTheDomains(uniqueDomain string, locatioToSave string) {
-	// Initialize savedDomains if it's nil
-	if savedDomains == nil {
-		savedDomains = []string{}
-	}
-	// Maintain a list of all authorized domains.
-	if !arrayContains(savedDomains, uniqueDomain) {
-		// Only validate the domain once.
-		savedDomains = append(savedDomains, uniqueDomain)
-		// Validate each and every found domain.
-		if isDomainRegistered(uniqueDomain) {
-			writeToFile(locatioToSave, uniqueDomain)
-		} else {
-			if logs {
-				// Let the users know if there are any issues while verifying the domain.
-				log.Println("Error validation the domain regestration:", uniqueDomain)
-			}
-		}
-	} else {
-		if logs {
-			// Let the users know if there are any issues while verifying the domain.
-			log.Println("Error duplicate domain found:", uniqueDomain)
-		}
-	}
-	// When it's finished, we'll be able to inform waitgroup that it's finished.
-	validationWaitGroup.Done()
+func validateTheDomains(savedDomains *[]string, uniqueDomain string, locatioToSave string) {
+    // Initialize savedDomains if it's nil
+    if *savedDomains == nil {
+        *savedDomains = []string{}
+    }
+    // Maintain a list of all authorized domains.
+    if !arrayContains(*savedDomains, uniqueDomain) {
+        // Only validate the domain once.
+        *savedDomains = append(*savedDomains, uniqueDomain)
+        // Validate each and every found domain.
+        if isDomainRegistered(uniqueDomain) {
+            writeToFile(locatioToSave, uniqueDomain)
+        } else {
+            if logs {
+                // Let the users know if there are any issues while verifying the domain.
+                log.Println("Domain not registered:", uniqueDomain)
+            }
+        }
+    } else {
+        if logs {
+            // Let the users know if there are any issues while verifying the domain.
+            log.Println("Duplicate domain found:", uniqueDomain)
+        }
+    }
+    // When it's finished, we'll be able to inform waitgroup that it's finished.
+    validationWaitGroup.Done()
 }
 
 // Take a list of domains and make them one-of-a-kind
