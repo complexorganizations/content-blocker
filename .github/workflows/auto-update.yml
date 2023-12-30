@@ -3,9 +3,9 @@ name: Update of the Resources
 
 # Define when the workflow should run.
 on:
-  # Scheduled to run hourly.
+  # Scheduled to run daily.
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 0 * * *"
 
   # Triggered when changes are pushed to specified paths.
   push:
