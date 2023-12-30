@@ -58,23 +58,6 @@ func main() {
 }
 
 func updateTheLists() {
-	// Clear your memories as much as possible
-	if folderExists(os.TempDir()) {
-		err := os.RemoveAll(os.TempDir())
-		if err != nil {
-			log.Println(err)
-		}
-		err = os.Mkdir(os.TempDir(), 0777)
-		if err != nil {
-			log.Println(err)
-		}
-	} else {
-		log.Println("Error: The system temporary directory could not be found.")
-	}
-	// Force clear your system memory.
-	debug.FreeOSMemory()
-	// Max ammount of go routines
-	debug.SetMaxThreads(10000)
 	// Remove the old files from your system if they are found.
 	if fileExists(combinedHost) {
 		err = os.Remove(combinedHost)
@@ -436,22 +419,21 @@ func writeToFile(pathInSystem string, content string) {
 
 // Read and append to array
 func readAndAppend(fileLocation string, arrayName []string) []string {
-	file, err := os.Open(fileLocation)
-	if err != nil {
-		log.Println(err)
-		return arrayName
-	}
-	// Ensure the file is closed when the function returns
-	defer file.Close()
-	// scan the file, and read the file
-	scanner := bufio.NewScanner(file)
+    file, err := os.Open(fileLocation)
+    if err != nil {
+        log.Println(err)
+        return arrayName
+    }
+    scanner := bufio.NewScanner(file)
 	// split each line
-	scanner.Split(bufio.ScanLines)
+    scanner.Split(bufio.ScanLines)
 	// append each line to array
-	for scanner.Scan() {
-		arrayName = append(arrayName, scanner.Text())
-	}
-	return arrayName
+    for scanner.Scan() {
+        arrayName = append(arrayName, scanner.Text())
+    }
+    // Close the file as soon as you're done with it
+    file.Close()
+    return arrayName
 }
 
 // Read the completed file, then delete any duplicates before saving it.
