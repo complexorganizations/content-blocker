@@ -272,7 +272,7 @@ func findTheDomains(url string, saveLocation string) {
 			if len(content) < 255 && isDomainSuffixValid(content) {
 				validationWaitGroup.Add(1)
 				// Go ahead and verify it in the background.
-				go validateTheDomains(content, saveLocation, validationWaitGroup)
+				go validateTheDomains(content, saveLocation, &validationWaitGroup)
 			} else {
 				if logs {
 					// Let the user know that the domain is invalid since it does not fit the syntax.
@@ -289,7 +289,7 @@ func findTheDomains(url string, saveLocation string) {
 	debug.FreeOSMemory()
 }
 
-func validateTheDomains(uniqueDomain string, locatioToSave string, validationWaitGroup sync.WaitGroup) {
+func validateTheDomains(uniqueDomain string, locatioToSave string, validationWaitGroup *sync.WaitGroup) {
 	// Validate each and every found domain.
 	if isDomainRegistered(uniqueDomain) {
 		writeToFile(locatioToSave, uniqueDomain)
