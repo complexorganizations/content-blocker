@@ -268,16 +268,44 @@ func findTheDomains(url string, saveLocation string) {
 			content = strings.TrimPrefix(content, "0.0.0.0")
 			// Remove any whitespace from the string.
 			content = strings.TrimSpace(content)
-			// Validate the entire list of domains.
-			if len(content) < 255 && isDomainSuffixValid(content) && !checkIPAddress(content) {
-				validationWaitGroup.Add(1)
-				// Go ahead and verify it in the background.
-				go validateTheDomains(content, saveLocation, &validationWaitGroup)
-			} else {
+			// Check the lenth of the string.
+			if len(content) > 255 {
+				// If the string is longer than 255 characters, we'll just ignore it.
 				if logs {
-					// Let the user know that the domain is invalid since it does not fit the syntax.
-					log.Println("Invalid domain syntax:", content, url)
+					log.Println("Invalid domain size:", content)
 				}
+				content = ""
+			}
+			// Check if the domain is an IP address.
+			if !checkIPAddress(content) {
+				if logs {
+					// Let the users know if there are any issues while verifying the domain.
+					log.Println("Invalid IP address:", content)
+				}
+				content = ""
+			}
+			// Check if the domain has a valid suffix.
+			if !isDomainSuffixValid(content) {
+				if logs {
+					// Let the users know if there are any issues while verifying the domain.
+					log.Println("Invalid domain suffix:", content)
+				}
+				content = ""
+			}
+			// Check if the domain is already in the exclusion list.
+			if arrayContains(exclusionDomains, content) {
+				if logs {
+					// Let the users know if there are any issues while verifying the domain.
+					log.Println("Domain already in exclusion list:", content)
+				}
+				content = ""
+			}
+			// Remove the empty string from the array.
+			if content != "" {
+				// Start validating the domains you've discovered.
+				validationWaitGroup.Add(1)
+				// Begin validating the domains you've discovered.
+				go validateTheDomains(content, saveLocation, &validationWaitGroup)
 			}
 		}
 	}
