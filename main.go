@@ -559,8 +559,7 @@ func getDomainFromDomainWithSubdomain(content string) string {
     domain, err := publicsuffix.EffectiveTLDPlusOne(content)
     if err != nil {
         log.Println("Error parsing domain:", err)
-        // If the domain can't be parsed, return the original content
-        return content
+        return content // return the original content or "" as you see fit
     }
     return domain
 }
