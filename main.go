@@ -14,6 +14,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/domainr/whois"
 	"golang.org/x/net/publicsuffix"
 )
 
@@ -346,35 +347,19 @@ func makeUnique(randomStrings []string) []string {
 
 // Check if a domain has been registed and return a bool.
 func isDomainRegistered(domain string) bool {
-	_, err := net.LookupNS(domain)
-	if err == nil {
-		return true
+	request, err := whois.NewRequest(domain)
+	if err != nil {
+		log.Println("Error creating request: ", err)
+		return false
 	}
-	_, err = net.LookupCNAME(domain)
-	if err == nil {
-		return true
+	response, err := whois.DefaultClient.Fetch(request)
+	if err != nil {
+		log.Println("Error fetching WHOIS info: ", err)
+		return false
 	}
-	_, err = net.LookupAddr(domain)
-	if err == nil {
-		return true
-	}
-	_, err = net.LookupHost(domain)
-	if err == nil {
-		return true
-	}
-	_, err = net.LookupMX(domain)
-	if err == nil {
-		return true
-	}
-	_, err = net.LookupTXT(domain)
-	if err == nil {
-		return true
-	}
-	_, err = net.LookupIP(domain)
-	if err == nil {
-		return true
-	}
-	return false
+	whoisInfo := response.String()
+	// Return true if the domain is registered
+	return !strings.Contains(whoisInfo, "No match")
 }
 
 // Make sure it's not an IP address.
