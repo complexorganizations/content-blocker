@@ -279,29 +279,27 @@ func findTheDomains(url string, saveLocation string) {
 				}
 				content = ""
 			}
-			// Check if the domain is an IP address.
-			if checkIPAddress(content) {
-				if logs {
-					// Let the users know if there are any issues while verifying the domain.
-					log.Println("Invalid IP address:", content, url)
+			// Check if the content isnt empty.
+			if content != "" {
+				// Check if the domain is an IP address.
+				if checkIPAddress(content) {
+					if logs {
+						// Let the users know if there are any issues while verifying the domain.
+						log.Println("Invalid IP address:", content, url)
+					}
+					content = ""
 				}
-				content = ""
 			}
-			// Check if the domain has a valid suffix.
-			if !isDomainSuffixValid(content) {
-				if logs {
-					// Let the users know if there are any issues while verifying the domain.
-					log.Println("Invalid domain suffix:", content, url)
+			// Only check if the domain is valid
+			if content != "" {
+				// Check if the domain has a valid suffix.
+				if !isDomainSuffixValid(content) {
+					if logs {
+						// Let the users know if there are any issues while verifying the domain.
+						log.Println("Invalid domain suffix:", content, url)
+					}
+					content = ""
 				}
-				content = ""
-			}
-			// Check if the domain is already in the exclusion list.
-			if arrayContains(exclusionDomains, content) {
-				if logs {
-					// Let the users know if there are any issues while verifying the domain.
-					log.Println("Domain already in exclusion list:", content, url)
-				}
-				content = ""
 			}
 			// Remove the empty string from the array.
 			if content != "" {
@@ -385,15 +383,6 @@ func fileExists(filename string) bool {
 		return false
 	}
 	return !info.IsDir()
-}
-
-// Check to see whether the folder already exists.
-func folderExists(foldername string) bool {
-	info, err := os.Stat(foldername)
-	if err != nil {
-		return false
-	}
-	return info.IsDir()
 }
 
 // check if a array contains a string
@@ -556,10 +545,10 @@ func isDomainSuffixValid(domain string) bool {
 
 // Get the domain from a given domain with subdomain
 func getDomainFromDomainWithSubdomain(content string) string {
-    domain, err := publicsuffix.EffectiveTLDPlusOne(content)
-    if err != nil {
-        log.Println("Error parsing domain:", err)
-        return content // return the original content or "" as you see fit
-    }
-    return domain
+	domain, err := publicsuffix.EffectiveTLDPlusOne(content)
+	if err != nil {
+		log.Println("Error parsing domain:", err)
+		return content // return the original content or "" as you see fit
+	}
+	return domain
 }
