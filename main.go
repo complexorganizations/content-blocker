@@ -367,7 +367,7 @@ func isDomainRegistered(domain string) bool {
 
 // Make sure it's not an IP address.
 func checkIPAddress(ip string) bool {
-	return net.ParseIP(ip) == nil
+	return net.ParseIP(ip) != nil
 }
 
 // Verify the URI.
