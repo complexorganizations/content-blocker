@@ -269,7 +269,7 @@ func findTheDomains(url string, saveLocation string) {
 			// Remove any whitespace from the string.
 			content = strings.TrimSpace(content)
 			// Validate the entire list of domains.
-			if len(content) < 255 && isDomainSuffixValid(content) {
+			if len(content) < 255 && isDomainSuffixValid(content) && !checkIPAddress(content) {
 				validationWaitGroup.Add(1)
 				// Go ahead and verify it in the background.
 				go validateTheDomains(content, saveLocation, &validationWaitGroup)
