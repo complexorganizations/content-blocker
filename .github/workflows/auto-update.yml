@@ -45,7 +45,7 @@ jobs:
 
       # Generate new resources using content-blocker.
       - name: Generate New Resources
-        run: ./content-blocker -update
+        run: ./content-blocker -update -logs
 
       # Commit and push updates to the repository.
       - name: Commit and Push Updates
