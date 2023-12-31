@@ -280,7 +280,7 @@ func findTheDomains(url string, saveLocation string) {
 				content = ""
 			}
 			// Check if the domain is an IP address.
-			if !checkIPAddress(content) {
+			if checkIPAddress(content) {
 				if logs {
 					// Let the users know if there are any issues while verifying the domain.
 					log.Println("Invalid IP address:", content, url)
@@ -559,7 +559,8 @@ func getDomainFromDomainWithSubdomain(content string) string {
     domain, err := publicsuffix.EffectiveTLDPlusOne(content)
     if err != nil {
         log.Println("Error parsing domain:", err)
-        return content // return the original content or "" as you see fit
+        // If the domain can't be parsed, return the original content
+        return content
     }
     return domain
 }
