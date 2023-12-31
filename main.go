@@ -347,16 +347,21 @@ func makeUnique(randomStrings []string) []string {
 
 // Check if a domain has been registed and return a bool.
 func isDomainRegistered(domain string) bool {
+	// Remove the subdomain from the domain.
+	domain = getDomainFromDomainWithSubdomain(domain)
+	// Create a new request.
 	request, err := whois.NewRequest(domain)
 	if err != nil {
 		log.Println("Error creating request: ", err)
 		return false
 	}
+	// Send the request and get the response.
 	response, err := whois.DefaultClient.Fetch(request)
 	if err != nil {
 		log.Println("Error fetching WHOIS info: ", err)
 		return false
 	}
+	// Convert the response to a string.
 	whoisInfo := response.String()
 	// Return true if the domain is registered
 	return !strings.Contains(whoisInfo, "No match")
