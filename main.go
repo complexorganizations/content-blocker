@@ -556,9 +556,10 @@ func isDomainSuffixValid(domain string) bool {
 
 // Get the domain from a given domain with subdomain
 func getDomainFromDomainWithSubdomain(content string) string {
-	domain, err := publicsuffix.EffectiveTLDPlusOne(content)
-	if err != nil {
-		log.Fatalln(err)
-	}
-	return domain
+    domain, err := publicsuffix.EffectiveTLDPlusOne(content)
+    if err != nil {
+        log.Println("Error parsing domain:", err)
+        return content // return the original content or "" as you see fit
+    }
+    return domain
 }
