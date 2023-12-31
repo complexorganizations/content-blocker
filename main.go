@@ -272,7 +272,7 @@ func findTheDomains(url string, saveLocation string) {
 			if len(content) > 255 {
 				// If the string is longer than 255 characters, we'll just ignore it.
 				if logs {
-					log.Println("Invalid domain size:", content)
+					log.Println("Invalid domain size:", content, url)
 				}
 				content = ""
 			}
@@ -280,7 +280,7 @@ func findTheDomains(url string, saveLocation string) {
 			if !checkIPAddress(content) {
 				if logs {
 					// Let the users know if there are any issues while verifying the domain.
-					log.Println("Invalid IP address:", content)
+					log.Println("Invalid IP address:", content, url)
 				}
 				content = ""
 			}
@@ -288,7 +288,7 @@ func findTheDomains(url string, saveLocation string) {
 			if !isDomainSuffixValid(content) {
 				if logs {
 					// Let the users know if there are any issues while verifying the domain.
-					log.Println("Invalid domain suffix:", content)
+					log.Println("Invalid domain suffix:", content, url)
 				}
 				content = ""
 			}
@@ -296,7 +296,7 @@ func findTheDomains(url string, saveLocation string) {
 			if arrayContains(exclusionDomains, content) {
 				if logs {
 					// Let the users know if there are any issues while verifying the domain.
-					log.Println("Domain already in exclusion list:", content)
+					log.Println("Domain already in exclusion list:", content, url)
 				}
 				content = ""
 			}
