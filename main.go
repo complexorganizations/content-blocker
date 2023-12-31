@@ -266,6 +266,8 @@ func findTheDomains(url string, saveLocation string) {
 			content = strings.TrimSpace(content)
 			// Remove 0.0.0.0 from the beginning of the string.
 			content = strings.TrimPrefix(content, "0.0.0.0")
+			// Remove 127.0.0.1 from the beginning of the string.
+			content = strings.TrimPrefix(content, "127.0.0.1")
 			// Remove any whitespace from the string.
 			content = strings.TrimSpace(content)
 			// Check the lenth of the string.
