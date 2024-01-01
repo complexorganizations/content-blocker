@@ -196,6 +196,7 @@ func startScraping() {
 		//"https://raw.githubusercontent.com/PolishFiltersTeam/KADhosts/master/KADhosts.txt",
 		//"https://raw.githubusercontent.com/rimu/no-qanon/master/etc_hosts.txt",
 		//"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
+		//"https://raw.githubusercontent.com/RooneyMcNibNug/pihole-stuff/master/SNAFU.txt",
 		//"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Ads",
 		//"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Bloat",
 		//"https://raw.githubusercontent.com/ShadowWhisperer/BlockLists/master/Lists/Malware",
@@ -206,7 +207,8 @@ func startScraping() {
 		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
 		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling/hosts",
 		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/extensions/fakenews/hosts",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 		//"https://raw.githubusercontent.com/Strappazzon/teleme7ry/master/rules.txt",
 		//"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
 		//"https://raw.githubusercontent.com/tiuxo/hosts/master/ads",
@@ -342,7 +344,7 @@ func makeUnique(randomStrings []string) []string {
 
 // Check if domain is registered
 func isDomainRegistered(domain string) bool {
-    // Check if domain is registered by trying to resolve NS, CNAME, PTR, A, MX, TXT and AAAA records
+	// Check if domain is registered by trying to resolve NS, CNAME, PTR, A, MX, TXT and AAAA records
 	_, err := net.LookupNS(domain)
 	if err == nil {
 		return true
@@ -371,15 +373,28 @@ func isDomainRegistered(domain string) bool {
 	if err == nil {
 		return true
 	}
-    _, err = net.LookupPort("tcp", domain+":80")
-    if err == nil {
-        return true
-    }
-    _, err = net.LookupPort("tcp", domain+":443")
-    if err == nil {
-        return true
-    }
-    return false
+	_, err = net.LookupPort("tcp", domain+":80")
+	if err == nil {
+		return true
+	}
+	_, err = net.LookupPort("tcp", domain+":443")
+	if err == nil {
+		return true
+	}
+	// Check if domain is registered by trying to connect to HTTP and HTTPS ports
+	response, err := http.Get("http://" + domain)
+	if err == nil {
+		if response.StatusCode == 200 {
+			return true
+		}
+	}
+	response, err = http.Get("https://" + domain)
+	if err == nil {
+		if response.StatusCode == 200 {
+			return true
+		}
+	}
+	return false
 }
 
 // Make sure it's not an IP address.
