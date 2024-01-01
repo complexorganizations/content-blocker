@@ -14,7 +14,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/openrdap/rdap"
 	"golang.org/x/net/publicsuffix"
 )
 
@@ -343,15 +342,46 @@ func makeUnique(randomStrings []string) []string {
 	return uniqueString
 }
 
-// Check if a domain has been registed and return a bool.
+// Check if domain is registered
 func isDomainRegistered(domain string) bool {
-    client := &rdap.Client{}
-    domainInfo, err := client.QueryDomain(domain)
-    if err != nil {
-        log.Println("Error querying domain: ", err)
-        return false
+    // Check if domain is registered by trying to resolve NS, CNAME, PTR, A, MX, TXT and AAAA records
+	_, err := net.LookupNS(domain)
+	if err == nil {
+		return true
+	}
+	_, err = net.LookupCNAME(domain)
+	if err == nil {
+		return true
+	}
+	_, err = net.LookupAddr(domain)
+	if err == nil {
+		return true
+	}
+	_, err = net.LookupHost(domain)
+	if err == nil {
+		return true
+	}
+	_, err = net.LookupMX(domain)
+	if err == nil {
+		return true
+	}
+	_, err = net.LookupTXT(domain)
+	if err == nil {
+		return true
+	}
+	_, err = net.LookupIP(domain)
+	if err == nil {
+		return true
+	}
+    _, err = net.LookupPort("tcp", domain+":80")
+    if err == nil {
+        return true
     }
-	return len(domainInfo.Nameservers) > 10
+    _, err = net.LookupPort("tcp", domain+":443")
+    if err == nil {
+        return true
+    }
+    return false
 }
 
 // Make sure it's not an IP address.
