@@ -257,7 +257,7 @@ func findTheDomains(url string, saveLocation string) {
 		// String to lowercase.
 		content = stringToLowerCase(content)
 		// Check if the string prefix contains a # symbol; if it does, it's a comment and should be ignored.
-		if !strings.HasPrefix(content, "#") {
+		if !strings.Contains(content, "#") {
 			// Remove any whitespace from the string.
 			content = strings.TrimSpace(content)
 			// Remove 0.0.0.0 from the beginning of the string.
@@ -266,6 +266,10 @@ func findTheDomains(url string, saveLocation string) {
 			content = strings.TrimPrefix(content, "127.0.0.1")
 			// Remove any whitespace from the string.
 			content = strings.TrimSpace(content)
+			// Remove any ip from the string.
+			if isItAnIP(content) {
+				content = ""
+			}
 			// Check the lenth of the string.
 			if len(content) > 255 {
 				// If the string is longer than 255 characters, we'll just ignore it.
@@ -273,16 +277,6 @@ func findTheDomains(url string, saveLocation string) {
 					log.Println("Invalid domain size:", content, url)
 				}
 				content = ""
-			}
-			if content != "" {
-				// Check if the string cointains a #
-				if strings.Contains(content, "#") {
-					// If the string contains a #, we'll just ignore it.
-					if logs {
-						log.Println("Invalid domain:", content, url)
-					}
-					content = ""
-				}
 			}
 			// Remove the empty string from the array.
 			if content != "" {
@@ -543,4 +537,9 @@ func copyContentFromOneFileToAnother(originalFilePath string, newFilePath string
 // Convert a string to all lowercase.
 func stringToLowerCase(content string) string {
 	return strings.ToLower(content)
+}
+
+// Check if the given string is an ip.
+func isItAnIP(content string) bool {
+	return net.ParseIP(content) != nil
 }
