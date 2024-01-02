@@ -13,8 +13,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-
-	"golang.org/x/net/publicsuffix"
 )
 
 var (
@@ -468,9 +466,6 @@ func makeEverythingUnique(contentLocation string) {
 	sort.Strings(uniqueDomains)
 	// Remove all the exclusions domains from the list.
 	for _, content := range exclusionDomains {
-		if getDomainFromDomainWithSubdomain(content) == content {
-			uniqueDomains = removeStringFromSlice(uniqueDomains, content)
-		}
 		uniqueDomains = removeStringFromSlice(uniqueDomains, content)
 	}
 	// Delete the original host file and rewrite it.
@@ -548,14 +543,4 @@ func copyContentFromOneFileToAnother(originalFilePath string, newFilePath string
 // Convert a string to all lowercase.
 func stringToLowerCase(content string) string {
 	return strings.ToLower(content)
-}
-
-// Get the domain from a given domain with subdomain
-func getDomainFromDomainWithSubdomain(content string) string {
-	domain, err := publicsuffix.EffectiveTLDPlusOne(content)
-	if err != nil {
-		log.Println("Error parsing domain:", err)
-		return content // return the original content or "" as you see fit
-	}
-	return domain
 }
