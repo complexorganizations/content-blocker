@@ -351,28 +351,7 @@ func isDomainRegistered(domain string) bool {
 	if err == nil {
 		return true
 	}
-	_, err = net.LookupPort("tcp", domain+":80")
-	if err == nil {
-		return true
-	}
-	_, err = net.LookupPort("tcp", domain+":443")
-	if err == nil {
-		return true
-	}
-	// Check if domain is registered by trying to connect to HTTP and HTTPS ports
-	response, err := http.Get("http://" + domain)
-	if err == nil {
-		if response.StatusCode == 200 {
-			return true
-		}
-	}
-	response, err = http.Get("https://" + domain)
-	if err == nil {
-		if response.StatusCode == 200 {
-			return true
-		}
-	}
-	return false
+	return true
 }
 
 // Verify the URI.
