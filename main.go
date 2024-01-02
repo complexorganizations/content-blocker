@@ -276,24 +276,12 @@ func findTheDomains(url string, saveLocation string) {
 				}
 				content = ""
 			}
-			// Check if the content isnt empty.
 			if content != "" {
-				// Check if the domain is an IP address.
-				if checkIPAddress(content) {
+				// Check if the string cointains a #
+				if strings.Contains(content, "#") {
+					// If the string contains a #, we'll just ignore it.
 					if logs {
-						// Let the users know if there are any issues while verifying the domain.
-						log.Println("Invalid IP address:", content, url)
-					}
-					content = ""
-				}
-			}
-			// Only check if the domain is valid
-			if content != "" {
-				// Check if the domain has a valid suffix.
-				if !isDomainSuffixValid(content) {
-					if logs {
-						// Let the users know if there are any issues while verifying the domain.
-						log.Println("Invalid domain suffix:", content, url)
+						log.Println("Invalid domain:", content, url)
 					}
 					content = ""
 				}
@@ -393,11 +381,6 @@ func isDomainRegistered(domain string) bool {
 		}
 	}
 	return false
-}
-
-// Make sure it's not an IP address.
-func checkIPAddress(ip string) bool {
-	return net.ParseIP(ip) != nil
 }
 
 // Verify the URI.
@@ -565,12 +548,6 @@ func copyContentFromOneFileToAnother(originalFilePath string, newFilePath string
 // Convert a string to all lowercase.
 func stringToLowerCase(content string) string {
 	return strings.ToLower(content)
-}
-
-// Check if a given domain suffix is valid.
-func isDomainSuffixValid(domain string) bool {
-	_, testICANNSuffix := publicsuffix.PublicSuffix(domain)
-	return testICANNSuffix
 }
 
 // Get the domain from a given domain with subdomain
