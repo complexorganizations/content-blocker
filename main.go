@@ -204,7 +204,7 @@ func startScraping() {
 		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts",
 		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling/hosts",
 		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/extensions/fakenews/hosts",
-		"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
+		//"https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts",
 		//"https://raw.githubusercontent.com/Strappazzon/teleme7ry/master/rules.txt",
 		//"https://raw.githubusercontent.com/tg12/pihole-phishtank-list/master/list/phish_domains.txt",
 		//"https://raw.githubusercontent.com/tiuxo/hosts/master/ads",
