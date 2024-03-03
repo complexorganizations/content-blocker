@@ -1,7 +1,7 @@
 ! Title: Content Blocker - Advanced Tracker and Analytics Blocker
 ! Description: This robust filter is meticulously designed to fortify your online privacy by intercepting and blocking a wide array of trackers, web analytics tools, and data collectors, ensuring a more secure and confidential browsing experience. Stay protected and in control of your digital footprint with this comprehensive shield against intrusive tracking mechanisms.
 ! Version: 1.0.0
-! Last updated: 2024-03-02 00:52:08
+! Last updated: 2024-03-03 00:57:19
 ! Update frequency: Daily
 ! Homepage: https://github.com/complexorganizations/content-blocker
 ! License: https://github.com/complexorganizations/content-blocker/main/.github/license
