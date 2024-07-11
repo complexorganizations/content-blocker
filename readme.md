@@ -29,10 +29,6 @@ To add the custom content blocker list to your browser using the provided link, 
    chrome-extension://cjpalhdlnbpafiamejdnhcphjbkeiagm/asset-viewer.html?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcomplexorganizations%2Fcontent-blocker%2Fmain%2Fassets%2Fbrowser.txt&title=Custom%20Content%20Blocker%20List&subscribe=1
    ```
 
-<a href="chrome-extension://cjpalhdlnbpafiamejdnhcphjbkeiagm/asset-viewer.html?url=https%3A%2F%2Fraw.githubusercontent.com%2Fcomplexorganizations%2Fcontent-blocker%2Fmain%2Fassets%2Fbrowser.txt&title=Custom%20Content%20Blocker%20List&subscribe=1" target="_blank">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/UBlock_Origin.svg/2048px-UBlock_Origin.svg.png" alt="uBlock Origin" width="200">
-</a>
-
 2. **Open Your Browser**: Launch the web browser where you want to add this content blocker list.
 
 3. **Paste the Link in a New Tab**: Open a new tab and paste the link into the address bar. Then, press Enter to navigate to that link.
