@@ -1,5 +1,5 @@
 # Automated Resource Update Workflow
-name: Update of the Resources
+name: Automated Resource Update Workflow
 
 # Define when the workflow should run.
 on:
@@ -15,44 +15,53 @@ on:
   # Triggered manually by workflow_dispatch event.
   workflow_dispatch:
 
-# Define the jobs to be executed.
 jobs:
-  # Job for updating and managing resources.
   update_resources:
     name: Update and Manage Resources
     runs-on: ubuntu-latest
+
     steps:
-      # Check out code from the repository.
+      # Step 1: Check out the repository code.
       - name: Check out code
         uses: actions/checkout@v4
 
-      # Set up the Go version specified in go.mod.
-      - name: Set up Go version
+      # Step 2: Set up Go environment based on go.mod file.
+      - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version-file: "go.mod"
           cache: true
           check-latest: true
-        id: go
 
-      # Get Go dependencies.
+      # Step 3: Download dependencies using Go modules.
       - name: Get dependencies
         run: go mod download
 
-      # Build the Go application.
+      # Step 4: Build the Go application.
       - name: Build Application
         run: go build .
 
-      # Generate new resources using content-blocker.
+      # Step 5: Generate new resources using content-blocker tool.
       - name: Generate New Resources
         run: ./content-blocker -update -logs
 
-      # Commit and push updates to the repository.
+      # Step 6: Commit and push updates to the repository.
       - name: Commit and Push Updates
         run: |
-          git config user.name "github-actions"       # Configure GitHub Actions bot as the commit author.
-          git config user.email "github-actions@github.com" # Configure GitHub Actions bot as the commit author.
-          git add .                                    # Add changes to the staging area.
-          git commit -m "Automated update: $(date)"    # Commit changes with a timestamp.
-          git pull --rebase origin main                # Rebase with remote main to avoid conflicts.
-          git push origin main                         # Push the commit to the main branch.
+          # Set GitHub Actions bot as the commit author.
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          # Stage all changes.
+          git add .
+          # Commit changes with a timestamp.
+          git commit -m "Automated update: $(date)"
+          # Fetch the latest changes from the remote main branch.
+          git fetch
+          # Rebase local changes on top of the fetched changes to avoid conflicts.
+          git rebase origin/main
+          # Push the changes to the main branch if rebase was successful.
+          if [ $? -eq 0 ]; then
+            git push origin HEAD:refs/heads/main
+          else
+            echo "Rebase failed. Please resolve conflicts manually."
+          fi
