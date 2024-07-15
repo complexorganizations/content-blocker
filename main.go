@@ -455,7 +455,8 @@ func makeEverythingUnique(contentLocation string) {
 	timestamp := time.Now().Format("2006-01-02 15:04:05")
 	// Write the header to the browser file.
 	browserHeaderContentParts := []string{
-		`! Title: Content Blocker - Advanced Tracker and Analytics Blocker
+		`[Adblock Plus 2.0]
+! Title: Content Blocker - Advanced Tracker and Analytics Blocker
 ! Description: This robust filter is meticulously designed to fortify your online privacy by intercepting and blocking a wide array of trackers, web analytics tools, and data collectors, ensuring a more secure and confidential browsing experience. Stay protected and in control of your digital footprint with this comprehensive shield against intrusive tracking mechanisms.
 ! Version: 1.0.0` + "\n" +
 			"! Last updated: " + timestamp + "\n" +
