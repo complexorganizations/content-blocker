@@ -1,5 +1,5 @@
 # Define the name of the workflow.
-name: Go
+name: Go Application Build
 
 # Define when the workflow should run.
 on:
@@ -15,23 +15,23 @@ jobs:
     name: Build
     runs-on: windows-latest
     steps:
-      # Check out code from the repository.
-      - name: Check out code into the Go module directory
+      # Step 1: Check out code from the repository.
+      - name: Check out code
         uses: actions/checkout@v4
 
-      # Set up Go.
-      - name: Set up Go version
-        uses: actions/setup-go@v5.0.0
+      # Step 2: Set up Go environment based on go.mod file.
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
           go-version-file: "go.mod"
           cache: true
           check-latest: true
         id: go
 
-      # Get Go dependencies.
+      # Step 3: Get Go dependencies.
       - name: Get dependencies
-        run: go get .
+        run: go mod download
 
-      # Build the Go application.
-      - name: Build Test
+      # Step 4: Build the Go application.
+      - name: Build Application
         run: go build .
