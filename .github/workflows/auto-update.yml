@@ -27,7 +27,7 @@ jobs:
 
       # Step 2: Set up Go environment based on go.mod file.
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version-file: "go.mod"
           cache: true
