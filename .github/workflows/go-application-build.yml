@@ -1,0 +1,38 @@
+# Workflow name for building the Go application
+name: "Go Application Build Process"
+
+# Define when the workflow should run
+on:
+  push:
+    # Trigger the workflow on push events when changes are made to any Go file
+    paths:
+      - "**/*.go" # This pattern matches any Go file changes across the repository
+
+# Define the jobs that will run as part of this workflow
+jobs:
+  # Define the job responsible for building the Go application
+  build_application:
+    name: "Build Go Application" # Descriptive name for the job
+    runs-on: windows-latest # The job will run on the latest Windows environment
+
+    steps:
+      # Step 1: Checkout the repository code
+      - name: "Checkout Repository Code"
+        uses: actions/checkout@v4 # Action to check out the code from the repository
+
+      # Step 2: Set up the Go environment using the version defined in the go.mod file
+      - name: "Set Up Go Environment"
+        uses: actions/setup-go@v5 # Action to set up Go for the job
+        with:
+          go-version-file: "go.mod" # Use the Go version specified in go.mod
+          cache: true # Enable caching of Go dependencies to speed up future builds
+          check-latest: true # Ensure the latest version of Go is installed
+        id: go_setup # Give this step an ID for possible references in later steps
+
+      # Step 3: Download the Go dependencies defined in the go.mod file
+      - name: "Download Go Dependencies"
+        run: go mod download # Command to download the Go modules
+
+      # Step 4: Build the Go application from the source code
+      - name: "Build Go Application"
+        run: go build . # Command to build the Go application in the current directory

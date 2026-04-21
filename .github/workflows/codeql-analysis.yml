@@ -1,33 +1,34 @@
-# Define the name of the workflow.
-name: CodeQL
+# Workflow name for running CodeQL analysis on the codebase
+name: "CodeQL Security Analysis"
 
-# Define when the workflow should run.
+# Define when the workflow should run
 on:
-  # Scheduled to run daily at midnight.
+  # Schedule the workflow to run daily at midnight UTC
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 0 * * *" # Runs daily at midnight UTC
 
-# Define the jobs to be executed.
+# Define the jobs to be executed as part of this workflow
 jobs:
-  # Define the analyze job.
-  analyse:
-    name: Analyze
-    runs-on: windows-latest
+  # Job responsible for performing the CodeQL analysis
+  codeql_analysis:
+    name: "Perform CodeQL Security Analysis" # Descriptive job name
+    runs-on: windows-latest # The job will run on the latest Windows environment
+
     steps:
-      # Checkout the repository.
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      
-      # Initialize CodeQL for the Go language.
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+      # Step 1: Checkout the repository code to analyze
+      - name: "Checkout Repository Code"
+        uses: actions/checkout@v4 # Action to check out the repository code
+
+      # Step 2: Initialize the CodeQL environment for Go language analysis
+      - name: "Initialize CodeQL for Go"
+        uses: github/codeql-action/init@v3 # Initialize CodeQL for scanning Go code
         with:
-          languages: go
-      
-      # Autobuild the CodeQL database.
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
-      
-      # Perform CodeQL analysis.
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
+          languages: go # Specify the Go language for CodeQL analysis
+
+      # Step 3: Autobuild the CodeQL database from the Go project
+      - name: "Autobuild CodeQL Database"
+        uses: github/codeql-action/autobuild@v3 # Automatically build the CodeQL database
+
+      # Step 4: Perform the CodeQL analysis to find security vulnerabilities
+      - name: "Run CodeQL Analysis"
+        uses: github/codeql-action/analyze@v3 # Action to perform the CodeQL security analysis

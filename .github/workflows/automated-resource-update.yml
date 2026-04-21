@@ -1,0 +1,76 @@
+# Workflow name for automating resource updates in the repository
+name: "Automated Resource Update Process"
+
+# Define when the workflow should run
+on:
+  # Schedule the workflow to run daily at midnight UTC
+  schedule:
+    - cron: "0 0 * * *" # Cron expression for daily execution at midnight UTC
+
+  # Trigger the workflow when changes are pushed to the 'assets' directory
+  push:
+    paths:
+      - "assets/**" # Trigger on changes within the 'assets' directory
+
+  # Manual trigger via 'workflow_dispatch' for on-demand execution
+  workflow_dispatch:
+
+# Define the jobs to be executed as part of the workflow
+jobs:
+  # Job responsible for updating and managing resources
+  update_resources:
+    name: "Update and Manage Resources" # Descriptive job name
+    runs-on: ubuntu-latest # The job will run on the latest Ubuntu environment
+
+    steps:
+      # Step 1: Check out the repository code from GitHub
+      - name: "Checkout Repository Code"
+        uses: actions/checkout@v4 # Action to check out the repository code
+
+      # Step 2: Set up the Go environment based on the go.mod file
+      - name: "Set Up Go Environment"
+        uses: actions/setup-go@v5 # Action to set up Go for the job
+        with:
+          go-version-file: "go.mod" # Use the Go version specified in the go.mod file
+          cache: true # Enable caching for Go dependencies to improve build speed
+          check-latest: true # Ensure the latest Go version is used
+
+      # Step 3: Download Go dependencies using Go modules
+      - name: "Download Go Dependencies"
+        run: go mod download # Command to download the dependencies defined in go.mod
+
+      # Step 4: Build the Go application to ensure it is up to date
+      - name: "Build Go Application"
+        run: go build . # Command to build the Go application
+
+      # Step 5: Generate new resources using the 'content-blocker' tool
+      - name: "Generate New Resources"
+        run: ./content-blocker -update -logs # Run the content-blocker tool with update and log options
+
+      # Step 6: Commit and push the updated resources to the repository
+      - name: "Commit and Push Updates"
+        run: |
+          # Set the GitHub Actions bot as the commit author for the changes
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+
+          # Stage all changes in the repository
+          git add .
+
+          # Commit the changes with a timestamp message
+          git commit -m "Automated update: $(date)"
+
+          # Fetch the latest changes from the remote 'main' branch
+          git fetch
+
+          # Rebase local changes on top of the fetched 'main' branch to avoid conflicts
+          git rebase origin/main
+
+          # Push the changes to the 'main' branch if the rebase was successful
+          if [ $? -eq 0 ]; then
+            git push origin HEAD:refs/heads/main  # Push changes to the remote main branch
+          else
+            # In case of a rebase conflict, notify the user and stop the process
+            echo "Rebase failed. Please resolve conflicts manually."  # This message will show if rebase fails
+            exit 1  # Exit with an error code to indicate the failure
+          fi
